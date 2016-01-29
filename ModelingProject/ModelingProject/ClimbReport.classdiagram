@@ -8,26 +8,12 @@
 red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-water-solo</body>
     </comment>
   </ownedCommentsInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="980479d5-ef05-4b69-ab65-d710687f82eb">
-      <profileInstance Id="152705f7-7554-407a-82af-d5cfa2304ad0" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="c7068a67-245b-4f72-9fdf-7362a3740991">
-      <profileInstance Id="519ca077-9b39-45b0-8071-fbe2062cef33" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="c03c16e7-c380-4c8c-aac9-d8d6c1f01fdb" name="user" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="cb0bc8d4-825c-4a3b-9067-feb621a54bc9" />
         <ownedAttributesInternal>
-          <property Id="490c53a4-83d0-4eef-8e20-5a0027b2d613" name="user_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="490c53a4-83d0-4eef-8e20-5a0027b2d613" name="id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="84c70460-cb8d-4a39-b33f-b0b2c430e162" />
           </property>
           <property Id="62a44c54-2c5b-42f4-adff-f121abbe3640" name="name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -49,7 +35,7 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
           <property Id="eda759c5-5bd1-4d57-9ce2-365ff4d8fe7d" name="longitude" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="54b9d222-5499-4fa8-be55-abd8a532b50d" />
           </property>
-          <property Id="4058c0f6-48a8-4c18-b377-1fbc18487bbc" name="location_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="4058c0f6-48a8-4c18-b377-1fbc18487bbc" name="id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="1a36e41f-7d24-4d46-b74b-cd3f2f56ebfe" />
           </property>
         </ownedAttributesInternal>
@@ -119,7 +105,7 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
           </association>
         </targetEnds>
         <ownedAttributesInternal>
-          <property Id="838a75b6-8297-46ea-b571-833da34d1486" name="report_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="838a75b6-8297-46ea-b571-833da34d1486" name="id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="6f45407f-90e1-4fd2-98f3-4f08a41cd709" />
           </property>
           <property Id="8e40db7f-8597-48c2-b11b-5db69c08e986" name="route_grade" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -131,17 +117,11 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
           <property Id="7fa631bb-2571-418a-ba23-d746b2e7c41d" name="route_name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="aff16272-f2b1-4e30-94d9-f862f764d034" />
           </property>
-          <property Id="8f8cfb0d-9ca8-4841-bb69-fc915e77184d" name="on_sight" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="a592af58-a4a4-467a-874f-dc78e0632a8b" />
-          </property>
-          <property Id="4e9f3e85-6f25-4678-a700-192c837a0e82" name="flash" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="2aefb590-f084-4b1d-8329-3b0da284b81e" />
-          </property>
-          <property Id="1b81a407-0796-4500-9be8-421d0a4d8ebd" name="red_point" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="521790fe-be85-43ee-bf33-8631689c16fd" />
-          </property>
           <property Id="5a8826c6-4b98-41e8-9282-c36694446455" name="location_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="0ff9848c-be9a-420a-848e-42a9cf82a982" />
+          </property>
+          <property Id="7c061f3f-6f03-4cdf-9582-e11013e350c4" name="tag_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="8dc0f59b-b8fc-4f3d-8c73-3b099fd11c45" />
           </property>
         </ownedAttributesInternal>
       </class>
@@ -150,10 +130,10 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
       <class Id="f63da8ad-22ba-44eb-a904-45baa41a78b3" name="tag" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="9ebf26c1-3da4-41fd-b2b8-8c4bf2fd0bed" />
         <ownedAttributesInternal>
-          <property Id="9fddfccd-8bd9-4f3c-a1de-4fed46fe72dd" name="tag_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="9fddfccd-8bd9-4f3c-a1de-4fed46fe72dd" name="id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="8feca39d-826d-4029-8afd-bcc9d69530f7" />
           </property>
-          <property Id="0f20be70-60d8-4f62-b7de-468781999b41" name="tag_name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="0f20be70-60d8-4f62-b7de-468781999b41" name="name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="025eff01-9352-44e0-98c8-2eeaa6afb4de" />
           </property>
         </ownedAttributesInternal>
@@ -162,5 +142,19 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
   </packagedElements>
   <package Id="66661f76-7bc8-4398-b11d-62a88977fd84" name="ModelingProject">
     <elementDefinition Id="f002b187-b133-4eb1-9000-1306338e3b6b" />
+    <profileInstances>
+      <packageHasProfileInstances Id="980479d5-ef05-4b69-ab65-d710687f82eb">
+        <profileInstance Id="152705f7-7554-407a-82af-d5cfa2304ad0" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="c7068a67-245b-4f72-9fdf-7362a3740991">
+        <profileInstance Id="519ca077-9b39-45b0-8071-fbe2062cef33" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </logicalClassDesignerModel>

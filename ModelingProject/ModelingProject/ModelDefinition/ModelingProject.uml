@@ -36,7 +36,7 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
         <ownedAttributesInternal>
           <property
             Id="84c70460-cb8d-4a39-b33f-b0b2c430e162"
-            name="user_id"
+            name="id"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -102,7 +102,7 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
             isComposite="false" />
           <property
             Id="1a36e41f-7d24-4d46-b74b-cd3f2f56ebfe"
-            name="location_id"
+            name="id"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -295,7 +295,7 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
         <ownedAttributesInternal>
           <property
             Id="6f45407f-90e1-4fd2-98f3-4f08a41cd709"
-            name="report_id"
+            name="id"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -338,41 +338,19 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
             aggregation="None"
             isComposite="false" />
           <property
-            Id="a592af58-a4a4-467a-874f-dc78e0632a8b"
-            name="on_sight"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false" />
-          <property
-            Id="2aefb590-f084-4b1d-8329-3b0da284b81e"
-            name="flash"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false" />
-          <property
-            Id="521790fe-be85-43ee-bf33-8631689c16fd"
-            name="red_point"
-            isLeaf="false"
-            isStatic="false"
-            isReadOnly="false"
-            isUnique="false"
-            isDerived="false"
-            isDerivedUnion="false"
-            aggregation="None"
-            isComposite="false" />
-          <property
             Id="0ff9848c-be9a-420a-848e-42a9cf82a982"
             name="location_id"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+          <property
+            Id="8dc0f59b-b8fc-4f3d-8c73-3b099fd11c45"
+            name="tag_id"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -394,7 +372,7 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
         <ownedAttributesInternal>
           <property
             Id="8feca39d-826d-4029-8afd-bcc9d69530f7"
-            name="tag_id"
+            name="id"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -405,7 +383,7 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
             isComposite="false" />
           <property
             Id="025eff01-9352-44e0-98c8-2eeaa6afb4de"
-            name="tag_name"
+            name="name"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
