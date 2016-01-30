@@ -11,23 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127232208) do
+ActiveRecord::Schema.define(version: 20160130183334) do
+
+  create_table "keys", force: :cascade do |t|
+    t.string   "app_name",   limit: 100
+    t.string   "key_value",  limit: 100
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "user_id",    limit: 4
+  end
+
+  add_index "keys", ["user_id"], name: "index_keys_on_user_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
     t.integer  "latitude",   limit: 4
     t.integer  "longitude",  limit: 4
     t.string   "name",       limit: 50
-    t.integer  "report_id",  limit: 4
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
 
-  add_index "locations", ["report_id"], name: "index_locations_on_report_id", using: :btree
-
   create_table "reports", force: :cascade do |t|
     t.string   "route_name",  limit: 50
     t.string   "route_grade", limit: 5
-    t.integer  "tag_id",      limit: 4
     t.integer  "user_id",     limit: 4
     t.integer  "location_id", limit: 4
     t.datetime "created_at",             null: false
@@ -35,7 +41,6 @@ ActiveRecord::Schema.define(version: 20160127232208) do
   end
 
   add_index "reports", ["location_id"], name: "index_reports_on_location_id", using: :btree
-  add_index "reports", ["tag_id"], name: "index_reports_on_tag_id", using: :btree
   add_index "reports", ["user_id"], name: "index_reports_on_user_id", using: :btree
 
   create_table "reports_tags", id: false, force: :cascade do |t|
@@ -45,6 +50,19 @@ ActiveRecord::Schema.define(version: 20160127232208) do
 
   add_index "reports_tags", ["report_id", "tag_id"], name: "index_reports_tags_on_report_id_and_tag_id", using: :btree
 
+  create_table "roles", force: :cascade do |t|
+    t.string   "name",       limit: 50
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.integer "user_id", limit: 4
+    t.integer "role_id", limit: 4
+  end
+
+  add_index "roles_users", ["user_id", "role_id"], name: "index_roles_users_on_user_id_and_role_id", using: :btree
+
   create_table "tags", force: :cascade do |t|
     t.string   "name",       limit: 50
     t.datetime "created_at",            null: false
@@ -53,11 +71,11 @@ ActiveRecord::Schema.define(version: 20160127232208) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name",       limit: 50
-    t.integer  "report_id",  limit: 4
+    t.string   "username",   limit: 50
+    t.string   "password",   limit: 50
+    t.string   "email",      limit: 50
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
-
-  add_index "users", ["report_id"], name: "index_users_on_report_id", using: :btree
 
 end

@@ -3,8 +3,9 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users do |t|
 
       t.string "name", :limit => 50
-
-      t.belongs_to :report, index: true
+      t.string "username", :limit => 50
+      t.string "password", :limit => 50
+      t.string "email", :limit => 50
 
       t.timestamps null: false
     end

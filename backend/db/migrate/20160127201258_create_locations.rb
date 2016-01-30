@@ -7,7 +7,7 @@ class CreateLocations < ActiveRecord::Migration
 
       t.string "name", :limit => 50
 
-      t.belongs_to :report, index: true
+      #t.belongs_to :report, index: true
 
       t.timestamps null: false
     end
