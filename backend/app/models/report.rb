@@ -1,7 +1,10 @@
 class Report < ActiveRecord::Base
 
-  validates :route_name, presence: true
-  validates :route_grade, presence: true
+  VALID_NAME_REGEX = /\A[\w+\-.&_\såäöÅÄÖéèëÉÈËáàÁÀúùüÚÙÜóòÒÓ]+\z/i
+  VALID_GRADE_REGEX = /\A[\w+\-]+\z/i
+
+  validates :route_name, presence: true, length: { maximum: 50, minimum: 2}, format: { with: VALID_NAME_REGEX }
+  validates :route_grade, presence: true, length: { maximum: 5, minimum: 1}, format: { with: VALID_GRADE_REGEX }
 
   belongs_to :user
   belongs_to :location
