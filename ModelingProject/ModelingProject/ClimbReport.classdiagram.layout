@@ -16,11 +16,11 @@
         <OperationElementListCompartment Id="2ed5e006-bec9-458b-aa08-61f8a64ae536" absoluteBounds="7.5150000000000006, 5.7417968476812042, 1.4700000000000002, 0.20117186754941963" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="0ec4be5b-81ba-409c-a576-0652a2245d75" absoluteBounds="5, 4.5, 1.5, 2.1835936953624087" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+    <classShape Id="0ec4be5b-81ba-409c-a576-0652a2245d75" absoluteBounds="5, 4.5, 1.5, 1.8632812052965164" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
       <classMoniker Id="bb54f06c-e860-4456-8176-7adb2db783e4" LastKnownName="report" />
       <nestedChildShapes>
-        <AttributeElementListCompartment Id="bbbafd8b-7dc7-4368-9ac3-3817bfafd351" absoluteBounds="5.0150000000000006, 4.8900000000000006, 1.4700000000000002, 1.4824218278129895" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
-        <OperationElementListCompartment Id="4b7185dd-f056-498f-8421-042dc0d437ea" absoluteBounds="5.015, 6.38242182781299, 1.4700000000000002, 0.20117186754941963" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <AttributeElementListCompartment Id="bbbafd8b-7dc7-4368-9ac3-3817bfafd351" absoluteBounds="5.0150000000000006, 4.8900000000000006, 1.4700000000000002, 1.162109337747097" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="4b7185dd-f056-498f-8421-042dc0d437ea" absoluteBounds="5.015, 6.0621093377470974, 1.4700000000000002, 0.20117186754941963" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <associationConnector edgePoints="[(6.5 : 5.27148435761531); (7.5 : 5.27148435761531)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110" sourceMultiplicity="1" targetMultiplicity="1">
