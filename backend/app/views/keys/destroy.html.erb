@@ -9,4 +9,6 @@
 <% end %>
 
 
-<%= link_to "Back to list", userkeys_path %>
+<%= link_to_unless(current_user.is_admin?, "Back to list", userkeys_path){} %>
+
+<%= link_to_if(current_user.is_admin?, "Back to users", users_path){} %>

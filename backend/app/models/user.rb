@@ -32,4 +32,9 @@ class User < ActiveRecord::Base
     self.roles.where(:name => role_names).present?
   end
 
+  # Return true if user is admin
+  def is_admin?
+    self.has_role?("Admin")
+  end
+
 end
