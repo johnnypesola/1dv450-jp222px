@@ -2,10 +2,18 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  root 'users#login'
+
   resources :users
   resources :keys
 
-  get 'keys' => 'keys#show', as: :userkeys
+  get 'userkeys' => 'keys#show', as: :userkeys
+
+  get 'login' => 'users#login', as: :login
+
+  post 'dologin' => 'users#dologin', as: :dologin
+
+  get 'dologout' => 'users#dologout', as: :dologout
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
