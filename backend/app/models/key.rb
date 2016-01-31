@@ -7,22 +7,18 @@ class Key < ActiveRecord::Base
             presence: true,
             length: {
                 maximum: 100,
-                minimum: 2,
-                too_short: "minst %{count} tecken måste anges",
-                too_long: "max %{count} tecken får anges"
+                minimum: 2
             },
-            format: { with: VALID_APP_NAME_REGEX, message: "Namnet innehåller ogiltiga tecken."  }
+            format: { with: VALID_APP_NAME_REGEX }
 
   validates :key_value,
             presence: true,
             length: {
                 maximum: 100,
-                minimum: 2,
-                too_short: "minst %{count} tecken måste anges",
-                too_long: "max %{count} tecken får anges"
+                minimum: 2
             },
-            format: {
-                with: VALID_APP_KEY_REGEX, message: "Nyckeln innehåller ogiltiga tecken."  }
+            format: { with: VALID_APP_KEY_REGEX },
+            uniqueness: true
 
   belongs_to :user
 
