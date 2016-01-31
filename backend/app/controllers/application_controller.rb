@@ -25,6 +25,19 @@ class ApplicationController < ActionController::Base
     redirect_to login_path
   end
 
+  # Check user login method
+  def check_login
+    unless logged_in?
+      access_denied
+    end
+  end
+
+  # Check admin login method
+  def check_admin_login
+    unless logged_in? and current_user.has_role?("Admin")
+      access_denied
+    end
+  end
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.

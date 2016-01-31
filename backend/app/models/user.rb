@@ -13,9 +13,6 @@ class User < ActiveRecord::Base
             },
             format: { with: VALID_NAME_REGEX  }
 
-  #validates :password_digest,
-  #          presence: true
-
   validates :email,
             presence: true,
             length: { maximum: 50, minimum: 3 },
@@ -26,5 +23,13 @@ class User < ActiveRecord::Base
   has_many :key
 
   has_and_belongs_to_many :roles
+
+
+  ### Methods
+
+  # Check if user has role
+  def has_role?(*role_names)
+    self.roles.where(:name => role_names).present?
+  end
 
 end
