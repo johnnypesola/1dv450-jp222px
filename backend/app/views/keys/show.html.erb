@@ -1,0 +1,22 @@
+<%= render "layouts/logged_in_header" %>
+
+<h1>My API-keys</h1>
+
+<% if flash[:notice] %>
+    <div class="notice">
+      <%= flash[:notice] %>
+    </div>
+<% end %>
+
+Number of application keys: <%= current_user.key.count %>
+
+<ul>
+  <% current_user.key.each do |key| %>
+      <li><%= key.app_name %> <%= key.key_value %>
+        <%= link_to "Delete", key, method: :delete, data: { confirm: "Are you sure?" } %>
+      </li>
+  <% end %>
+</ul>
+
+
+<%= link_to "Create new App key", new_key_path %>

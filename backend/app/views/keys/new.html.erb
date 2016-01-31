@@ -1,0 +1,29 @@
+<%= render "layouts/logged_in_header" %>
+
+<h1>New API key</h1>
+
+<% if @key.errors.any? %>
+
+    <div class="error">
+      <h3>Error occured</h3>
+
+      <ul>
+        <% @key.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+
+    </div>
+
+<% end %>
+
+<%= form_for @key do |f| %>
+
+    <p><%= f.label :app_name %></p>
+    <p><%= f.text_field :app_name, :size => 100 %></p>
+
+    <p><%= f.submit "Register app" %></p>
+
+<% end %>
+
+<%= link_to "Back to list", userkeys_path %>

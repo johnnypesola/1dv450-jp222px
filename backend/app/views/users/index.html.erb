@@ -1,0 +1,24 @@
+<%= render "layouts/logged_in_header" %>
+
+<h1>All users</h1>
+
+<% @something %>
+<% @users.inspect %>
+
+Number of users: <%= @users.count %>
+
+<% @users.each do |user| %>
+    <h2><%= user.name %> (<%= user.email %>)</h2>
+    <p>API-key count: <%= user.key.count %> st. </p>
+
+    <ul>
+      <% user.key.each do |key| %>
+          <li>
+            <%= key.app_name %>
+            <%= link_to "Delete", key, method: :delete, data: { confirm: "Are you sure?" } %>
+          </li>
+
+      <% end %>
+    </ul>
+
+<% end %>
