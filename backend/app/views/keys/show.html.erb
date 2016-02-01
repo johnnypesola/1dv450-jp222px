@@ -1,22 +1,38 @@
 <%= render "layouts/logged_in_header" %>
 
-<h1>My API-keys</h1>
+<div class="row">
+  <%= render "layouts/flashmessage" %>
+</div>
 
-<% if flash[:notice] %>
-    <div class="notice">
-      <%= flash[:notice] %>
-    </div>
-<% end %>
+<div class="row">
+  <h1>My API-keys</h1>
+</div>
 
-Number of application keys: <%= current_user.key.count %>
+<div class="row">
 
-<ul>
-  <% current_user.key.each do |key| %>
-      <li><%= key.app_name %> <%= key.key_value %>
-        <%= link_to "Delete", key, method: :delete, data: { confirm: "Are you sure?" } %>
-      </li>
-  <% end %>
-</ul>
+  <p>Number of application keys: <%= current_user.key.count %></p>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>App name</th>
+      <th>Key value</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% current_user.key.each do |key| %>
+        <tr>
+          <td><%= key.app_name %></td>
+          <td> <%= key.key_value %></td>
+          <td><%= link_to "Delete", key, method: :delete, class: "btn btn-xs btn-default", data: { confirm: "Are you sure?" } %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "Create new App key", new_key_path, class: 'btn btn-lg btn-primary'   %>
+
+</div>
 
 
-<%= link_to "Create new App key", new_key_path %>

@@ -1,24 +1,66 @@
 <%= render "layouts/logged_in_header" %>
 
-<h1>All users</h1>
+<div class="row">
+  <%= render "layouts/flashmessage" %>
+</div>
 
-<% @something %>
-<% @users.inspect %>
+<div class="row">
+  <h1>All users</h1>
+</div>
 
-Number of users: <%= @users.count %>
+<div class="row">
 
-<% @users.each do |user| %>
-    <h2><%= user.name %> (<%= user.email %>)</h2>
-    <p>API-key count: <%= user.key.count %> st. </p>
+  <p>Number of users: <%= @users.count %></p>
 
-    <ul>
-      <% user.key.each do |key| %>
-          <li>
-            <%= key.app_name %>
-            <%= link_to "Delete", key, method: :delete, data: { confirm: "Are you sure?" } %>
-          </li>
+  <% @users.each do |user| %>
 
-      <% end %>
-    </ul>
+      <div class="panel panel-default">
 
-<% end %>
+        <div class="panel-heading">
+          <h3 class="panel-title"><span class="glyphicon glyphicon-user"></span> <%= user.name %> (<%= user.email %>)</h3>
+        </div>
+
+        <div class="panel-body">
+
+          <% if user.key.any? %>
+              <table class="table table-striped">
+
+                <thead>
+                <tr>
+                  <th>App name</th>
+                  <th>Key value</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <% user.key.each do |key| %>
+                    <tr>
+                      <td><%= key.app_name %></td>
+                      <td><%= key.key_value %></td>
+                      <td><%= link_to "Delete", key, method: :delete, class: "btn btn-xs btn-default", data: { confirm: "Are you sure?" } %></td>
+                    </tr>
+
+                <% end %>
+
+                </tbody>
+
+              </table>
+
+          <% else %>
+
+              <p class="text-muted">No api-keys found</p>
+
+          <% end %>
+
+        </div>
+
+      </div>
+
+
+
+  <% end %>
+
+
+</div>
+

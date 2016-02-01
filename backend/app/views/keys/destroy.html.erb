@@ -1,14 +1,16 @@
 <%= render "layouts/logged_in_header" %>
 
-<h1>Delete API-key</h1>
+<div class="row">
+  <h1>Delete API-key</h1>
+</div>
 
-<% if flash[:notice] %>
-    <div class="notice">
-      <%= flash[:notice] %>
-    </div>
-<% end %>
+<div class="row">
+  <%= render "layouts/flashmessage" %>
+</div>
 
 
-<%= link_to_unless(current_user.is_admin?, "Back to list", userkeys_path){} %>
+<div class="row">
+  <%= link_to_unless(current_user.is_admin?, "Back to list", userkeys_path, class: 'btn btn-lg btn-primary'){} %>
 
-<%= link_to_if(current_user.is_admin?, "Back to users", users_path){} %>
+  <%= link_to_if(current_user.is_admin?, "Back to users", users_path, class: 'btn btn-lg btn-primary'){} %>
+</div>
