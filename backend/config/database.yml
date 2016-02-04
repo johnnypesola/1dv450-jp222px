@@ -14,7 +14,7 @@ default: &default
   encoding: utf8
   pool: 5
   username: 1dv450
-  password: agUD1INXHXHFm2w3
+  password: <%= begin IO.read("/home/dbuser/1dv450.db") rescue "" end %>
   socket: /var/run/mysqld/mysqld.sock
 
 development:

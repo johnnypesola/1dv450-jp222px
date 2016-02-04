@@ -4,17 +4,13 @@
 
 2.2.3
 
-* System dependencies
+* Databas
 
-Database: mysql 14.14
+mysql 14.14
 
-* Configuration
+* Instruktioner för installation
 
-* Database creation
-
-* Database initialization
-
-* Deployment instructions
-
-
+Applikationen har för närvarande ett beroende till en mysqldatabas. Av den 
+anledningen så finns applikationen tillgänglig för test online.
+http://www.pesola.se:3000
 
