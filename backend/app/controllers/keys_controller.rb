@@ -29,7 +29,7 @@ class KeysController < ApplicationController
 
     if @key.save
 
-      flash[:notice] = "Application key successfully generated."
+      flash[:succcess] = "Application key successfully generated."
       redirect_to userkeys_path
 
     else
@@ -53,17 +53,17 @@ class KeysController < ApplicationController
     @key = Key.find(destroy_params[:id])
 
     # Check that user owns the key or is a admin
-    if @key.user_id == current_user.id or current_user.has_role?("Admin")
+    if @key.user_id == current_user.id or current_user.is_admin?
 
       # Try to delete key
       if @key.destroy
-        flash[:notice] = "Application key successfully deleted."
+        flash[:succcess] = "Application key successfully deleted."
       else
-        flash[:notice] = "Could not delete application key."
+        flash[:danger] = "Could not delete application key."
       end
 
     else
-      flash[:notice] = "You are not the owner of that key."
+      flash[:danger] = "You are not the owner of that key."
     end
 
   end

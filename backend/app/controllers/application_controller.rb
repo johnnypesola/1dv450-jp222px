@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
   # Redirect to login with flash message.
   def access_denied
-    flash[:notice] = "Access denied. Please log in."
+    flash[:danger] = "Access denied. Please log in."
     redirect_to login_path
   end
 
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 
       unless current_user.is_admin?
 
-        flash[:notice] = "Access denied. Please log in as Admin."
+        flash[:danger] = "Access denied. Please log in as Admin."
 
         redirect_to userkeys_url
 

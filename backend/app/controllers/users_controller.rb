@@ -58,14 +58,14 @@ class UsersController < ApplicationController
 
       else
 
-        flash[:notice] = "Wrong password, please try again."
+        flash[:danger] = "Wrong password, please try again."
         redirect_to login_path
 
       end
 
     else
 
-      flash[:notice] = "Could not find a user with the email address: #{params[:email]}"
+      flash[:danger] = "Could not find a user with the email address: #{params[:email]}"
       redirect_to login_path
 
     end
@@ -82,7 +82,7 @@ class UsersController < ApplicationController
 
     session[:user_id] = nil
 
-    flash[:notice] = "Successfully logged out."
+    flash[:success] = "Successfully logged out."
 
     redirect_to root_path
 

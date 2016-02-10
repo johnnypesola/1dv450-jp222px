@@ -1,6 +1,7 @@
-<% if flash[:notice] %>
-    <div class="row alert alert-warning col-md-6 col-md-offset-3">
+<% flash.each do |type, text| %>
 
-      <%= flash[:notice] %>
+    <div class="row alert alert-<%= type %> col-md-6 col-md-offset-3">
+      <%= text %>
     </div>
+
 <% end %>
