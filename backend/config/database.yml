@@ -50,5 +50,5 @@ test:
 production:
   <<: *default
   database: 1dv450
-  username: backend
-  password: <%= ENV['BACKEND_DATABASE_PASSWORD'] %>
+  #username: 1dv450
+  #password: <%= begin IO.read("/home/dbuser/1dv450.db") rescue "" end %>
