@@ -45,7 +45,7 @@ class UsersController < ApplicationController
         session[:user_id] = user.id
 
         # If user is and admin, redirect to users
-        if user.has_role?("Admin")
+        if user.is_admin?
 
           redirect_to users_url
 

@@ -34,9 +34,23 @@ class ApplicationController < ActionController::Base
 
   # Check admin login method
   def check_admin_login
-    unless logged_in? and current_user.has_role?("Admin")
+
+    if logged_in?
+
+      unless current_user.is_admin?
+
+        flash[:notice] = "Access denied. Please log in as Admin."
+
+        redirect_to userkeys_url
+
+      end
+
+    else
+
       access_denied
+
     end
+
   end
 
   # Prevent CSRF attacks by raising an exception.

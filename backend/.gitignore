@@ -14,3 +14,7 @@
 
 # Ignore DB configuration file
 database.yml
+
+# Ignore Jetbrains IDE files
+.idea
+
