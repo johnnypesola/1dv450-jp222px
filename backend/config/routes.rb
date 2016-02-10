@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root 'users#login'
 
   resources :users
-  resources :keys
+  resources :keys, :except => [:index]
 
   get 'userkeys' => 'keys#show', as: :userkeys
 

@@ -40,12 +40,6 @@ class KeysController < ApplicationController
 
   end
 
-  def index
-
-
-
-  end
-
   def destroy
 
     check_login

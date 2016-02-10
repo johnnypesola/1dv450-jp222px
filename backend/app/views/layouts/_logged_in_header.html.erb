@@ -2,13 +2,20 @@
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
-      <span class="navbar-brand">
-        <span class="glyphicon glyphicon-user"></span>
-        <%= current_user.name %>
+        <span class="navbar-brand">
+          <span class="glyphicon glyphicon-user"></span>
+          <%= current_user.name %>
 
-        <%= link_to "Logout", dologout_path, class: "btn btn-xs btn-info" %>
-      </span>
+          <%= link_to "Logout", dologout_path, class: "btn btn-xs btn-info" %>
+        </span>
       </div>
+
+      <% if current_user.is_admin? %>
+        <div class="collapse navbar-collapse">
+          <%= render "layouts/admin_buttons" %>
+        </div>
+      <% end %>
+
     </div>
   </nav>
 </div>
