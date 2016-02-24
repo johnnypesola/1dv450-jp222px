@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+
   # Custom error pages
 
   get "/404" => "errors#not_found"
@@ -17,6 +18,15 @@ Rails.application.routes.draw do
   # Rest of the App specific routes
   root 'users#login'
 
+
+  # Session routes
+
+  get "/auth/:provider/callback" => "sessions#create"
+  get "/signout" => "sessions#destroy", :as => :signout
+  get "/test" => 'sessions#test'
+  get "/authenticate" => "sessions#authenticate"
+
+  # Resources specific
   resources :users
 
   resources :keys, :except => [:index]
