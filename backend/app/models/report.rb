@@ -23,7 +23,7 @@ class Report < ActiveRecord::Base
             },
             format: { with: VALID_GRADE_REGEX, message: "Graderingen innehåller ogiltiga tecken."}
 
-  belongs_to :user
+  belongs_to :clientuser
   belongs_to :location
 
   has_and_belongs_to_many :tags

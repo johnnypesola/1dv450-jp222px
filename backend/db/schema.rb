@@ -43,16 +43,16 @@ ActiveRecord::Schema.define(version: 20160223230242) do
   end
 
   create_table "reports", force: :cascade do |t|
-    t.string   "route_name",  limit: 50
-    t.string   "route_grade", limit: 5
-    t.integer  "user_id",     limit: 4
-    t.integer  "location_id", limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "route_name",    limit: 50
+    t.string   "route_grade",   limit: 5
+    t.integer  "clientuser_id", limit: 4
+    t.integer  "location_id",   limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
+  add_index "reports", ["clientuser_id"], name: "index_reports_on_clientuser_id", using: :btree
   add_index "reports", ["location_id"], name: "index_reports_on_location_id", using: :btree
-  add_index "reports", ["user_id"], name: "index_reports_on_user_id", using: :btree
 
   create_table "reports_tags", id: false, force: :cascade do |t|
     t.integer "report_id", limit: 4

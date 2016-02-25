@@ -1,5 +1,7 @@
 class Clientuser < ActiveRecord::Base
 
+  has_many :report
+
   def self.create_with_omniauth(auth)
 
     # Create user from github auth info
@@ -21,6 +23,11 @@ class Clientuser < ActiveRecord::Base
 
     self.save
 
+  end
+
+  def expire
+    self.token_expires = Time.now - 1.hour
+    self.save
   end
 
   def has_login_expired?

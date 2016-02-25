@@ -1,42 +1,30 @@
 Rails.application.routes.draw do
   get 'errors/not_found'
-
   get 'errors/unacceptable'
-
   get 'errors/internal_error'
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-
   # Custom error pages
-
   get "/404" => "errors#not_found"
   get "/422" => "errors#unacceptable"
   get "/500" => "errors#internal_error"
 
-  # Rest of the App specific routes
-  root 'users#login'
-
-
-  # Session routes
-
+  # REST API session routes
   get "/auth/:provider/callback" => "sessions#create"
   get "/signout" => "sessions#destroy", :as => :signout
   get "/test" => 'sessions#test'
   get "/authenticate" => "sessions#authenticate"
+  get "/unauthorized" => "sessions#unauthorized", :as => :unauthorized
+  get "/unauthorized_key" => "sessions#unauthorized_key", :as => :unauthorized_key
 
-  # Resources specific
+
+  # API-key App specific routes
+  root 'users#login'
   resources :users
-
   resources :keys, :except => [:index]
 
   get 'userkeys' => 'keys#show', as: :userkeys
-
   get 'login' => 'users#login', as: :login
-
   post 'dologin' => 'users#dologin', as: :dologin
-
   get 'dologout' => 'users#dologout', as: :dologout
 
   # You can have the root of your site routed with "root"

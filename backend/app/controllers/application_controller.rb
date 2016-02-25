@@ -53,6 +53,23 @@ class ApplicationController < ActionController::Base
 
   end
 
+  ### REST API specific below
+
+  def check_api_key(key_value)
+
+    if Key.find_by_key_value(key_value).nil?
+
+      redirect_to unauthorized_key_path
+
+      return false
+
+    end
+
+    return true
+
+  end
+
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception

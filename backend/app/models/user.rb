@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
             format: { with: VALID_EMAIL_REGEX },
             uniqueness: true
 
-  has_many :report
   has_many :key
 
   has_and_belongs_to_many :roles

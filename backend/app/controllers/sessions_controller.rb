@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  include RestAuthHelper
+
   def index
   end
 
@@ -20,7 +22,19 @@ class SessionsController < ApplicationController
 
   def destroy
 
+    clientuser = Clientuser.try_get_logged_in_user(request.headers)
 
+    if clientuser.nil?
+      response.status = 401
+      render :nothing => true
+
+    else
+
+      clientuser.expire
+      response.status = 200
+      render :nothing => true
+
+    end
 
   end
 
@@ -31,15 +45,26 @@ class SessionsController < ApplicationController
 
   def test
 
-    user = Clientuser.try_get_logged_in_user(request.headers)
-    
-    if user.nil?
-      response.status = 401
-      render :nothing => true
-    else
+    if check_rest_login && check_api_key(params[:key])
+
       response.status = 200
-      render :json => user
+      render :json => session['logged_in_user']
+
     end
+
+  end
+
+  def unauthorized
+
+    response.status = 401
+    render :json => { :error => 'Unauthorized' }
+
+  end
+
+  def unauthorized_key
+
+    response.status = 401
+    render :json => { :error => 'Unauthorized key' }
 
   end
 
