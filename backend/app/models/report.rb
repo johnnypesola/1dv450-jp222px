@@ -7,21 +7,17 @@ class Report < ActiveRecord::Base
             presence: true,
             length: {
                 maximum: 50,
-                minimum: 2,
-                too_short: "minst %{count} tecken måste anges",
-                too_long: "max %{count} tecken får anges"
+                minimum: 2
             },
-            format: { with: VALID_NAME_REGEX, message: "Namnet innehåller ogiltiga tecken." }
+            format: { with: VALID_NAME_REGEX }
 
   validates :route_grade,
             presence: true,
             length: {
                 maximum: 5,
-                minimum: 1,
-                too_short: "minst %{count} tecken måste anges",
-                too_long: "max %{count} tecken får anges"
+                minimum: 1
             },
-            format: { with: VALID_GRADE_REGEX, message: "Graderingen innehåller ogiltiga tecken."}
+            format: { with: VALID_GRADE_REGEX }
 
   belongs_to :clientuser
   belongs_to :location

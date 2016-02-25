@@ -6,11 +6,9 @@ class Tag < ActiveRecord::Base
             presence: true,
             length: {
                 maximum: 50,
-                minimum: 2,
-                too_short: "minst %{count} tecken måste anges",
-                too_long: "max %{count} tecken får anges"
+                minimum: 2
             },
-            format: { with: VALID_NAME_REGEX, message: "Namnet innehåller ogiltiga tecken." }
+            format: { with: VALID_NAME_REGEX }
 
   has_and_belongs_to_many :reports
 

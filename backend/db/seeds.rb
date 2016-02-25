@@ -12,7 +12,9 @@ admin_role = Role.create(name: "Admin")
 
 tag = Tag.create(name: "Redpoint")
 
-user = User.create(name: "Kalle Anka", password: "password", email: "kalle@anka.se")
+user = User.create(name: "Administrator", password: "password", email: "admin@admin.se")
+
+clientuser = Clientuser.create(provider: "github", uid: "8630408", name: "Johnny Pesola", token: "cb594f81cb486d3e007e8ad4f7007b2463619c97", auth_token: "5AVAnJMtVLezkf6MKidFrw", token_expires: "2016-01-01 12:00:00")
 
 report = Report.create(route_grade: "5c", route_name: "Lätta Leden")
 
@@ -28,6 +30,6 @@ location.report << report
 
 report.tags << tag
 
-user.report << report
+clientuser.report << report
 
 user.key << key
