@@ -12,7 +12,10 @@ module RestAuthHelper
 
     end
 
-    # Store user in session
+    # Expand login time
+    clientuser.expand_login_time
+
+    # Store user in session, for a short period of time
     session['logged_in_user'] = clientuser
 
     return true

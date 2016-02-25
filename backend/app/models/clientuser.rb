@@ -30,6 +30,12 @@ class Clientuser < ActiveRecord::Base
     self.save
   end
 
+  def expand_login_time
+    self.token_expires = Time.now + 1.hour
+    self.save
+  end
+
+
   def has_login_expired?
     self.token_expires < Time.now
   end

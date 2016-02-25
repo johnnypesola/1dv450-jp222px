@@ -1,6 +1,4 @@
-class Api::V1::LocationsController < ApplicationController
-
-  include RestAuthHelper
+class Api::V1::LocationsController < Api::ApiBaseController
 
   def index
 
@@ -39,39 +37,90 @@ class Api::V1::LocationsController < ApplicationController
 
   def create
 
-    location = Location.new(location_params)
+    if check_rest_login && check_api_key(params[:key])
 
-    if location.save
+      location = Location.new(location_params)
 
-      # Add HATEOAS href to object
-      location.href = api_v1_location_url(location.id)
+      if location.save
 
-      response.status = 201
-      render :json => location, methods: [:href]
+        # Add HATEOAS href to object
+        location.href = api_v1_location_url(location.id)
 
-    else
-      # Save was unsuccessful, probably due to missing values
+        response.status = 201
+        render :json => location, methods: [:href]
 
-      errors = Array.new
+      else
+        # Save was unsuccessful, probably due to missing values
 
-      location.errors.full_messages.each do |msg|
-        errors.append(msg)
+        errors = Array.new
+
+        location.errors.full_messages.each do |msg|
+          errors.append(msg)
+        end
+
+        response.status = 400
+        render :json => {
+            error: 'Could not save location.',
+            reasons: errors
+        }
+
       end
 
-      response.status = 400
-      render :json => {
-          error: 'Could not save location.',
-          reasons: errors
-      }
+    end
+
+  end
+
+  def destroy
+
+    if check_rest_login && check_api_key(params[:key])
+
+      location = Location.find(destroy_params[:id])
+
+      # Try to delete location
+      if location.destroy
+
+        response.status = 200
+
+        render :nothing => true
+
+      else
+
+        errors = Array.new
+
+        location.errors.full_messages.each do |msg|
+          errors.append(msg)
+        end
+
+        response.status = 400
+
+        render :json => {
+            error: 'Could not delete location.',
+            reasons: errors
+        }
+
+      end
 
     end
+
+  rescue ActiveRecord::RecordNotFound
+
+      response.status = 400
+
+      render :json => {
+          error: 'Could not delete location.',
+          reasons: [ 'Location not found' ]
+      }
 
   end
 
   private
 
   def location_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :name)
+    params.permit(:latitude, :longitude, :name)
+  end
+
+  def destroy_params
+    params.permit(:id)
   end
 
 end
