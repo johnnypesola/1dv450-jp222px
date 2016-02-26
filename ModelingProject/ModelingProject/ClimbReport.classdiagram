@@ -12,12 +12,59 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
     <logicalClassDesignerModelHasTypes>
       <class Id="c03c16e7-c380-4c8c-aac9-d8d6c1f01fdb" name="user" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="cb0bc8d4-825c-4a3b-9067-feb621a54bc9" />
+        <targetEnds>
+          <association Id="9b7e4416-21fa-407a-8307-eb1f2b616ace" isDerived="false" sourceEndRoleName="user" targetEndRoleName="role" isLeaf="false" isAbstract="false">
+            <classMoniker Id="4bb4cad5-d522-420a-a8a8-685378a17a56" LastKnownName="role" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="264afed0-6e08-4b5e-89ff-afcdcf3786c5" name="user" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString Id="cb6a7d71-f0e7-41d9-b54f-fd55b8966f28" name="Lower" value="1">
+                      <elementDefinition Id="630c1bc4-6c88-42a7-8845-0b7e42ba8ec6" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="5bf47395-478d-41f0-bd61-20863abd12eb" name="Upper" value="1">
+                      <elementDefinition Id="10f34736-9ea7-48c0-95fd-4393f2df480b" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="a8362c2d-0948-458e-875c-ce2e444ffae5" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="4970e845-7e7c-43d8-88f9-0c7c5822c5b2" name="role" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="32f8f087-9e87-4366-9b63-fa89c4fde7a7" name="Lower" value="*">
+                      <elementDefinition Id="fcff0d8b-0280-4247-8e77-72bb1a7a01f1" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="7e580b76-5a53-4d26-8503-a3baa8ab3fa8" name="Upper" value="*">
+                      <elementDefinition Id="eed94409-9570-4449-919c-eeadd7f887a6" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="51cd8128-4424-47b0-b845-3b7e1121887c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="4cc0a302-a2d5-40a6-a116-876b207e79e2" />
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property Id="490c53a4-83d0-4eef-8e20-5a0027b2d613" name="id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="84c70460-cb8d-4a39-b33f-b0b2c430e162" />
           </property>
           <property Id="62a44c54-2c5b-42f4-adff-f121abbe3640" name="name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="60f442d7-36c3-4018-9a80-719919d89767" />
+          </property>
+          <property Id="b4bf4e2a-129d-47dd-aca5-0732dd2362ee" name="role_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="e13e48fb-24fb-4793-9ffb-b90126e65a9f" />
+          </property>
+          <property Id="69b5e204-101f-4a80-a7b7-9b509e466ce7" name="password" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="583eac2e-3f5a-48ec-99b9-8b33d6d83257" />
+          </property>
+          <property Id="9b110a16-8724-468c-bacd-11a2cbe86846" name="email" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="93a7c5bc-a43d-4cee-a0f6-07cbfa999e21" />
           </property>
         </ownedAttributesInternal>
       </class>
@@ -50,6 +97,16 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
                 <memberEnd Id="e0aef34d-9613-4689-a083-f640c73e7459" name="report" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString Id="a8877988-96b6-485d-b9b1-3872f9be6886" name="Lower" value="1">
+                      <elementDefinition Id="65addf0f-170a-4dac-8318-5d3f654ca070" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="2ce7e27c-e6f5-4a42-be41-e9d891ad00ea" name="Upper" value="1">
+                      <elementDefinition Id="0d2005ab-b000-48e7-bb19-a816bbb201c0" />
+                    </literalString>
+                  </upperValueInternal>
                   <elementDefinition Id="ef4c75d5-8d6a-45f3-a0a6-e47c6be8ddba" />
                 </memberEnd>
               </associationHasOwnedEnds>
@@ -87,21 +144,31 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="bef05f7e-ee0a-4843-bc69-0b309d608309" />
           </association>
-          <association Id="e950e4ba-fa71-4653-bd09-f7e6f70ff4d6" isDerived="false" sourceEndRoleName="report" targetEndRoleName="user" isLeaf="false" isAbstract="false">
-            <classMoniker Id="c03c16e7-c380-4c8c-aac9-d8d6c1f01fdb" LastKnownName="user" />
+          <association Id="27f0e0f4-95a9-4c16-af74-c90d600deb3b" isDerived="false" sourceEndRoleName="report" targetEndRoleName="clientuser" isLeaf="false" isAbstract="false">
+            <classMoniker Id="fb414c48-f1cd-4680-ae20-396e84503580" LastKnownName="clientuser" />
             <relationshipOwnedElementsInternal>
               <associationHasOwnedEnds>
-                <memberEnd Id="17591485-ec85-42e5-a104-31904fa0a746" name="report" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="85916357-485b-4678-8a57-9bad90b5d5da" />
+                <memberEnd Id="bd65b2e8-211e-4247-815f-21a989a6d93e" name="report" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString Id="345bf223-05a4-4ff4-9a39-cb5b3bf1c8d0" name="Lower" value="*">
+                      <elementDefinition Id="4a2b7b05-12dd-461b-9e36-d8019bab10f7" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="040a67a9-7a30-4a4f-b987-e1571ca31d39" name="Upper" value="*">
+                      <elementDefinition Id="316c839b-c969-44e6-bae3-79554931bd35" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="049767ef-0d42-4bd9-ad9d-3efe59834dc3" />
                 </memberEnd>
               </associationHasOwnedEnds>
               <associationHasOwnedEnds>
-                <memberEnd Id="d5a07d3b-8697-4d3b-b311-524a8da646c1" name="user" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <elementDefinition Id="c7444f7a-1d7a-4824-a49d-afc3570c4606" />
+                <memberEnd Id="15490a72-9638-41f1-b52a-4513269820e3" name="clientuser" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="eaa5bbe1-ff63-4ea9-b60d-1157f3a6930b" />
                 </memberEnd>
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
-            <elementDefinition Id="09848cd4-685f-4fc9-be6d-dc855677dabd" />
+            <elementDefinition Id="98d3901f-7ae9-427b-b3c2-f47de344a034" />
           </association>
         </targetEnds>
         <ownedAttributesInternal>
@@ -111,7 +178,7 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
           <property Id="8e40db7f-8597-48c2-b11b-5db69c08e986" name="route_grade" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="0417768d-7c9d-4b0b-b578-3c020acbd12e" />
           </property>
-          <property Id="7acafb8a-03cf-40fc-b4eb-9fbd24d234f2" name="user_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="7acafb8a-03cf-40fc-b4eb-9fbd24d234f2" name="clientuser_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="c34e8e89-52fd-4727-ac56-4c15d0dcc40c" />
           </property>
           <property Id="7fa631bb-2571-418a-ba23-d746b2e7c41d" name="route_name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -129,12 +196,156 @@ red-point, flash, on-sight, bouldering, sport-climbing, trad-climbing, deep-wate
     <logicalClassDesignerModelHasTypes>
       <class Id="f63da8ad-22ba-44eb-a904-45baa41a78b3" name="tag" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="9ebf26c1-3da4-41fd-b2b8-8c4bf2fd0bed" />
+        <targetEnds>
+          <association Id="86e1f293-7b21-44c8-9df9-29c69436f079" isDerived="false" sourceEndRoleName="tag" targetEndRoleName="report" isLeaf="false" isAbstract="false">
+            <classMoniker Id="bb54f06c-e860-4456-8176-7adb2db783e4" LastKnownName="report" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="7388d820-6916-4d48-8563-598600f66a8e" name="tag" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="8d9eecc5-fef7-4929-b401-a517b3fc361e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="14b843f4-eab3-47de-a5f8-8af6dc5018fb" name="report" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="c89115ba-59c6-4312-ac95-1d80d970b2ba" name="Lower" value="*">
+                      <elementDefinition Id="8e301d15-f6a9-49d5-a4cb-db05cedb42a2" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="4a4138f2-ba0d-46aa-846d-ace043741c60" name="Upper" value="*">
+                      <elementDefinition Id="e676a3ca-ebb4-4816-9a76-e340d8b5fd34" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="9c3386f2-9296-47bc-a19f-40951b9dfe7f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="9088a9f7-6959-4747-acb5-c2cd01513d70" />
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property Id="9fddfccd-8bd9-4f3c-a1de-4fed46fe72dd" name="id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="8feca39d-826d-4029-8afd-bcc9d69530f7" />
           </property>
           <property Id="0f20be70-60d8-4f62-b7de-468781999b41" name="name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="025eff01-9352-44e0-98c8-2eeaa6afb4de" />
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="6c88aa24-4798-4fbe-8cc8-2e1f3819f606" name="key" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="4e0a8822-456e-43d9-bba6-7f8da653c10f" />
+        <targetEnds>
+          <association Id="9c507475-eb5a-4797-9c5b-cbee8042366b" isDerived="false" sourceEndRoleName="key" targetEndRoleName="user" isLeaf="false" isAbstract="false">
+            <classMoniker Id="c03c16e7-c380-4c8c-aac9-d8d6c1f01fdb" LastKnownName="user" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="deffa7b6-3355-413e-bcca-853e88bd569e" name="key" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString Id="1905cb0f-505c-4550-916c-7509d78988f5" name="Lower" value="*">
+                      <elementDefinition Id="176bc4e1-6b05-4b6f-aee4-279715f47f4d" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="06e44332-1204-48a8-94d8-c26a5b1c582a" name="Upper" value="*">
+                      <elementDefinition Id="b7241a9a-bcee-4e86-8ed2-2cbbf21e8249" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="fc8d12aa-dacc-4daa-be24-1ac7bc40d0ff" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ed65c991-5537-4040-b77d-861ad6e02a61" name="user" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="36c64487-90b3-49f2-883e-f166e02fc0c3" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="86b24d1a-392f-4977-9160-4ae77f082a85" />
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property Id="32be1cef-5f92-46fe-8d85-6cd20b7daacf" name="user_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="1fe83d21-9925-470f-97f6-b6dbf672e3e6" />
+          </property>
+          <property Id="6f2f5aca-bd36-4ef7-877c-e447a15fdb5a" name="key_value" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="6f250630-a564-40df-ba0e-a248a468426e" />
+          </property>
+          <property Id="ceae5832-9255-4415-8bf2-32529bc832c8" name="app_name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="d4a1ca61-6f49-4822-b0c1-0d6e8b4bf841" />
+          </property>
+          <property Id="066306c4-87f4-4090-beaf-5ed061ff97ac" name="id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="993dd545-a015-4ff6-9fda-612ae9601228" />
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4bb4cad5-d522-420a-a8a8-685378a17a56" name="role" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="a08f7ea3-d321-4f58-917d-99e5fb3532cd" />
+        <targetEnds>
+          <association Id="65453a56-3b6c-4df0-9f0b-3eb5cd4e9385" isDerived="false" sourceEndRoleName="role" targetEndRoleName="user" isLeaf="false" isAbstract="false">
+            <classMoniker Id="c03c16e7-c380-4c8c-aac9-d8d6c1f01fdb" LastKnownName="user" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="17525d9a-0661-4257-8b75-be134dd59c2f" name="role" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="d9431b20-8747-4a4f-b3de-78dcff0009d8" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b47c794a-5954-4f08-8e23-a04f14655f70" name="user" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="17513e48-96d7-4da3-8e2d-d370b878a502" name="Lower" value="*">
+                      <elementDefinition Id="dbaee317-38c8-450b-9599-6c363343ac11" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="c378df35-c4e2-451c-9d21-3edac3f5916a" name="Upper" value="*">
+                      <elementDefinition Id="4c6745d3-ce98-43a6-a251-7e6f3a9b8b79" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="7426edae-cbbf-4028-a689-26c5b67ec33a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="63b6b9d5-4644-4a46-923e-2ca3bb02237d" />
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property Id="8e0a2a32-1fb0-4447-bb5a-bd1382d89fa1" name="name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="bb15a170-b09a-4acd-bdff-43b73b8fa6a6" />
+          </property>
+          <property Id="8bc0cd11-625e-492f-9425-e4b5a09e41ae" name="id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="7c4ed043-dd13-48ee-a5d5-cd37b3d50b17" />
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="fb414c48-f1cd-4680-ae20-396e84503580" name="clientuser" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="651c6545-17c6-476f-8d87-c13e8757392c" />
+        <ownedAttributesInternal>
+          <property Id="b88870bf-999a-488c-825d-9c9c7e7c72c0" name="id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="befa7611-4dc8-40b0-ace4-9eea6c2984f5" />
+          </property>
+          <property Id="c7e68f2f-0474-4884-a8d8-1d6a2640ad34" name="name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="130e8034-471b-427e-8a8d-f6ffee85e315" />
+          </property>
+          <property Id="d739dfd5-39c6-4c8d-a707-6d2dd9697f73" name="provider" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="dc79f60d-5f13-48cc-8530-168850c01d3e" />
+          </property>
+          <property Id="4b5aacd9-0b77-4a3f-8046-03c1310b04e7" name="uid" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="fb03931b-b626-46bd-bec2-92bd19ac2210" />
+          </property>
+          <property Id="fcb1ba77-d7fe-47c1-a2e1-bc882322b746" name="token" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="76b70d24-005c-4ce4-91c4-f4af2023417d" />
+          </property>
+          <property Id="b2b97a31-7246-4558-9178-f25bffe93530" name="auth_token" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="b8880154-219b-47e1-a629-46cad12d9da0" />
+          </property>
+          <property Id="b4155469-5cfb-47b8-b9bc-3514efcf2958" name="token_expires" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="1d8e1a74-78a5-44c8-a506-0cca03cee86a" />
           </property>
         </ownedAttributesInternal>
       </class>
