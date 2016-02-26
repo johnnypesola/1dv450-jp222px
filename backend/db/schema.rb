@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20160223230242) do
   add_index "keys", ["user_id"], name: "index_keys_on_user_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
-    t.integer  "latitude",   limit: 4
-    t.integer  "longitude",  limit: 4
+    t.float    "latitude",   limit: 24
+    t.float    "longitude",  limit: 24
     t.string   "name",       limit: 50
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false

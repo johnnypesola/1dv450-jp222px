@@ -1,5 +1,7 @@
 class Report < ActiveRecord::Base
 
+  attr_accessor :href
+
   VALID_NAME_REGEX = /\A[\w+\-.&_\såäöÅÄÖéèëÉÈËáàÁÀúùüÚÙÜóòÒÓ]+\z/i
   VALID_GRADE_REGEX = /\A[\w+\-]+\z/i
 

@@ -1,9 +1,8 @@
 class Location < ActiveRecord::Base
 
-  include Rails.application.routes.url_helpers
-
   attr_accessor :href
 
+  reverse_geocoded_by :latitude, :longitude
 
   VALID_NAME_REGEX = /\A[\w+\-.&_\såäöÅÄÖéèëÉÈËáàÁÀúùüÚÙÜóòÒÓ]+\z/i
 

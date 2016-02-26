@@ -1,5 +1,7 @@
 class Tag < ActiveRecord::Base
 
+  attr_accessor :href
+
   VALID_NAME_REGEX = /\A[\w+\-.&_\såäöÅÄÖéèëÉÈËáàÁÀúùüÚÙÜóòÒÓ]+\z/i
 
   validates :name,

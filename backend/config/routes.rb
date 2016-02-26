@@ -16,10 +16,17 @@ Rails.application.routes.draw do
   get "/unauthorized" => "sessions#unauthorized", :as => :unauthorized
   get "/unauthorized_key" => "sessions#unauthorized_key", :as => :unauthorized_key
 
+
+  get '/api/v1/locations/near' => 'api/v1/locations#near', :as => :locations_near
+
   namespace :api, defaults: {format: 'json'} do
 
     namespace :v1 do
+
       resources :locations
+      resources :tags
+      resources :reports
+
     end
 
   end

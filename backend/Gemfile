@@ -32,6 +32,12 @@ gem 'bcrypt', '~> 3.1.7'
 # OAuth for github support
 gem 'omniauth-github'
 
+# Geokit rails (Geo calculation) DOES NOT WORK
+#gem 'geokit-rails', github: 'geokit/geokit-rails'
+
+gem 'geocoder'
+
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
