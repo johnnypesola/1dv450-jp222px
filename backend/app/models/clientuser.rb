@@ -19,19 +19,19 @@ class Clientuser < ActiveRecord::Base
     self.name = auth["info"]["name"] # could be updated (better check when new logins)
     self.token = auth["credentials"]["token"] # github provider token should not give out
     self.auth_token = SecureRandom.urlsafe_base64(nil, false) # generate a access_key for client to call the API
-    self.token_expires = Time.now + 1.hour
+    self.token_expires = Time.now + 2.weeks
 
     self.save
 
   end
 
   def expire
-    self.token_expires = Time.now - 1.hour
+    self.token_expires = Time.now - 2.weeks
     self.save
   end
 
   def expand_login_time
-    self.token_expires = Time.now + 1.hour
+    self.token_expires = Time.now + 2.weeks
     self.save
   end
 

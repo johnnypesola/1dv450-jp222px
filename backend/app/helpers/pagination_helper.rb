@@ -10,7 +10,7 @@ module PaginationHelper
     end
 
     # Show href if there are more next pages
-    if resource.total_pages == page_num
+    if resource.total_pages == page_num || resource.total_pages == 0
       next_page_href = ''
     else
       next_page_href = api_v1_reports_url + '?per_page=' + per_page.to_s + '&page_num=' + (page_num + 1).to_s

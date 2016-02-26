@@ -19,6 +19,12 @@ Rails.application.routes.draw do
   # Get locations near gps coordinates
   get '/api/v1/locations/near' => 'api/v1/locations#near', :as => :locations_near
 
+  # Search for locations
+  get '/api/v1/locations/search' => 'api/v1/locations#search', :as => :locations_search
+
+  # Search for reports
+  get '/api/v1/reports/search' => 'api/v1/reports#search', :as => :reports_search
+
   # Get reports with specific tag
   get '/api/v1/tags/:id/reports' => 'api/v1/tags#reports', :as => :tag_reports
 

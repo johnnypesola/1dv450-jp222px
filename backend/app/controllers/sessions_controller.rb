@@ -48,7 +48,7 @@ class SessionsController < ApplicationController
     if check_rest_login && check_api_key(params[:key])
 
       response.status = 200
-      render :json => session['logged_in_user']
+      render :json => get_logged_in_user
 
     end
 

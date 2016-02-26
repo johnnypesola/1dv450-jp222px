@@ -2,148 +2,167 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
   def index
 
-    #if check_rest_login && check_api_key(params[:key])
+    if check_rest_login && check_api_key(params[:key])
 
-    # Pagination params
-    page_num = Integer(params[:page_num]) || 1
-    per_page = Integer(params[:per_page]) || 10
+      # Pagination params
+      page_num = Integer(params[:page_num]) || 1
+      per_page = Integer(params[:per_page]) || 10
 
-    # Sort by
-    case params[:sort_by]
-      when 'route_grade', 'route_name', 'created_at', 'updated_at'
-        sort_by = params[:sort_by]
-      else
-        sort_by = 'created_at'
+      # Sort by
+      case params[:sort_by]
+        when 'route_grade', 'route_name', 'created_at', 'updated_at'
+          sort_by = params[:sort_by]
+        else
+          sort_by = 'created_at'
+      end
+
+      # Sort order
+      sort_order = params[:sort_order] == 'asc' ? 'ASC' : 'DESC'
+
+      # Get reports
+      reports = Report.page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
+
+      # Add HATEOAS href to objects
+      reports.each do |report|
+        report.href = api_v1_report_url(report.id)
+      end
+
+      # Render objects
+      response.status = 200
+      render :json => {
+        :items => reports,
+        :pagination => generate_pagination_json(page_num, per_page, reports)
+      }, methods: [:href]
+
     end
-
-    # Sort order
-    sort_order = params[:sort_order] == 'asc' ? 'ASC' : 'DESC'
-
-    # Get reports
-    reports = Report.page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
-
-    # Add HATEOAS href to objects
-    reports.each do |report|
-      report.href = api_v1_report_url(report.id)
-    end
-
-    # Render objects
-    response.status = 200
-    render :json => {
-      :items => reports,
-      :pagination => generate_pagination_json(page_num, per_page, reports)
-    }, methods: [:href]
-
-    #end
 
     rescue ArgumentError, TypeError
 
-    response.status = 400
-    render :json => {
-        error: 'Could not get reports.',
-        reasons: [ 'Please provide parameters of correct type: (integer)page_num, (integer)per_page' ]
-    }
+      response.status = 400
+      render :json => {
+          error: 'Could not get reports.',
+          reasons: [ 'Please provide parameters of correct type: (integer)page_num, (integer)per_page' ]
+      }
 
   end
 
   def show
 
-    #if check_rest_login && check_api_key(params[:key])
+    if check_rest_login && check_api_key(params[:key])
 
-    report = Report.find(params[:id])
+      report = Report.find(params[:id])
 
-    # Add HATEOAS href to object
-    report.href = api_v1_report_url(report.id)
+      # Add HATEOAS href to object
+      report.href = api_v1_report_url(report.id)
 
-    response.status = 200
-    render :json => report, methods: [:href]
+      response.status = 200
+      render :json => report, methods: [:href]
 
-    #end
+    end
 
   end
 
   def create
 
-    #if check_rest_login && check_api_key(params[:key])
+    if check_rest_login && check_api_key(params[:key])
 
-    report = Report.new(report_params)
+      report = Report.new(report_params)
 
-    if report.save
+      report.clientuser_id = get_logged_in_user.id
 
-      # Add HATEOAS href to object
-      report.href = api_v1_report_url(report.id)
+      # Check that location actually exists
+      unless Location.exists?(report.location_id)
 
-      response.status = 201
-      render :json => report, methods: [:href]
+        response.status = 404
 
-    else
-      # Save was unsuccessful, probably due to missing values
+        render :json => {
+            error: 'Could not create report.',
+            reasons: [ 'location not found or parameter (integer)location_id missing' ]
+        }
 
-      errors = Array.new
+        return
 
-      report.errors.full_messages.each do |msg|
-        errors.append(msg)
+      else
+
+        if report.save
+
+          # Add HATEOAS href to object
+          report.href = api_v1_report_url(report.id)
+
+          response.status = 201
+          render :json => report, methods: [:href]
+
+          return
+
+        else
+          # Save was unsuccessful, probably due to missing values
+
+          errors = Array.new
+
+          report.errors.full_messages.each do |msg|
+            errors.append(msg)
+          end
+
+          response.status = 400
+          render :json => {
+              error: 'Could not save report.',
+              reasons: errors
+          }
+
+        end
+
       end
 
-      response.status = 400
-      render :json => {
-          error: 'Could not save report.',
-          reasons: errors
-      }
-
     end
-
-    #end
 
   end
 
   def destroy
 
-    #if check_rest_login && check_api_key(params[:key])
+    if check_rest_login && check_api_key(params[:key])
 
-    report = Report.find(destroy_params[:id])
+      report = Report.find(destroy_params[:id])
 
-    # Try to delete report
-    if report.destroy
+      # Try to delete report
+      if report.destroy
 
-      response.status = 200
+        response.status = 200
 
-      render :nothing => true
+        render :nothing => true
 
-    else
+      else
 
-      errors = Array.new
+        errors = Array.new
 
-      report.errors.full_messages.each do |msg|
-        errors.append(msg)
+        report.errors.full_messages.each do |msg|
+          errors.append(msg)
+        end
+
+        response.status = 400
+
+        render :json => {
+            error: 'Could not delete report.',
+            reasons: errors
+        }
+
       end
+
+    end
+
+    rescue ActiveRecord::RecordNotFound
 
       response.status = 400
 
       render :json => {
           error: 'Could not delete report.',
-          reasons: errors
+          reasons: [ 'report not found' ]
       }
-
-    end
-
-      #end
-
-  rescue ActiveRecord::RecordNotFound
-
-    response.status = 400
-
-    render :json => {
-        error: 'Could not delete report.',
-        reasons: [ 'report not found' ]
-    }
 
   end
 
   def remove_tag
 
-    #if check_rest_login && check_api_key(params[:key])
-    begin
+    if check_rest_login && check_api_key(params[:key])
 
       report = Report.find(params[:report_id])
       tag = Tag.find(params[:tag_id])
@@ -169,6 +188,8 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
       end
 
+    end
+
     rescue ActiveRecord::RecordNotFound
 
       response.status = 404
@@ -187,14 +208,11 @@ class Api::V1::ReportsController < Api::ApiBaseController
           reasons: [ 'Tag already present on report' ]
       }
 
-    end
-
   end
 
   def add_tag
 
-    #if check_rest_login && check_api_key(params[:key])
-    begin
+    if check_rest_login && check_api_key(params[:key])
 
       report = Report.find(params[:report_id])
       tag = Tag.find(params[:tag_id])
@@ -220,6 +238,8 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
       end
 
+    end
+
     rescue ActiveRecord::RecordNotFound
 
       response.status = 404
@@ -238,16 +258,77 @@ class Api::V1::ReportsController < Api::ApiBaseController
           reasons: [ 'Tag already present on report' ]
       }
 
+  end
+
+  def search
+
+    if check_rest_login && check_api_key(params[:key])
+
+      # Search string
+      search_string = params[:search_string]
+
+      # Pagination params
+      page_num = Integer(params[:page_num]) || 1
+      per_page = Integer(params[:per_page]) || 10
+
+      # Sort by
+      case params[:sort_by]
+        when 'route_grade', 'route_name', 'created_at', 'updated_at'
+          sort_by = params[:sort_by]
+        else
+          sort_by = 'created_at'
+      end
+
+      # Sort order params
+      sort_order = params[:sort_order] == 'asc' ? 'ASC' : 'DESC'
+
+      # Check search params
+      if search_string.nil?
+
+        response.status = 400
+        render :json => {
+            error: 'Could not get reports.',
+            reasons: [ 'Please provide parameters of correct type: (string)search_string' ]
+        }
+
+        return
+
+      else
+
+        # Search after value and apply pagination and order
+        reports = Report.where("route_name LIKE ?", "%#{search_string}%"
+        ).page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
+
+        # Add HATEOAS href to objects
+        reports.each do |report|
+          report.href = api_v1_report_url(report.id)
+        end
+
+        # Render objects
+        response.status = 200
+        render :json => {
+            :items => reports,
+
+        }, methods: [:href]
+
+      end
+
     end
 
-    #end
+  rescue ArgumentError, TypeError
+
+    response.status = 400
+    render :json => {
+        error: 'Could not get reports.',
+        reasons: [ 'Please provide parameters of correct type: (integer)page_num, (integer)per_page' ]
+    }
 
   end
 
   private
 
   def report_params
-    params.permit(:route_name, :route_grade)
+    params.permit(:route_name, :route_grade, :location_id)
   end
 
   def destroy_params
