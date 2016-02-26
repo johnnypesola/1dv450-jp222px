@@ -62,6 +62,61 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
   end
 
+  def update
+
+    if check_rest_login && check_api_key(params[:key])
+
+      report = Report.find(report_params[:id])
+
+      # Check if are not allowed to modify this report
+      if report.clientuser_id != get_logged_in_user.id
+
+        response.status = 403
+        render :json => {
+            error: 'Could not save report.',
+            reasons: [ 'you are not the owner of that report' ]
+        }
+
+        return
+
+      end
+
+      if report.update(report_params)
+
+        response.status = 200
+        render :json => report, methods: [:href]
+
+      else
+
+        # Save was unsuccessful, probably due to missing values
+
+        errors = Array.new
+
+        report.errors.full_messages.each do |msg|
+          errors.append(msg)
+        end
+
+        response.status = 400
+        render :json => {
+            error: 'Could not save report.',
+            reasons: errors
+        }
+
+      end
+
+    end
+
+    rescue ActiveRecord::RecordNotFound
+
+      response.status = 400
+
+      render :json => {
+          error: 'Could not update report.',
+          reasons: [ 'report not found' ]
+      }
+
+  end
+
   def create
 
     if check_rest_login && check_api_key(params[:key])
@@ -122,6 +177,19 @@ class Api::V1::ReportsController < Api::ApiBaseController
     if check_rest_login && check_api_key(params[:key])
 
       report = Report.find(destroy_params[:id])
+
+      # Check if are not allowed to modify this report
+      if report.clientuser_id != get_logged_in_user.id
+
+        response.status = 403
+        render :json => {
+            error: 'Could not delete report.',
+            reasons: [ 'you are not the owner of that report' ]
+        }
+
+        return
+
+      end
 
       # Try to delete report
       if report.destroy
@@ -328,7 +396,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
   private
 
   def report_params
-    params.permit(:route_name, :route_grade, :location_id)
+    params.permit(:route_name, :route_grade, :location_id, :id)
   end
 
   def destroy_params

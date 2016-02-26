@@ -65,6 +65,39 @@ class Api::V1::TagsController < Api::ApiBaseController
 
   end
 
+  def update
+
+    if check_rest_login && check_api_key(params[:key])
+
+      tag = Tag.find(tag_params[:id])
+
+      if tag.update(tag_params)
+
+        response.status = 200
+        render :json => tag, methods: [:href]
+
+      else
+
+        # Save was unsuccessful, probably due to missing values
+
+        errors = Array.new
+
+        tag.errors.full_messages.each do |msg|
+          errors.append(msg)
+        end
+
+        response.status = 400
+        render :json => {
+            error: 'Could not save tag.',
+            reasons: errors
+        }
+
+      end
+
+    end
+
+  end
+
   def create
 
     if check_rest_login && check_api_key(params[:key])
@@ -196,7 +229,7 @@ class Api::V1::TagsController < Api::ApiBaseController
   private
 
   def tag_params
-    params.permit(:name)
+    params.permit(:name, :id)
   end
 
   def destroy_params

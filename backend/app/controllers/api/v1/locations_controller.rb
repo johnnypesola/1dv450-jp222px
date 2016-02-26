@@ -61,6 +61,39 @@ class Api::V1::LocationsController < Api::ApiBaseController
 
   end
 
+  def update
+
+    if check_rest_login && check_api_key(params[:key])
+
+      location = Location.find(location_params[:id])
+
+      if location.update(location_params)
+
+        response.status = 200
+        render :json => location, methods: [:href]
+
+      else
+
+        # Save was unsuccessful, probably due to missing values
+
+        errors = Array.new
+
+        location.errors.full_messages.each do |msg|
+          errors.append(msg)
+        end
+
+        response.status = 400
+        render :json => {
+            error: 'Could not save location.',
+            reasons: errors
+        }
+
+      end
+
+    end
+
+  end
+
   def near
 
     if check_rest_login && check_api_key(params[:key])
@@ -251,7 +284,7 @@ class Api::V1::LocationsController < Api::ApiBaseController
   private
 
   def location_params
-    params.permit(:latitude, :longitude, :name)
+    params.permit(:latitude, :longitude, :name, :id)
   end
 
   def destroy_params
