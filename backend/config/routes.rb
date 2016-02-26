@@ -16,8 +16,15 @@ Rails.application.routes.draw do
   get "/unauthorized" => "sessions#unauthorized", :as => :unauthorized
   get "/unauthorized_key" => "sessions#unauthorized_key", :as => :unauthorized_key
 
-
+  # Get locations near gps coordinates
   get '/api/v1/locations/near' => 'api/v1/locations#near', :as => :locations_near
+
+  # Get reports with specific tag
+  get '/api/v1/tags/:id/reports' => 'api/v1/tags#reports', :as => :tag_reports
+
+  # Add and remove tags for report
+  post '/api/v1/reports/:report_id/tag/:tag_id' => 'api/v1/reports#add_tag', :as => :report_add_tag
+  delete '/api/v1/reports/:report_id/tag/:tag_id' => 'api/v1/reports#remove_tag', :as => :report_remove_tag
 
   namespace :api, defaults: {format: 'json'} do
 

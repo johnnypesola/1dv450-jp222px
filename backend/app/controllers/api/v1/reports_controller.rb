@@ -8,7 +8,19 @@ class Api::V1::ReportsController < Api::ApiBaseController
     page_num = Integer(params[:page_num]) || 1
     per_page = Integer(params[:per_page]) || 10
 
-    reports = Report.page(page_num).per(per_page)
+    # Sort by
+    case params[:sort_by]
+      when 'route_grade', 'route_name', 'created_at', 'updated_at'
+        sort_by = params[:sort_by]
+      else
+        sort_by = 'created_at'
+    end
+
+    # Sort order
+    sort_order = params[:sort_order] == 'asc' ? 'ASC' : 'DESC'
+
+    # Get reports
+    reports = Report.page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
 
     # Add HATEOAS href to objects
     reports.each do |report|
@@ -125,6 +137,110 @@ class Api::V1::ReportsController < Api::ApiBaseController
         error: 'Could not delete report.',
         reasons: [ 'report not found' ]
     }
+
+  end
+
+  def remove_tag
+
+    #if check_rest_login && check_api_key(params[:key])
+    begin
+
+      report = Report.find(params[:report_id])
+      tag = Tag.find(params[:tag_id])
+
+      tags_before = report.tags.length
+
+      # Remove to from report
+      report.tags.delete(tag)
+
+      if report.tags.length == tags_before - 1
+
+        response.status = 200
+        render :nothing => true
+
+      else
+
+        response.status = 500
+
+        render :json => {
+            error: 'Could add tag to report.',
+            reasons: [ 'Unknown error occured' ]
+        }
+
+      end
+
+    rescue ActiveRecord::RecordNotFound
+
+      response.status = 404
+
+      render :json => {
+          error: 'Could add tag to report.',
+          reasons: [ 'Report or tag not found' ]
+      }
+
+    rescue ActiveRecord::RecordNotUnique
+
+      response.status = 400
+
+      render :json => {
+          error: 'Could add tag to report.',
+          reasons: [ 'Tag already present on report' ]
+      }
+
+    end
+
+  end
+
+  def add_tag
+
+    #if check_rest_login && check_api_key(params[:key])
+    begin
+
+      report = Report.find(params[:report_id])
+      tag = Tag.find(params[:tag_id])
+
+      tags_before = report.tags.length
+
+      # Add tag to report
+      report.tags << tag
+
+      if report.tags.length == tags_before + 1
+
+        response.status = 200
+        render :nothing => true
+
+      else
+
+        response.status = 500
+
+        render :json => {
+            error: 'Could add tag to report.',
+            reasons: [ 'Unknown error occured' ]
+        }
+
+      end
+
+    rescue ActiveRecord::RecordNotFound
+
+      response.status = 404
+
+      render :json => {
+          error: 'Could add tag to report.',
+          reasons: [ 'Report or tag not found' ]
+      }
+
+    rescue ActiveRecord::RecordNotUnique
+
+      response.status = 400
+
+      render :json => {
+          error: 'Could add tag to report.',
+          reasons: [ 'Tag already present on report' ]
+      }
+
+    end
+
+    #end
 
   end
 

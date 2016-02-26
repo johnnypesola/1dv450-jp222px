@@ -5,7 +5,7 @@ class CreateReportsTags < ActiveRecord::Migration
       t.integer "tag_id"
     end
 
-    add_index :reports_tags, ["report_id", "tag_id"]
+    add_index :reports_tags, ["report_id", "tag_id"], :unique => true
 
   end
 end

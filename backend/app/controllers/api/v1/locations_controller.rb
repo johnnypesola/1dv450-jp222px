@@ -8,7 +8,18 @@ class Api::V1::LocationsController < Api::ApiBaseController
     page_num = Integer(params[:page_num]) || 1
     per_page = Integer(params[:per_page]) || 10
 
-    locations = Location.page(page_num).per(per_page)
+    # Sort by
+    case params[:sort_by]
+      when 'name', 'created_at', 'updated_at'
+        sort_by = params[:sort_by]
+      else
+        sort_by = 'name'
+    end
+
+    # Sort order
+    sort_order = params[:sort_order] == 'asc' ? 'ASC' : 'DESC'
+
+    locations = Location.page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
 
     # Add HATEOAS href to objects
     locations.each do |location|

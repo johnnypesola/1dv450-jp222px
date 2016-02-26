@@ -1,6 +1,6 @@
 class Tag < ActiveRecord::Base
 
-  attr_accessor :href
+  attr_accessor :href, :reports_href
 
   VALID_NAME_REGEX = /\A[\w+\-.&_\såäöÅÄÖéèëÉÈËáàÁÀúùüÚÙÜóòÒÓ]+\z/i
 

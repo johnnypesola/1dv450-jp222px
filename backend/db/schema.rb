@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20160223230242) do
     t.integer "tag_id",    limit: 4
   end
 
-  add_index "reports_tags", ["report_id", "tag_id"], name: "index_reports_tags_on_report_id_and_tag_id", using: :btree
+  add_index "reports_tags", ["report_id", "tag_id"], name: "index_reports_tags_on_report_id_and_tag_id", unique: true, using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name",       limit: 50
