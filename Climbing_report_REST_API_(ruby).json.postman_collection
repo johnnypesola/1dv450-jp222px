@@ -58,7 +58,7 @@
 		{
 			"id": "0ca2e67b-a326-da85-21a4-93c436abc821",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/locations/1?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/locations/1?key=abcd1234",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -97,7 +97,7 @@
 		{
 			"id": "1de8a9d2-be12-fa6f-09fc-5cc454976e03",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/locations/near?key=abcd1234&latitude=50&longitude=50&distance=200",
+			"url": "http://www.pesola.se:3000/api/v1/locations/near?key=abcd1234&latitude=50&longitude=50&distance=200",
 			"pathVariables": {},
 			"preRequestScript": "",
 			"method": "GET",
@@ -125,7 +125,7 @@
 		{
 			"id": "2cadcce6-aff1-c31a-a193-033bb1cd09cc",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/reports/1?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/reports/1?key=abcd1234",
 			"pathVariables": {},
 			"preRequestScript": "",
 			"method": "PUT",
@@ -165,7 +165,7 @@
 		{
 			"id": "2dd95b65-b33a-4675-ecc7-f21618fcf546",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/tags/1/reports?key=abcd1234&page_num=1&per_page=20&sort_by=route_name&sort_order=asc",
+			"url": "http://www.pesola.se:3000/api/v1/tags/1/reports?key=abcd1234&page_num=1&per_page=20&sort_by=route_name&sort_order=asc",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -192,7 +192,7 @@
 		{
 			"id": "32a6bcca-ebf2-6783-212e-5575710223fa",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/reports/search?key=abcd1234&page_num=1&per_page=5&sort_by=created_at&sort_order=asc&search_string=a",
+			"url": "http://www.pesola.se:3000/api/v1/reports/search?key=abcd1234&page_num=1&per_page=5&sort_by=created_at&sort_order=asc&search_string=a",
 			"pathVariables": {},
 			"preRequestScript": "",
 			"method": "GET",
@@ -232,7 +232,7 @@
 		{
 			"id": "36fd4fed-bdc4-b29e-767d-31a79ac4604a",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/locations/3?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/locations/3?key=abcd1234",
 			"pathVariables": {},
 			"preRequestScript": "",
 			"method": "PUT",
@@ -272,7 +272,7 @@
 		{
 			"id": "41577672-1d5f-c7cc-55c1-5b7c007be737",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/locations?key=abcd1234&page_num=1&per_page=5&sort_by=created_at&sort_order=asc",
+			"url": "http://www.pesola.se:3000/api/v1/locations?key=abcd1234&page_num=1&per_page=5&sort_by=created_at&sort_order=asc",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -299,7 +299,7 @@
 		{
 			"id": "4eecfe97-92fc-7652-547a-4e90b04ffd93",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/tags/1?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/tags/1?key=abcd1234",
 			"pathVariables": {},
 			"preRequestScript": "",
 			"method": "PUT",
@@ -327,7 +327,7 @@
 		{
 			"id": "6965cf4c-6ed9-cd0e-b1ba-9d83d12f6d1e",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/locations?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/locations?key=abcd1234",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -366,7 +366,7 @@
 		{
 			"id": "7f1691dc-3ab5-48b4-3183-a6b3155b65c4",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/reports/1/tag/1?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/reports/1/tag/1?key=abcd1234",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -386,7 +386,7 @@
 		{
 			"id": "805c7862-809e-aa9e-ccdd-124b81c45f40",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/reports/1?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/reports/1?key=abcd1234",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -406,7 +406,7 @@
 		{
 			"id": "80e93f06-3c0b-4010-a369-5927b41b4fbc",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/reports?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/reports?key=abcd1234",
 			"pathVariables": {},
 			"preRequestScript": "",
 			"method": "POST",
@@ -452,7 +452,7 @@
 		{
 			"id": "83c316b5-8406-64d3-e02e-d51c06199dc3",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/reports/2?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/reports/2?key=abcd1234",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "DELETE",
@@ -472,7 +472,7 @@
 		{
 			"id": "9bcc0d79-f071-4647-4d0c-2282c6aa628a",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/tags?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/tags?key=abcd1234",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -499,7 +499,7 @@
 		{
 			"id": "9fd2458f-8f00-b127-61b5-474ceb209b5d",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/reports?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/reports?key=abcd1234",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -538,7 +538,7 @@
 		{
 			"id": "a4225105-0ce9-6a03-6077-ebe8969e3b2f",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/tags/1?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/tags/1?key=abcd1234",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -565,7 +565,7 @@
 		{
 			"id": "b082f993-5c82-161c-58ad-3a6f1a1c18e9",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/locations/search?key=abcd1234&page_num=1&per_page=5&sort_by=created_at&sort_order=asc&search_string=a",
+			"url": "http://www.pesola.se:3000/api/v1/locations/search?key=abcd1234&page_num=1&per_page=5&sort_by=created_at&sort_order=asc&search_string=a",
 			"pathVariables": {},
 			"preRequestScript": "",
 			"method": "GET",
@@ -605,7 +605,7 @@
 		{
 			"id": "bada7708-4e6e-826c-c265-b7ac662cbe39",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/locations/2?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/locations/2?key=abcd1234",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "DELETE",
@@ -625,7 +625,7 @@
 		{
 			"id": "d47644dd-9364-0bee-6e6c-d81980ba55c4",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/reports?key=abcd1234&page_num=1&per_page=5&sort_by=created_at&sort_order=asc",
+			"url": "http://www.pesola.se:3000/api/v1/reports?key=abcd1234&page_num=1&per_page=5&sort_by=created_at&sort_order=asc",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -664,7 +664,7 @@
 		{
 			"id": "d950e9ee-8271-2a1c-00b4-90ed68da6e54",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/tags/2?key=abcd1234",
+			"url": "http://www.pesola.se:3000/api/v1/tags/2?key=abcd1234",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "DELETE",
@@ -684,7 +684,7 @@
 		{
 			"id": "f7c43292-0d46-dd2f-c579-7805fdacf751",
 			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
-			"url": "http://192.168.1.12:3000/api/v1/tags?key=abcd1234&page_num=1&per_page=5&sort_by=name&sort_order=asc",
+			"url": "http://www.pesola.se:3000/api/v1/tags?key=abcd1234&page_num=1&per_page=5&sort_by=name&sort_order=asc",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
