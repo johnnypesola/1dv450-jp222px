@@ -2,11 +2,10 @@
 
 ### Instruktioner för att testa REST-API:t
 
-
 Applikationen borde vara relativt lätt att testa då den finns tillgänglig på nätet under adressen http://www.pesola.se:3000.
 Se till att ladda ner denna [Postman kollektionsfil för test av API:t](Climbing_report_REST_API_(ruby).json.postman_collection) och importera in i [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop).
 
-Den förinställa tokenet som finns inställt i postman-konfigurationen har för studen en giltighetstid på två veckor, vilket gör att man under peer-reviewens tid inte borde bli utloggad.
+Den förinställa token som finns inställt i postman-konfigurationen har för studen en giltighetstid på två veckor, vilket gör att man under peer-reviewens tid inte borde bli utloggad.
 
 Jag rekommenderar att REST-API:ts OAuth del (Session controllern) testas i slutskedet, eftersom man då slipper skriva in det nya genererade tokenet i Postmans alla anrop, vilket sparar en del tid.
 
