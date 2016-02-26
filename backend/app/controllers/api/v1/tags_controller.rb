@@ -4,7 +4,11 @@ class Api::V1::TagsController < Api::ApiBaseController
 
     #if check_rest_login && check_api_key(params[:key])
 
-    tags = Tag.all
+    # Pagination params
+    page_num = Integer(params[:page_num]) || 1
+    per_page = Integer(params[:per_page]) || 10
+
+    tags = Tag.page(page_num).per(per_page)
 
     # Add HATEOAS href to objects
     tags.each do |tag|
@@ -13,9 +17,20 @@ class Api::V1::TagsController < Api::ApiBaseController
 
     # Render objects
     response.status = 200
-    render :json => tags, methods: [:href]
+    render :json => {
+        :items => tags,
+        :pagination => generate_pagination_json(page_num, per_page, tags)
+    }, methods: [:href]
 
-    #end
+      #end
+
+  rescue ArgumentError, TypeError
+
+    response.status = 400
+    render :json => {
+        error: 'Could not get tags.',
+        reasons: [ 'Please provide parameters of correct type: (integer)page_num, (integer)per_page' ]
+    }
 
   end
 

@@ -4,7 +4,11 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
     #if check_rest_login && check_api_key(params[:key])
 
-    reports = Report.all
+    # Pagination params
+    page_num = Integer(params[:page_num]) || 1
+    per_page = Integer(params[:per_page]) || 10
+
+    reports = Report.page(page_num).per(per_page)
 
     # Add HATEOAS href to objects
     reports.each do |report|
@@ -13,9 +17,20 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
     # Render objects
     response.status = 200
-    render :json => reports, methods: [:href]
+    render :json => {
+      :items => reports,
+      :pagination => generate_pagination_json(page_num, per_page, reports)
+    }, methods: [:href]
 
     #end
+
+    rescue ArgumentError, TypeError
+
+    response.status = 400
+    render :json => {
+        error: 'Could not get reports.',
+        reasons: [ 'Please provide parameters of correct type: (integer)page_num, (integer)per_page' ]
+    }
 
   end
 

@@ -4,18 +4,33 @@ class Api::V1::LocationsController < Api::ApiBaseController
 
     #if check_rest_login && check_api_key(params[:key])
 
-      locations = Location.all
+    # Pagination params
+    page_num = Integer(params[:page_num]) || 1
+    per_page = Integer(params[:per_page]) || 10
 
-      # Add HATEOAS href to objects
-      locations.each do |location|
-        location.href = api_v1_location_url(location.id)
-      end
+    locations = Location.page(page_num).per(per_page)
 
-      # Render objects
-      response.status = 200
-      render :json => locations, methods: [:href]
+    # Add HATEOAS href to objects
+    locations.each do |location|
+      location.href = api_v1_location_url(location.id)
+    end
+
+    # Render objects
+    response.status = 200
+    render :json => {
+        :items => locations,
+        :pagination => generate_pagination_json(page_num, per_page, locations)
+    }, methods: [:href]
 
     #end
+
+    rescue ArgumentError, TypeError
+
+      response.status = 400
+      render :json => {
+          error: 'Could not get locations.',
+          reasons: [ 'Please provide parameters of correct type: (integer)page_num, (integer)per_page' ]
+      }
 
   end
 
