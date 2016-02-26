@@ -5,6 +5,17 @@
 	"order": [],
 	"folders": [
 		{
+			"id": "1f92bf78-870d-afd9-64ce-a680f8577b95",
+			"name": "OAuth (Try last)",
+			"description": "",
+			"order": [
+				"3450d5a9-c49d-2d0b-db9f-96522ad50613",
+				"9aadeeb7-7594-f33f-e2a2-72e79ecdace9"
+			],
+			"owner": "",
+			"collectionId": "0640736a-7e12-05e1-14f3-d1a8bd8ffb1b"
+		},
+		{
 			"id": "95335022-8c75-9a56-2466-e0ae0330bc70",
 			"name": "Location",
 			"description": "",
@@ -228,6 +239,34 @@
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"folder": "44deedc7-7142-a2f4-0a65-27d1a7e1f3a2"
+		},
+		{
+			"id": "3450d5a9-c49d-2d0b-db9f-96522ad50613",
+			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
+			"url": "http://www.pesola.se:3000/signout",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "0640736a-7e12-05e1-14f3-d1a8bd8ffb1b",
+			"data": [
+				{
+					"key": "name",
+					"value": "Another Flash",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Sign Out",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1456529046648,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "1f92bf78-870d-afd9-64ce-a680f8577b95"
 		},
 		{
 			"id": "36fd4fed-bdc4-b29e-767d-31a79ac4604a",
@@ -468,6 +507,34 @@
 			"collectionId": "0640736a-7e12-05e1-14f3-d1a8bd8ffb1b",
 			"responses": [],
 			"folder": "44deedc7-7142-a2f4-0a65-27d1a7e1f3a2"
+		},
+		{
+			"id": "9aadeeb7-7594-f33f-e2a2-72e79ecdace9",
+			"headers": "X-auth-token: -gIlnX_Z6FNl4l60uJjKDg\n",
+			"url": "http://www.pesola.se:3000/authenticate?callback=http://www.pesola.se/temp/1dv450-client/authenticated.html",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "0640736a-7e12-05e1-14f3-d1a8bd8ffb1b",
+			"data": [
+				{
+					"key": "name",
+					"value": "Another Flash",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Sign In with Github OAuth (Not working)",
+			"description": "Try this client instead for logging in with github.\nhttp://www.pesola.se/temp/1dv450-client/",
+			"descriptionFormat": "html",
+			"time": 1456529367524,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "1f92bf78-870d-afd9-64ce-a680f8577b95"
 		},
 		{
 			"id": "9bcc0d79-f071-4647-4d0c-2282c6aa628a",
