@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Api::SessionsController < ApplicationController
 
   include RestAuthHelper
 
@@ -41,17 +41,6 @@ class SessionsController < ApplicationController
   def authenticate
     session[:client_callback] = params[:callback]
     redirect_to "/auth/github"
-  end
-
-  def test
-
-    if check_rest_login && check_api_key(params[:key])
-
-      response.status = 200
-      render :json => get_logged_in_user
-
-    end
-
   end
 
   def unauthorized

@@ -9,12 +9,11 @@ Rails.application.routes.draw do
   get "/500" => "errors#internal_error"
 
   # REST API session routes
-  get "/auth/:provider/callback" => "sessions#create"
-  get "/signout" => "sessions#destroy", :as => :signout
-  get "/test" => 'sessions#test'
-  get "/authenticate" => "sessions#authenticate"
-  get "/unauthorized" => "sessions#unauthorized", :as => :unauthorized
-  get "/unauthorized_key" => "sessions#unauthorized_key", :as => :unauthorized_key
+  get "/auth/:provider/callback" => "api/sessions#create"
+  get "/signout" => "api/sessions#destroy", :as => :signout
+  get "/authenticate" => "api/sessions#authenticate"
+  get "/unauthorized" => "api/sessions#unauthorized", :as => :unauthorized
+  get "/unauthorized_key" => "api/sessions#unauthorized_key", :as => :unauthorized_key
 
   # Get locations near gps coordinates
   get '/api/v1/locations/near' => 'api/v1/locations#near', :as => :locations_near
