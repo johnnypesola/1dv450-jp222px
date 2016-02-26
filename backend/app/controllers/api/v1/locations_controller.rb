@@ -55,7 +55,10 @@ class Api::V1::LocationsController < Api::ApiBaseController
       location.href = api_v1_location_url(location.id)
 
       response.status = 200
-      render :json => location, methods: [:href]
+      render :json => {
+          :items => [location],
+      }, methods: [:href]
+
 
     end
 
@@ -69,8 +72,13 @@ class Api::V1::LocationsController < Api::ApiBaseController
 
       if location.update(location_params)
 
+        # Add HATEOAS href to object
+        location.href = api_v1_location_url(location.id)
+
         response.status = 200
-        render :json => location, methods: [:href]
+        render :json => {
+            :items => [location],
+        }, methods: [:href]
 
       else
 
@@ -122,7 +130,10 @@ class Api::V1::LocationsController < Api::ApiBaseController
 
         # Render objects
         response.status = 200
-        render :json => locations, methods: [:href]
+
+        render :json => {
+            :items => locations,
+        }, methods: [:href]
 
       end
 
@@ -150,7 +161,9 @@ class Api::V1::LocationsController < Api::ApiBaseController
         location.href = api_v1_location_url(location.id)
 
         response.status = 201
-        render :json => location, methods: [:href]
+        render :json => {
+            :items => [location],
+        }, methods: [:href]
 
       else
         # Save was unsuccessful, probably due to missing values
@@ -264,7 +277,7 @@ class Api::V1::LocationsController < Api::ApiBaseController
         response.status = 200
         render :json => {
             :items => locations,
-
+            :pagination => generate_pagination_json(page_num, per_page, locations)
         }, methods: [:href]
 
       end

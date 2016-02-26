@@ -112,7 +112,6 @@ class Api::V1::TagsController < Api::ApiBaseController
         response.status = 201
         render :json => {
             :items => [tag],
-
         }, methods: [:href]
 
       else
@@ -197,19 +196,36 @@ class Api::V1::TagsController < Api::ApiBaseController
       # Sort order
       sort_order = params[:sort_order] == 'asc' ? 'ASC' : 'DESC'
 
+      # Get tag
+      tag = Tag.find(params[:id])
+
       # Get reports
-      #reports = Report.page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
-      reports = Tag.find(params[:id]).reports.page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
+      reports = tag.reports.page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
+
+      if reports.length == 0
+
+        response.status = 404
+        render :json => {
+            error: 'Could not get reports.',
+            reasons: [ 'No reports with the specified tag id could be found' ]
+        }
+
+        return
+
+      end
 
       # Add HATEOAS href to objects
       reports.each do |report|
         report.href = api_v1_report_url(report.id)
       end
 
+      tag.href = api_v1_tag_url(tag.id)
+
       # Render objects
       response.status = 200
       render :json => {
           :items => reports,
+          :tag => tag,
           :pagination => generate_pagination_json(page_num, per_page, reports)
       }, methods: [:href]
 
@@ -221,6 +237,14 @@ class Api::V1::TagsController < Api::ApiBaseController
       render :json => {
           error: 'Could not get reports.',
           reasons: [ 'Please provide parameters of correct type: (integer)page_num, (integer)per_page' ]
+      }
+
+    rescue ActiveRecord::RecordNotFound
+
+      response.status = 404
+      render :json => {
+          error: 'Could not get report.',
+          reasons: [ 'No report with the specified id could be found' ]
       }
 
   end

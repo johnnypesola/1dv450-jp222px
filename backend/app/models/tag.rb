@@ -10,7 +10,8 @@ class Tag < ActiveRecord::Base
                 maximum: 50,
                 minimum: 2
             },
-            format: { with: VALID_NAME_REGEX }
+            format: { with: VALID_NAME_REGEX },
+            uniqueness: true
 
   has_and_belongs_to_many :reports
 

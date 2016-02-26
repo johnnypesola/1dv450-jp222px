@@ -56,9 +56,19 @@ class Api::V1::ReportsController < Api::ApiBaseController
       report.href = api_v1_report_url(report.id)
 
       response.status = 200
-      render :json => report, methods: [:href]
+      render :json => {
+          :items => [report],
+      }, methods: [:href]
 
     end
+
+    rescue ActiveRecord::RecordNotFound
+
+      response.status = 404
+      render :json => {
+          error: 'Could not get report.',
+          reasons: [ 'No report with the specified id could be found' ]
+      }
 
   end
 
@@ -84,7 +94,9 @@ class Api::V1::ReportsController < Api::ApiBaseController
       if report.update(report_params)
 
         response.status = 200
-        render :json => report, methods: [:href]
+        render :json => {
+            :items => [report],
+        }, methods: [:href]
 
       else
 
@@ -121,7 +133,53 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
     if check_rest_login && check_api_key(params[:key])
 
-      report = Report.new(report_params)
+      # Tag specific
+
+      tag = nil
+
+      if !report_params[:tag_name].nil?
+
+        tag = Tag.new(name: report_params[:tag_name])
+
+        if tag.save
+
+          # Add HATEOAS href to object
+          tag.href = api_v1_tag_url(tag.id)
+
+        else
+          # Save was unsuccessful, probably due to missing values
+          errors = Array.new
+
+          tag.errors.full_messages.each do |msg|
+            errors.append(msg)
+          end
+
+          response.status = 400
+          render :json => {
+              error: 'Could not save tag.',
+              reasons: errors
+          }
+
+          return
+
+        end
+
+      end
+
+
+      # Report specific
+
+      report = Report.new(
+          route_name: report_params[:route_name],
+          route_grade: report_params[:route_grade],
+          location_id: report_params[:location_id]
+      )
+
+      # Add tag to report
+      unless tag.nil?
+        report.tags << tag
+      end
+
 
       report.clientuser_id = get_logged_in_user.id
 
@@ -145,7 +203,10 @@ class Api::V1::ReportsController < Api::ApiBaseController
           report.href = api_v1_report_url(report.id)
 
           response.status = 201
-          render :json => report, methods: [:href]
+          render :json => {
+              :items => [report],
+              :tag => tag,
+          }, methods: [:href]
 
           return
 
@@ -376,7 +437,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
         response.status = 200
         render :json => {
             :items => reports,
-
+            :pagination => generate_pagination_json(page_num, per_page, reports)
         }, methods: [:href]
 
       end
@@ -396,7 +457,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
   private
 
   def report_params
-    params.permit(:route_name, :route_grade, :location_id, :id)
+    params.permit(:route_name, :route_grade, :location_id, :id, :tag_name)
   end
 
   def destroy_params
