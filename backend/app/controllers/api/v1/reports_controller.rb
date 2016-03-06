@@ -25,6 +25,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
       # Add HATEOAS href to objects
       reports.each do |report|
         report.href = api_v1_report_url(report.id)
+        report.href_location = api_v1_location_url(report.location_id)
       end
 
       # Render objects
@@ -32,7 +33,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
       render :json => {
         :items => reports,
         :pagination => generate_pagination_json(page_num, per_page, reports)
-      }, methods: [:href]
+      }, methods: [:href, :href_location]
 
     end
 
@@ -54,11 +55,12 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
       # Add HATEOAS href to object
       report.href = api_v1_report_url(report.id)
+      report.href_location = api_v1_location_url(report.location_id)
 
       response.status = 200
       render :json => {
           :items => [report],
-      }, methods: [:href]
+      }, methods: [:href, :href_location]
 
     end
 
@@ -257,7 +259,9 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
         response.status = 200
 
-        render :nothing => true
+        render :json => {
+            :items => [report]
+        }
 
       else
 
@@ -353,8 +357,21 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
       if report.tags.length == tags_before + 1
 
-        response.status = 200
-        render :nothing => true
+
+
+
+
+        # Add HATEOAS href to objects
+        report.href = api_v1_report_url(report.id)
+        tag.href = api_v1_tag_url(tag.id)
+        tag.reports_href = api_v1_reports_url + '?for_tag=' + tag.id.to_s
+
+        response.status = 201
+        render :json => {
+            :items => [report],
+            :tag => tag,
+        }, methods: [:href, :reports_href, :tag_href]
+
 
       else
 

@@ -145,7 +145,9 @@ class Api::V1::TagsController < Api::ApiBaseController
 
         response.status = 200
 
-        render :nothing => true
+        render :json => {
+            :items => [tag]
+        }
 
       else
 

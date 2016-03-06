@@ -51,13 +51,10 @@ class Api::V1::LocationsController < Api::ApiBaseController
 
       location = Location.find(params[:id])
 
-      # Add HATEOAS href to object
-      location.href = api_v1_location_url(location.id)
-
       response.status = 200
       render :json => {
           :items => [location],
-      }, methods: [:href]
+      }
 
 
     end
@@ -197,7 +194,9 @@ class Api::V1::LocationsController < Api::ApiBaseController
 
         response.status = 200
 
-        render :nothing => true
+        render :json => {
+            :items => [location]
+        }
 
       else
 
