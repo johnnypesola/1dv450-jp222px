@@ -1,23 +1,42 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
+<div>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
+  <div class="jumbotron">
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
+    <div ng-switch on="isLoggedIn">
+      <div ng-switch-when="true">
+        <p class="lead">
+          <strong>"I'll be back"</strong> you said, and here you are!<br>
+          You are a man of true words.
+        </p>
+      </div>
+      <div ng-switch-when="false">
+        <h1>Welcome to the Climbing report system</h1>
+        <p class="lead">
+          Keep track of your climbing progress
+        </p>
+        <p><button class="btn btn-lg btn-success" ng-click="doLogIn()">Authenticate with Github <span class="glyphicon glyphicon-lock"></span></button></p>
+      </div>
+    </div>
+  </div>
 
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+  <div ng-switch on="isLoggedIn">
+    <div class="row marketing" ng-switch-when="false">
+      <h4>Authenticate with Github</h4>
+      <p>
+        This app uses Github for authenticatication. Don't have an account? <a href="http://www.github.com" target="_blank">Then check it out!</a>
+      </p>
+    </div>
+  </div>
+
+  <table>
+    <tr>
+      <th>Tag name</th>
+    </tr>
+    <tr ng-repeat="tag in tags">
+      <td>
+        {{tag.name}}
+      </td>
+    </tr>
+  </table>
+
 </div>
