@@ -8,12 +8,15 @@
  * Service in the climbingReportApp.
  */
 angular.module('climbingReportApp')
-  .service('tagService', function ($resource, API_URL, REST_PATH ) {
+  .service('tagService', function ($resource, API_URL, REST_PATH, authService ) {
 
     return $resource(
       API_URL + REST_PATH + 'tags/:tagId',
+      { tagId: '@tagId' },
       {
-        tagId: '@tagId'
+        query: {
+          headers: { 'X-auth-token': authService.getToken() }
+        }
       }
     );
 

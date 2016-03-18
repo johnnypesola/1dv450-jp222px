@@ -10,18 +10,88 @@
 
 angular.module('climbingReportApp')
 
-  .service('authService', function ($window, $http, $location, localStorageService, API_URL, APP_URL) {
+  .service('authService', function ($q, $window, $http, $location, localStorageService, API_URL, APP_URL) {
 
     // Init vars
     var that = this;
 
-    // Do login
+    // Private Methods START
+
+    var getTokenExpires = function () {
+
+      return Date.parse(localStorageService.get('tokenExpiresStr'));
+
+    };
+
+    var isTokenOld = function() {
+
+      if (getTokenExpires() < Date.now()) {
+
+        destroyToken();
+
+        return true;
+      }
+
+      return false;
+    };
+
+    var destroyToken = function() {
+      localStorageService.remove('authTokenStr');
+      localStorageService.remove('tokenExpiresStr');
+    };
+
+    /*
+    var checkIfIsLoggedInOnServer = function() {
+
+      that.addTokenToHttpHeaders();
+
+      // Create promise
+      var deferred = $q.defer();
+
+      // Fetch api result
+      $http.get(API_URL + 'is_logged_in')
+
+        // We are logged in
+        .success(function () {
+
+          // Resolve promise
+          deferred.resolve();
+        })
+
+        // We are not logged in
+        .error(function () {
+
+          deferred.reject();
+        });
+
+      // Return promise
+      return deferred.promise;
+    };
+    */
+
+    // Private Methods END
+
+    // Public Methods START
+
+    that.getToken = function () {
+
+      return localStorageService.get('authTokenStr');
+    };
 
     that.isLoggedIn = function() {
 
-      console.log('getTokenDataFromUrl', localStorageService.get('authTokenStr'), localStorageService.get('authTokenStr'));
+      var tokenExists = that.getToken() !== null;
 
-      return localStorageService.get('authTokenStr') !== null;
+      // If auth token is valid
+      if( tokenExists && !isTokenOld() ){
+
+        // Add tokens to HTTP headers (should follow every request, until page is reloaded.)
+        that.addTokenToHttpHeaders();
+
+        return true;
+      }
+
+      return false;
     };
 
     that.login = function () {
@@ -31,15 +101,35 @@ angular.module('climbingReportApp')
     };
 
     that.logout = function () {
-      // Remove token from local storage
-      localStorageService.remove('authTokenStr');
-      localStorageService.remove('tokenExpiresStr');
 
-      // Redirect to start page
-      $window.location.href = API_URL;
+      // Create promise
+      var deferred = $q.defer();
+
+      // Fetch api result
+      $http.get(API_URL + 'signout')
+
+      // TODO: Add functionality if logout fails
+
+        .success(function () {
+          deferred.resolve();
+        })
+
+        .error(function () {
+          deferred.reject();
+        });
+
+      deferred.promise.finally(function(){
+
+        // Remove token from local storage
+        destroyToken();
+
+        // Redirect to start page
+        $window.location.href = APP_URL;
+
+      });
     };
 
-    that.getTokenDataFromUrl = function () {
+    that.getAndSaveTokenDataFromUrlParams = function () {
 
       var url, authTokenStart, authTokenEnd, authTokenStr, tokenExpiresStart, tokenExpiresEnd, tokenExpiresStr;
 
@@ -48,7 +138,6 @@ angular.module('climbingReportApp')
 
       // Check that we have got url data
       if(url.indexOf('auth_token=') !== -1 && url.indexOf('token_expires=') !== -1) {
-
 
         // Parse Auth token
         authTokenStart = url.indexOf('auth_token=') + 11;
@@ -60,36 +149,32 @@ angular.module('climbingReportApp')
         tokenExpiresStart = url.indexOf('token_expires=') + 14;
         tokenExpiresEnd = url.indexOf('#', authTokenEnd + 1);
 
-        tokenExpiresStr = url.substring(tokenExpiresStart, tokenExpiresEnd);
+        // URI decode time string
+        tokenExpiresStr = decodeURIComponent(url.substring(tokenExpiresStart, tokenExpiresEnd));
+
+        // Replace + with space in tokenExpiresStr time string
+        tokenExpiresStr = tokenExpiresStr.replace(/\+/g, " ");
 
         // Save auth token in local storage.
         localStorageService.set('authTokenStr', authTokenStr);
         localStorageService.set('tokenExpiresStr', tokenExpiresStr);
 
-        console.log('getTokenDataFromUrl', localStorageService.get('authTokenStr'), localStorageService.get('authTokenStr'));
-
       } else {
 
         // TODO: Redirect with error message
-        $window.location.href = "";
+        $window.location.href = API_URL;
 
       }
     };
 
-    that.getToken = function () {
-
-      return localStorageService.get('authTokenStr');
-    };
-
-    that.getTokenExpires = function () {
-
-      return localStorageService.get('tokenExpiresStr');
-
-    };
-
     that.addTokenToHttpHeaders = function() {
 
-      $http.defaults.headers.common['X-auth-token'] = that.getToken();
+      console.log($http.defaults.headers);
+
+      // $http.defaults.headers.get = { 'X-auth-token':  that.getToken() };
 
     };
+
+    // Public Methods END
+
   });

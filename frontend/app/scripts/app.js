@@ -22,7 +22,14 @@ climbingReportApp = angular
     'LocalStorageModule'
   ]);
 
-climbingReportApp.config(function ($routeProvider) {
+climbingReportApp.constant('APP_URL', 'http://localhost:9000/');
+climbingReportApp.constant('API_URL', 'http://192.168.1.12:3000/');
+climbingReportApp.constant('REST_PATH', 'api/v1/');
+climbingReportApp.constant('API_KEY', '4f67454c0a0aaa329b74f863880a90afc16807a909770faa0d44c359c636f943');
+
+climbingReportApp.config(function ($routeProvider, $httpProvider) {
+
+    // App routes
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -42,8 +49,19 @@ climbingReportApp.config(function ($routeProvider) {
       .otherwise({
         redirectTo: '/'
       });
-  });
 
-climbingReportApp.constant('APP_URL', 'http://localhost:9000/');
-climbingReportApp.constant('API_URL', 'http://192.168.1.12:3000/');
-climbingReportApp.constant('REST_PATH', 'api/v1/');
+    // Add API key to every http request
+    $httpProvider.interceptors.push(function ($q, API_KEY) {
+      return {
+        request: function (config) {
+          config.url = config.url + '?key=' + API_KEY;
+
+          // config.params = config.params || {};
+          // config.params.key = API_KEY;
+
+          return config;
+
+        }
+      };
+    });
+  });

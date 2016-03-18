@@ -16,9 +16,11 @@ angular.module('climbingReportApp')
 
     // Public methods START
     $scope.doLogIn = function(){
-
       authService.login();
+    };
 
+    $scope.doLogOut = function(){
+      authService.logout();
     };
 
     // Public methods END
@@ -28,25 +30,29 @@ angular.module('climbingReportApp')
     // Private methods END
 
     // Init code START
-
     $scope.isLoggedIn = authService.isLoggedIn();
 
-    // JUST TEST SOME SHIT! OK???
-    if($scope.isLoggedIn) {
+      if($scope.isLoggedIn){
 
-      var tags = tagService.query();
+        var tags;
 
-      // In case tags cannot be fetched, display an error to user.
-      tags.$promise.catch(function(){
+        console.log('Logged in');
 
+        tags = tagService.query({ page_num: 0, per_page: 5 });
+
+        $scope.tags = tags;
+
+      } else {
+
+        // In case tags cannot be fetched, display an error to user.
         $rootScope.FlashMessage = {
           type: 'error',
           message: 'Tags could not be found. And its all your fault! You idiot!'
         };
-      });
 
-      $scope.tags = tags;
-    }
+        console.log('Not logged in');
+      }
+
 
     // Init code END
 
