@@ -9,7 +9,41 @@ body {
   padding: 0;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
+.climbing-report-logo {
+    height: 50px;
+    border-right: 1px solid #bbb;
+}
+
+.climbing-report-ornament {
+    background-image: url(../images/climbing_report_ornament.svg);
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+.logout {
+    margin: 14px;
+}
+
+.navbar-default {
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eeeeee+65,cccccc+100 */
+    background: #eeeeee; /* Old browsers */
+    background: -moz-linear-gradient(top,  #e2e2e2 65%, #d2d2d2 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #e2e2e2 65%,#d2d2d2 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #e2e2e2 65%,#d2d2d2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#d2d2d2',GradientType=0 ); /* IE6-9 */
+}
+
+.navbar-nav > li > a {
+    border-right: 1px solid #bbb;
+    border-bottom: 1px solid #ccc;
+}
+
+.navbar-default .navbar-nav > .active > a {
+    color: #00A000 !important;
+}
+
+    /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
 .footer {
@@ -19,8 +53,7 @@ body {
 
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 /* Make the masthead heading the same height as the navigation */
 .header h3 {

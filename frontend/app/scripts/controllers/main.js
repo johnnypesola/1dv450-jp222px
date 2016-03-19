@@ -19,10 +19,6 @@ angular.module('climbingReportApp')
       authService.login();
     };
 
-    $scope.doLogOut = function(){
-      authService.logout();
-    };
-
     // Public methods END
 
     // Private methods START
@@ -34,23 +30,8 @@ angular.module('climbingReportApp')
 
       if($scope.isLoggedIn){
 
-        var tags;
+        //$scope.tags = tagService.query({ page_num: 0, per_page: 5 });
 
-        console.log('Logged in');
-
-        tags = tagService.query({ page_num: 0, per_page: 5 });
-
-        $scope.tags = tags;
-
-      } else {
-
-        // In case tags cannot be fetched, display an error to user.
-        $rootScope.FlashMessage = {
-          type: 'error',
-          message: 'Tags could not be found. And its all your fault! You idiot!'
-        };
-
-        console.log('Not logged in');
       }
 
 

@@ -10,34 +10,23 @@
 
 angular.module('climbingReportApp')
 
-  .service('authService', function ($q, $window, $http, $location, localStorageService, API_URL, APP_URL) {
+  .service('authService', function ($q, $window, $http, $location, appSettings, API_URL, APP_URL) {
 
     // Init vars
     var that = this;
 
     // Private Methods START
 
-    var getTokenExpires = function () {
-
-      return Date.parse(localStorageService.get('tokenExpiresStr'));
-
-    };
-
     var isTokenOld = function() {
 
-      if (getTokenExpires() < Date.now()) {
+      if ( appSettings.getTokenExpires() < Date.now()) {
 
-        destroyToken();
+        appSettings.destroyToken();
 
         return true;
       }
 
       return false;
-    };
-
-    var destroyToken = function() {
-      localStorageService.remove('authTokenStr');
-      localStorageService.remove('tokenExpiresStr');
     };
 
     /*
@@ -73,25 +62,12 @@ angular.module('climbingReportApp')
 
     // Public Methods START
 
-    that.getToken = function () {
-
-      return localStorageService.get('authTokenStr');
-    };
-
     that.isLoggedIn = function() {
 
-      var tokenExists = that.getToken() !== null;
+      var tokenExists = appSettings.getToken() !== null;
 
       // If auth token is valid
-      if( tokenExists && !isTokenOld() ){
-
-        // Add tokens to HTTP headers (should follow every request, until page is reloaded.)
-        that.addTokenToHttpHeaders();
-
-        return true;
-      }
-
-      return false;
+      return tokenExists && !isTokenOld();
     };
 
     that.login = function () {
@@ -104,6 +80,13 @@ angular.module('climbingReportApp')
 
       // Create promise
       var deferred = $q.defer();
+
+      // Use auth token and api key in next request
+      appSettings.setIsTokenEnabled(true);
+      appSettings.setIsApiKeyEnabled(true);
+
+      console.log('authsettings getIsApiKeyEnabled', appSettings.getIsApiKeyEnabled());
+      console.log('authsettings getIsTokenEnabled', appSettings.getIsTokenEnabled());
 
       // Fetch api result
       $http.get(API_URL + 'signout')
@@ -121,12 +104,11 @@ angular.module('climbingReportApp')
       deferred.promise.finally(function(){
 
         // Remove token from local storage
-        destroyToken();
-
-        // Redirect to start page
-        $window.location.href = APP_URL;
+        appSettings.destroyToken();
 
       });
+
+      return deferred.promise;
     };
 
     that.getAndSaveTokenDataFromUrlParams = function () {
@@ -156,8 +138,8 @@ angular.module('climbingReportApp')
         tokenExpiresStr = tokenExpiresStr.replace(/\+/g, " ");
 
         // Save auth token in local storage.
-        localStorageService.set('authTokenStr', authTokenStr);
-        localStorageService.set('tokenExpiresStr', tokenExpiresStr);
+        appSettings.setToken(authTokenStr);
+        appSettings.setTokenExpires(tokenExpiresStr);
 
       } else {
 
@@ -165,14 +147,6 @@ angular.module('climbingReportApp')
         $window.location.href = API_URL;
 
       }
-    };
-
-    that.addTokenToHttpHeaders = function() {
-
-      console.log($http.defaults.headers);
-
-      // $http.defaults.headers.get = { 'X-auth-token':  that.getToken() };
-
     };
 
     // Public Methods END

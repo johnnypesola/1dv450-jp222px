@@ -37,7 +37,7 @@ climbingReportApp.config(function ($routeProvider, $httpProvider) {
         controllerAs: 'main'
       })
       .when('/auth/github', {
-        template: ' ',
+        template: '<img src="images/loader_animation.gif" />',
         controller: 'AuthCtrl',
         controllerAs: 'auth'
       })
@@ -50,17 +50,30 @@ climbingReportApp.config(function ($routeProvider, $httpProvider) {
         redirectTo: '/'
       });
 
-    // Add API key to every http request
-    $httpProvider.interceptors.push(function ($q, API_KEY) {
+    // Do stuff in every http request
+    $httpProvider.interceptors.push(function ($q, appSettings) {
       return {
         request: function (config) {
-          config.url = config.url + '?key=' + API_KEY;
 
-          // config.params = config.params || {};
-          // config.params.key = API_KEY;
+          // Only use API key for every http request if configured to do se.
+          console.log('appSettings.getIsApiKeyEnabled()', appSettings.getIsApiKeyEnabled(), config.url);
+
+          if(appSettings.getIsApiKeyEnabled()) {
+            config.url = config.url + appSettings.getApiKeyUrl();
+
+            appSettings.setIsApiKeyEnabled(false);
+          }
+
+          console.log('appSettings.getIsTokenEnabled()', appSettings.getIsTokenEnabled(), config.url);
+
+          // Only use token if configured to do so.
+          if(appSettings.getIsTokenEnabled()) {
+            config.headers['X-auth-token'] = appSettings.getToken();
+
+            appSettings.setIsTokenEnabled(false);
+          }
 
           return config;
-
         }
       };
     });

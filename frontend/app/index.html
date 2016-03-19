@@ -20,33 +20,29 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
+    <header data-ng-controller="HeaderCtrl" class="header">
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-
-            <a class="navbar-brand" href="#/">Climbing Report</a>
-          </div>
-
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/about">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
-            </ul>
-          </div>
+        <!-- Main menu -->
+        <div class="back-color-container">
+            <div class="main-menu">
+                <main-menu
+                    menu-items="menus"
+                ></main-menu>
+            </div>
         </div>
-      </div>
-    </div>
+
+        <!-- Flash message -->
+        <div class="flash-message-container text-center" role="alert" data-ng-controller="FlashMessageCtrl" data-ng-show="messageVisible">
+            <div class="alert alert-{{messageClass}}">
+                {{messageText}}
+                <button type="button" class="close" data-ng-click="hideMessage()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+
+    </header>
+
 
     <div class="container">
     <div ng-view=""></div>
@@ -93,6 +89,9 @@
         <script src="scripts/services/auth.js"></script>
         <script src="scripts/services/tag.js"></script>
         <script src="scripts/services/httpapi.js"></script>
+        <script src="scripts/services/appsettings.js"></script>
+        <script src="scripts/controllers/header.js"></script>
+        <script src="scripts/directives/menu.js"></script>
         <!-- endbuild -->
 </body>
 </html>

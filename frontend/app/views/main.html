@@ -1,6 +1,6 @@
 <div>
 
-  <div class="jumbotron">
+  <div class="jumbotron climbing-report-ornament">
 
     <div ng-switch on="isLoggedIn">
       <div ng-switch-when="true">
@@ -8,7 +8,7 @@
           <strong>"I'll be back"</strong> you said, and here you are!<br>
           You are a man of true words.
         </p>
-        <p><button class="btn btn-lg btn-success" ng-click="doLogOut()"><span class="glyphicon glyphicon-log-out"></span> Logout</button></p>
+        <p><button class="btn btn-lg btn-success"><span class="glyphicon glyphicon-edit"></span> Add report</button></p>
       </div>
       <div ng-switch-when="false">
         <h1>Welcome to the Climbing report system</h1>
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <table>
+  <table style="display: none">
     <tr>
       <th>Tag name</th>
     </tr>
