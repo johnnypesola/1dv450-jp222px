@@ -10,45 +10,64 @@
  * then these credentials should not be in those requests.
  */
 angular.module('climbingReportApp')
-  .service('appSettings', function (API_KEY, localStorageService, $location) {
+
+  // Define string constants for service
+  .constant('AUTH_TOKEN_STR', 'authTokenStr')
+  .constant('IS_TOKEN_ENABLED_STR', 'isTokenEnabled')
+  .constant('IS_API_KEY_ENABLED_STR', 'isApiKeyEnabled')
+  .constant('TOKEN_EXPIRES_STR', 'tokenExpiresStr')
+  .constant('PERSISTENT_FLASH_MESSAGE', 'persistentFlashMessage')
+  .constant('PERSISTENT_FLASH_TYPE', 'persistentFlashType')
+
+  .service('appSettings', function (
+    API_KEY,
+    AUTH_TOKEN_STR,
+    IS_TOKEN_ENABLED_STR,
+    IS_API_KEY_ENABLED_STR,
+    TOKEN_EXPIRES_STR,
+    PERSISTENT_FLASH_MESSAGE,
+    PERSISTENT_FLASH_TYPE,
+    localStorageService,
+    $location
+  ) {
+
+    // Define variable names
 
 
     // Token START
 
     this.setToken = function(value){
-      localStorageService.set('authTokenStr', value);
+      localStorageService.set(AUTH_TOKEN_STR, value);
     };
 
     this.getToken = function(){
-      return localStorageService.get('authTokenStr');
+      return localStorageService.get(AUTH_TOKEN_STR);
     };
 
     this.setIsTokenEnabled = function(value){
 
-      console.log('setIsTokenEnabled', value, typeof value);
-
       if(typeof value === 'boolean') {
-        localStorageService.set('isTokenEnabled', value);
+        localStorageService.set(IS_TOKEN_ENABLED_STR, value);
       } else {
-        localStorageService.set('isTokenEnabled', false);
+        localStorageService.set(IS_TOKEN_ENABLED_STR, false);
       }
     };
 
     this.getIsTokenEnabled = function(){
-      return localStorageService.get('isTokenEnabled');
+      return localStorageService.get(IS_TOKEN_ENABLED_STR);
     };
 
     this.setTokenExpires = function(value){
-      localStorageService.set('tokenExpiresStr', value);
+      localStorageService.set(TOKEN_EXPIRES_STR, value);
     };
 
     this.getTokenExpires = function(){
-      return localStorageService.get('tokenExpiresStr');
+      return localStorageService.get(TOKEN_EXPIRES_STR);
     };
 
     this.destroyToken = function(){
-      localStorageService.remove('authTokenStr');
-      localStorageService.remove('tokenExpiresStr');
+      localStorageService.remove(AUTH_TOKEN_STR);
+      localStorageService.remove(TOKEN_EXPIRES_STR);
     };
 
     // Token END
@@ -57,20 +76,16 @@ angular.module('climbingReportApp')
 
     this.setIsApiKeyEnabled = function(value) {
 
-      console.log('setIsApiKeyEnabled', value);
-
       if(typeof value === 'boolean') {
-        localStorageService.set('isApiKeyEnabled', value);
+        localStorageService.set(IS_API_KEY_ENABLED_STR, value);
       } else {
-        localStorageService.set('isApiKeyEnabled', false);
+        localStorageService.set(IS_API_KEY_ENABLED_STR, false);
       }
     };
 
     this.getIsApiKeyEnabled = function(){
 
-      console.log('getIsApiKeyEnabled');
-
-      return localStorageService.get('isApiKeyEnabled');
+      return localStorageService.get(IS_API_KEY_ENABLED_STR);
     };
 
     this.getApiKeyUrl = function(){
@@ -91,20 +106,20 @@ angular.module('climbingReportApp')
     };
 
     this.setPersistentFlashMessage = function(messageObj){
-      localStorageService.set('persistentFlashMessageMessage', messageObj.message);
-      localStorageService.set('persistentFlashMessageType', messageObj.type);
+      localStorageService.set(PERSISTENT_FLASH_MESSAGE, messageObj.message);
+      localStorageService.set(PERSISTENT_FLASH_TYPE, messageObj.type);
     };
 
     this.getPersistentFlashMessage = function(){
       var message, type;
 
-      message = localStorageService.get('persistentFlashMessageMessage');
-      type = localStorageService.get('persistentFlashMessageType');
+      message = localStorageService.get(PERSISTENT_FLASH_MESSAGE);
+      type = localStorageService.get(PERSISTENT_FLASH_TYPE);
 
       if(message && type) {
 
         // Remove old message
-        localStorageService.remove('persistentFlashMessageMessage', 'persistentFlashMessageType');
+        localStorageService.remove(PERSISTENT_FLASH_MESSAGE, PERSISTENT_FLASH_TYPE);
 
         // Return message
         return {
