@@ -10,9 +10,9 @@
 angular.module('climbingReportApp')
 
   // Header Controller
-  .controller('HeaderCtrl', ['$scope', '$rootScope', '$location', 'authService', function($scope, $rootScope, $location, authService){
+  .controller('HeaderCtrl', ['$scope', '$rootScope', '$location', 'AuthService', function($scope, $rootScope, $location, AuthService){
 
-    var isLoggedIn = authService.isLoggedIn();
+    var isLoggedIn = AuthService.isLoggedIn();
 
     // Declare Menu
     $scope.menus = [
@@ -62,7 +62,7 @@ angular.module('climbingReportApp')
   }])
 
   // Flash Message Controller
-  .controller('FlashMessageCtrl', ["$rootScope", "$scope", "appSettings", function($rootScope, $scope, appSettings){
+  .controller('FlashMessageCtrl', ["$rootScope", "$scope", "AppSettings", function($rootScope, $scope, AppSettings){
 
     var messageObj;
 
@@ -86,7 +86,7 @@ angular.module('climbingReportApp')
 
     /* Initialization START */
 
-    messageObj = appSettings.getPersistentFlashMessage();
+    messageObj = AppSettings.getPersistentFlashMessage();
 
     if(messageObj) {
       // Add class

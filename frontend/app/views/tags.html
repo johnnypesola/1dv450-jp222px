@@ -1,0 +1,57 @@
+<div>
+
+    <h1>Tags</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="20"></th>
+                <th width="55" class="text-right">Color</th>
+                <th>Tag name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="tag in tagsData.items">
+                <td>
+                    <button
+                        ng-show="!tag.isEditMode"
+                        class="custom-button btn btn-default btn-xs glyphicon glyphicon-pencil"
+                        ng-click="tag.isEditMode = true"
+                    />
+                </td>
+                <td>
+                    <div
+                        class="colorbox"
+                        style="background: {{tag.color}}"
+                    >
+                        <div colorpicker
+                             class="color-picker-container"
+                             ng-model="tag.color"
+                             colorpicker-position="top"
+                             colorpicker-is-open="tag.isEditMode"
+                        ></div>
+                    </div>
+                </td>
+                <td>
+                    <span ng-show="!tag.isEditMode">{{tag.name}}</span>
+
+                    <div class="input-group" ng-show="tag.isEditMode">
+                        <input type="text" class="form-control" ng-model="tag.name">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="saveTag(tag)" ng-disabled="tag.isSaving">Save</button>
+                            <button type="button" class="btn btn-default" ng-click="tag.isEditMode = false" ng-disabled="tag.isSaving">Cancel</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p><button class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus"></span> Add tag</button></p>
+
+    <div class="well">
+        <strong>What are tags for?</strong><br>
+        Tags helps you to categorize your climbing. As an example, there are tags for different types of climbing.
+    </div>
+
+</div>

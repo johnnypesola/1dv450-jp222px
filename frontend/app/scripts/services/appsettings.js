@@ -13,17 +13,13 @@ angular.module('climbingReportApp')
 
   // Define string constants for service
   .constant('AUTH_TOKEN_STR', 'authTokenStr')
-  .constant('IS_TOKEN_ENABLED_STR', 'isTokenEnabled')
-  .constant('IS_API_KEY_ENABLED_STR', 'isApiKeyEnabled')
   .constant('TOKEN_EXPIRES_STR', 'tokenExpiresStr')
   .constant('PERSISTENT_FLASH_MESSAGE', 'persistentFlashMessage')
   .constant('PERSISTENT_FLASH_TYPE', 'persistentFlashType')
 
-  .service('appSettings', function (
+  .service('AppSettings', function (
     API_KEY,
     AUTH_TOKEN_STR,
-    IS_TOKEN_ENABLED_STR,
-    IS_API_KEY_ENABLED_STR,
     TOKEN_EXPIRES_STR,
     PERSISTENT_FLASH_MESSAGE,
     PERSISTENT_FLASH_TYPE,
@@ -44,19 +40,6 @@ angular.module('climbingReportApp')
       return localStorageService.get(AUTH_TOKEN_STR);
     };
 
-    this.setIsTokenEnabled = function(value){
-
-      if(typeof value === 'boolean') {
-        localStorageService.set(IS_TOKEN_ENABLED_STR, value);
-      } else {
-        localStorageService.set(IS_TOKEN_ENABLED_STR, false);
-      }
-    };
-
-    this.getIsTokenEnabled = function(){
-      return localStorageService.get(IS_TOKEN_ENABLED_STR);
-    };
-
     this.setTokenExpires = function(value){
       localStorageService.set(TOKEN_EXPIRES_STR, value);
     };
@@ -73,20 +56,6 @@ angular.module('climbingReportApp')
     // Token END
 
     // ApiKey START
-
-    this.setIsApiKeyEnabled = function(value) {
-
-      if(typeof value === 'boolean') {
-        localStorageService.set(IS_API_KEY_ENABLED_STR, value);
-      } else {
-        localStorageService.set(IS_API_KEY_ENABLED_STR, false);
-      }
-    };
-
-    this.getIsApiKeyEnabled = function(){
-
-      return localStorageService.get(IS_API_KEY_ENABLED_STR);
-    };
 
     this.getApiKeyUrl = function(){
       return '?key=' + API_KEY;

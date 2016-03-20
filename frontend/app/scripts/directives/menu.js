@@ -7,7 +7,7 @@
  * # menu
  */
 angular.module('climbingReportApp')
-  .directive('mainMenu', ["$route", "$routeParams", "$location", "$rootScope", "authService", function($route, $routeParams, $location, $rootScope, authService) {
+  .directive('mainMenu', ["$route", "$routeParams", "$location", "$rootScope", "AuthService", function($route, $routeParams, $location, $rootScope, AuthService) {
     return {
       restrict: 'E',
       replace: true,
@@ -25,7 +25,7 @@ angular.module('climbingReportApp')
 
         /* Initialization START */
 
-        $scope.isLoggedIn = authService.isLoggedIn();
+        $scope.isLoggedIn = AuthService.isLoggedIn();
 
         // Detect when location / route / url is changed. For example when a <a> link is pressed.
         $rootScope.$on("$routeChangeStart", function () {

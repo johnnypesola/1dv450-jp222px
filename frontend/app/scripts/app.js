@@ -19,13 +19,15 @@ climbingReportApp = angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'colorpicker.module'
   ]);
 
 climbingReportApp.constant('APP_URL', 'http://localhost:9000/');
 climbingReportApp.constant('API_URL', 'http://192.168.1.12:3000/');
 climbingReportApp.constant('REST_PATH', 'api/v1/');
-climbingReportApp.constant('API_KEY', '4f67454c0a0aaa329b74f863880a90afc16807a909770faa0d44c359c636f943');
+climbingReportApp.constant('API_KEY', 'e22450efdfdf8c464ad31465931bf7b2dd1000d58f6e5afafa85044ecadbdabd');
+climbingReportApp.constant('AUTH_TOKEN_STR', 'X-auth-token');
 
 climbingReportApp.config(function ($routeProvider, $httpProvider) {
 
@@ -46,31 +48,43 @@ climbingReportApp.config(function ($routeProvider, $httpProvider) {
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
+      .when('/tags', {
+        templateUrl: 'views/tags.html',
+        controller: 'TagsCtrl',
+        controllerAs: 'tags'
+      })
       .otherwise({
         redirectTo: '/'
       });
 
     // Do stuff in every http request
-    $httpProvider.interceptors.push(function ($q, appSettings) {
+    $httpProvider.interceptors.push(function ($q, AppSettings, AUTH_TOKEN_STR) {
       return {
+        // Only use API Key and Auth if we are connecting to the REST API.
         request: function (config) {
 
-          // Only use API key for every http request if configured to do se.
-          console.log('appSettings.getIsApiKeyEnabled()', appSettings.getIsApiKeyEnabled(), config.url);
+          var urlPartsArray, apiUrlPartsArray, apiCompareUrl, currentCompareUrl;
 
-          if(appSettings.getIsApiKeyEnabled()) {
-            config.url = config.url + appSettings.getApiKeyUrl();
+          urlPartsArray = config.url.split('/');
 
-            appSettings.setIsApiKeyEnabled(false);
-          }
+          // If the url is a potential API url
+          if(urlPartsArray.length > 2) {
 
-          console.log('appSettings.getIsTokenEnabled()', appSettings.getIsTokenEnabled(), config.url);
+            apiUrlPartsArray = config.url.split('/');
 
-          // Only use token if configured to do so.
-          if(appSettings.getIsTokenEnabled()) {
-            config.headers['X-auth-token'] = appSettings.getToken();
+            // Build base urls to compare
+            currentCompareUrl = urlPartsArray[0] + urlPartsArray[2];
+            apiCompareUrl = apiUrlPartsArray[0] + apiUrlPartsArray[2];
 
-            appSettings.setIsTokenEnabled(false);
+            // If the base url of the request is the same as the API url
+            if ( currentCompareUrl === apiCompareUrl ) {
+
+              // Use API key
+              config.url = config.url + AppSettings.getApiKeyUrl();
+
+              // Use Authentication headers
+              config.headers[AUTH_TOKEN_STR] = AppSettings.getToken();
+            }
           }
 
           return config;

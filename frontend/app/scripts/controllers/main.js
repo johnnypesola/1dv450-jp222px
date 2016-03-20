@@ -8,7 +8,7 @@
  * Controller of the climbingReportApp
  */
 angular.module('climbingReportApp')
-  .controller('MainCtrl', function ( $rootScope, $scope, authService, tagService ) {
+  .controller('MainCtrl', function ( $rootScope, $scope, AuthService ) {
 
     // Init vars START
 
@@ -16,7 +16,7 @@ angular.module('climbingReportApp')
 
     // Public methods START
     $scope.doLogIn = function(){
-      authService.login();
+      AuthService.login();
     };
 
     // Public methods END
@@ -26,14 +26,8 @@ angular.module('climbingReportApp')
     // Private methods END
 
     // Init code START
-    $scope.isLoggedIn = authService.isLoggedIn();
 
-      if($scope.isLoggedIn){
-
-        //$scope.tags = tagService.query({ page_num: 0, per_page: 5 });
-
-      }
-
+    $scope.isLoggedIn = AuthService.isLoggedIn();
 
     // Init code END
 

@@ -10,7 +10,7 @@
 
 angular.module('climbingReportApp')
 
-  .service('authService', function ($q, $window, $http, $location, appSettings, API_URL, APP_URL) {
+  .service('AuthService', function ($q, $window, $http, $location, AppSettings, API_URL, APP_URL) {
 
     // Init vars
     var that = this;
@@ -19,9 +19,9 @@ angular.module('climbingReportApp')
 
     var isTokenOld = function() {
 
-      if ( appSettings.getTokenExpires() < Date.now()) {
+      if ( AppSettings.getTokenExpires() < Date.now()) {
 
-        appSettings.destroyToken();
+        AppSettings.destroyToken();
 
         return true;
       }
@@ -64,7 +64,7 @@ angular.module('climbingReportApp')
 
     that.isLoggedIn = function() {
 
-      var tokenExists = appSettings.getToken() !== null;
+      var tokenExists = AppSettings.getToken() !== null;
 
       // If auth token is valid
       return tokenExists && !isTokenOld();
@@ -80,13 +80,6 @@ angular.module('climbingReportApp')
 
       // Create promise
       var deferred = $q.defer();
-
-      // Use auth token and api key in next request
-      appSettings.setIsTokenEnabled(true);
-      appSettings.setIsApiKeyEnabled(true);
-
-      console.log('authsettings getIsApiKeyEnabled', appSettings.getIsApiKeyEnabled());
-      console.log('authsettings getIsTokenEnabled', appSettings.getIsTokenEnabled());
 
       // Fetch api result
       $http.get(API_URL + 'signout')
@@ -104,7 +97,7 @@ angular.module('climbingReportApp')
       deferred.promise.finally(function(){
 
         // Remove token from local storage
-        appSettings.destroyToken();
+        AppSettings.destroyToken();
 
       });
 
@@ -138,8 +131,8 @@ angular.module('climbingReportApp')
         tokenExpiresStr = tokenExpiresStr.replace(/\+/g, " ");
 
         // Save auth token in local storage.
-        appSettings.setToken(authTokenStr);
-        appSettings.setTokenExpires(tokenExpiresStr);
+        AppSettings.setToken(authTokenStr);
+        AppSettings.setTokenExpires(tokenExpiresStr);
 
       } else {
 

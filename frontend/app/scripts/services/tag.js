@@ -8,14 +8,14 @@
  * Service in the climbingReportApp.
  */
 angular.module('climbingReportApp')
-  .service('tagService', function ($resource, API_URL, REST_PATH, appSettings ) {
-
-    // appSettings.setIsTokenEnabled(true);
-    // appSettings.setIsApiKeyEnabled(true);
+  .service('Tag', function ($resource, API_URL, REST_PATH) {
 
     return $resource(
-      API_URL + REST_PATH + 'tags/:tagId',
-      { tagId: '@tagId' },
-      { query: { method: 'GET' } }
+      API_URL + REST_PATH + 'tags/:id',
+      null,
+      {
+        query: { method: 'GET' },
+        update: { method:'PUT' }
+      }
     );
   });

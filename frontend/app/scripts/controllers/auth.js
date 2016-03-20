@@ -15,14 +15,26 @@ angular.module('climbingReportApp')
 
         .then(function(){
 
-          // Set persistent Flash message
-          appSettings.setPersistentFlashMessage({
+          // SetFlash message
+          $rootScope.FlashMessage = {
             type: 'success',
             message: 'Successfully logged out!'
-          });
+          };
 
           // Redirect to start page
-          window.location = appSettings.getAppRootUrl();
+          $location.path('');
+        })
+
+        .catch(function(){
+
+          // Set Flash message
+          $rootScope.FlashMessage = {
+            type: 'danger',
+            message: 'Something went wrong while trying to log out on server. This is not a big deal though.'
+          };
+
+          // Redirect to start page
+          $location.path('');
         });
     }
 
