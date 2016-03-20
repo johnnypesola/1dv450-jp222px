@@ -1,17 +1,46 @@
 <div>
 
-    <h1>Tags</h1>
+    <div class="well">
+        <strong>What are tags for?</strong><br>
+        Tags helps you to categorize your climbing. As an example, there are tags for different types of climbing.
+    </div>
+
+    <div class="row">
+
+        <h1 class="col-md-6">Tags</h1>
+
+        <p class="text-right col-md-2">
+            <button class="btn btn-success" ng-click="isAddMode = true" ng-show="!isAddMode"><span class="glyphicon glyphicon-plus"></span> Add tag</button>
+        </p>
+        <div class="text-right col-md-4">
+            <ul class="pagination">
+                <li ng-class="{ disabled: tagsData.pagination.prev_page_href == ''}">
+                    <a href ng-click="previousPage()">
+                        <span>&laquo;</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <span>Page <strong>{{tagsData.pagination.page_num}}</strong> of {{tagsData.pagination.total_pages}}</span>
+                </li>
+                <li ng-class="{ disabled: tagsData.pagination.next_page_href == ''}">
+                    <a href ng-click="nextPage()">
+                        <span>&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th width="20"></th>
+                <th width="46"></th>
                 <th width="55" class="text-right">Color</th>
                 <th>Tag name</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="tag in tagsData.items">
+            <tr ng-repeat="tag in tagsData.items" class="repeat-animation">
                 <td>
                     <button
                         ng-show="!tag.isEditMode"
@@ -19,11 +48,8 @@
                         ng-click="tag.isEditMode = true"
                     />
                 </td>
-                <td>
-                    <div
-                        class="colorbox"
-                        style="background: {{tag.color}}"
-                    >
+                <td class="text-right">
+                    <div class="colorbox" style="background: {{tag.color}}">
                         <div colorpicker
                              class="color-picker-container"
                              ng-model="tag.color"
@@ -44,14 +70,31 @@
                     </div>
                 </td>
             </tr>
+            <!-- When adding a new tag -->
+            <tr ng-show="isAddMode">
+                <td></td>
+                <td>
+                    <div class="colorbox"
+                         style="background: {{newTag.color}}"
+                         colorpicker
+                         class="color-picker-container"
+                         ng-model="newTag.color"
+                         colorpicker-position="top"
+                    >
+
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="newTag.name">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="addTag(newTag)" ng-disabled="newTag.isAdding">Save</button>
+                            <button type="button" class="btn btn-default" ng-click="isAddMode = false" ng-disabled="newTag.isAdding">Cancel</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
         </tbody>
     </table>
-
-    <p><button class="btn btn-lg btn-success"><span class="glyphicon glyphicon-plus"></span> Add tag</button></p>
-
-    <div class="well">
-        <strong>What are tags for?</strong><br>
-        Tags helps you to categorize your climbing. As an example, there are tags for different types of climbing.
-    </div>
 
 </div>
