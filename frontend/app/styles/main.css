@@ -3,7 +3,6 @@
 .repeat-animation {
     box-sizing:border-box;
     line-height:20px;
-    border:1px solid #ddd;
 }
 
 .repeat-animation.ng-enter-stagger,
@@ -15,14 +14,14 @@
 
 .repeat-animation.ng-enter,
 .repeat-animation.ng-move {
-    -webkit-transition:0.2s linear all;
-    transition:0.2s linear all;
+    -webkit-transition:0.1s linear all;
+    transition:0.1s linear all;
 }
 
 .repeat-animation.ng-enter,
 .repeat-animation.ng-move {
-    -webkit-transition:0.2s linear all;
-    transition:0.2s linear all;
+    -webkit-transition:0.1s linear all;
+    transition:0.1s linear all;
 
     opacity:0;
     height:0;
@@ -72,7 +71,7 @@ body {
     display: inline-block;
     width: 22px;
     height: 22px;
-    border: 1px solid #aaa;
+    border: 1px solid #ccc;
     border-radius: 11px;
 }
 
@@ -87,11 +86,6 @@ body {
 .custom-button {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e1e1e1+51,f6f6f6+100 */
     background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(top,  #ffffff 0%, #e1e1e1 51%, #f6f6f6 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#e1e1e1 51%,#f6f6f6 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  #ffffff 0%,#e1e1e1 51%,#f6f6f6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
-
     margin-left: 5px;
 }
 

@@ -12,7 +12,7 @@ angular.module('climbingReportApp')
 
     return $resource(
       API_URL + REST_PATH + 'tags/:id',
-      null,
+      { id: '@id' },
       {
         query: { method: 'GET' },
         update: { method:'PUT' }

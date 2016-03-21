@@ -20,7 +20,8 @@ climbingReportApp = angular
     'ngSanitize',
     'ngTouch',
     'LocalStorageModule',
-    'colorpicker.module'
+    'colorpicker.module',
+    'ngMap'
   ]);
 
 climbingReportApp.constant('APP_URL', 'http://localhost:9000/');
@@ -52,6 +53,16 @@ climbingReportApp.config(function ($routeProvider, $httpProvider) {
         templateUrl: 'views/tags.html',
         controller: 'TagsCtrl',
         controllerAs: 'tags'
+      })
+      .when('/locations', {
+        templateUrl: 'views/locations.html',
+        controller: 'LocationsCtrl',
+        controllerAs: 'locations'
+      })
+      .when('/reports', {
+        templateUrl: 'views/reports.html',
+        controller: 'ReportsCtrl',
+        controllerAs: 'reports'
       })
       .otherwise({
         redirectTo: '/'

@@ -39,9 +39,50 @@ angular.module('climbingReportApp')
         });
     };
 
+    $scope.deleteTag = function(tag){
+
+      tag.isBusy = true;
+
+      var tagToDelete = new Tag(
+        {
+          id: tag.id,
+          name: tag.name,
+          color: tag.color
+        }
+      );
+
+      tagToDelete.$delete()
+
+        .then(function(response){
+
+          var tagToRemoveIndex;
+
+          // Find index of tag to remove
+          tagToRemoveIndex = $scope.tagsData.items.findIndex(function(otherTag){
+            return tag.id === otherTag.id;
+          });
+
+          // Remove tag from array.
+          $scope.tagsData.items.splice(tagToRemoveIndex, 1);
+
+          tag.isBusy = false;
+
+        })
+
+        // If tag could not be added.
+        .catch(function() {
+
+          // Set Flash message
+          $rootScope.FlashMessage = {
+            type: 'danger',
+            message: 'Something strange happened. Tag could not be deleted.'
+          };
+        });
+    };
+
     $scope.addTag = function(tag){
 
-      tag.isAdding = true;
+      tag.isBusy = true;
 
       var tagToAdd = new Tag(
         {
@@ -52,11 +93,12 @@ angular.module('climbingReportApp')
 
       tagToAdd.$save()
 
-        .then(function(){
-          $scope.isAddMode = false;
-          tag.isAdding = false;
+        .then(function(response){
 
-          $scope.tagsData.items.push(tag);
+          $scope.isAddMode = false;
+          tag.isBusy = false;
+
+          $scope.tagsData.items.push(response.items[0]);
         })
 
         // If tag could not be added.

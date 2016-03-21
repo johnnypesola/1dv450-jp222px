@@ -10,7 +10,7 @@
         <h1 class="col-md-6">Tags</h1>
 
         <p class="text-right col-md-2">
-            <button class="btn btn-success" ng-click="isAddMode = true" ng-show="!isAddMode"><span class="glyphicon glyphicon-plus"></span> Add tag</button>
+            <button class="btn btn-success" ng-click="isAddMode = true" ng-disabled="isAddMode"><span class="glyphicon glyphicon-plus"></span> Add tag</button>
         </p>
         <div class="text-right col-md-4">
             <ul class="pagination">
@@ -48,7 +48,7 @@
                         ng-click="tag.isEditMode = true"
                     />
                 </td>
-                <td class="text-right">
+                <td class="text-center">
                     <div class="colorbox" style="background: {{tag.color}}">
                         <div colorpicker
                              class="color-picker-container"
@@ -66,14 +66,15 @@
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="saveTag(tag)" ng-disabled="tag.isSaving">Save</button>
                             <button type="button" class="btn btn-default" ng-click="tag.isEditMode = false" ng-disabled="tag.isSaving">Cancel</button>
+                            <button type="button" class="btn btn-default" ng-click="deleteTag(tag)" ng-disabled="newTag.isSaving"><span class="glyphicon glyphicon-trash"></span></button>
                         </div>
                     </div>
                 </td>
             </tr>
             <!-- When adding a new tag -->
-            <tr ng-show="isAddMode">
+            <tr ng-show="isAddMode" class="repeat-animation">
                 <td></td>
-                <td>
+                <td class="text-center">
                     <div class="colorbox"
                          style="background: {{newTag.color}}"
                          colorpicker
@@ -88,8 +89,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" ng-model="newTag.name">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="addTag(newTag)" ng-disabled="newTag.isAdding">Save</button>
-                            <button type="button" class="btn btn-default" ng-click="isAddMode = false" ng-disabled="newTag.isAdding">Cancel</button>
+                            <button type="button" class="btn btn-default" ng-click="addTag(newTag)" ng-disabled="newTag.isBusy">Save</button>
+                            <button type="button" class="btn btn-default" ng-click="isAddMode = false" ng-disabled="newTag.isBusy">Cancel</button>
                         </div>
                     </div>
                 </td>
