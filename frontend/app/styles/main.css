@@ -46,7 +46,7 @@ ng-map {
     position: relative;
     cursor: pointer;
     display: block;
-    background: #FFF;
+    background: #fff;
     border-radius: 3px;
     font-size: 13px;
 
@@ -73,6 +73,8 @@ ng-map {
     position: absolute;
     top:3px;
     left:2px;
+    color: #fff;
+    background: #00A000 !important;
 }
 
 .map-marker-button span.cat-text {
@@ -83,7 +85,7 @@ ng-map {
 }
 
 a.highlightedmarker {
-    background: #0b97c4;
+    background: #00A000;
     color: #fff;
 
     -webkit-box-shadow: none;
@@ -92,12 +94,12 @@ a.highlightedmarker {
 }
 
 a.highlightedmarker:after {
-    border-color: #0b97c4 transparent;
+    border-color: #00A000 transparent;
 }
 
 a.highlightedmarker span.label {
     background: #fff !important;
-    color: #0b97c4;
+    color: #00A000;
 }
 
 /* Map specific END */

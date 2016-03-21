@@ -17,14 +17,14 @@
                 <div class="cm">
                     <!-- Runs angular function and also toggles bootstrap modal with "data-toggle" and "data-target" attributes -->
                     <a class="map-marker-button"
-                       ng-click="setSpecificTrafficMsg(trafficMessage)"
-                       ng-mouseover="highlightTrafficMessage(trafficMessage)"
-                       ng-mouseleave="highlightTrafficMessage()"
+                       ng-click="setSpecificLocation(location)"
+                       ng-mouseover="highlightLocation(location)"
+                       ng-mouseleave="highlightLocation()"
                        data-toggle="modal"
                        data-target="#specificTrafficMessage"
-                       ng-class="{highlightedmarker: hightlightedTrafficMsg == trafficMessage}"
+                       ng-class="{highlightedmarker: hightlightedLocation == location}"
                     >
-                        <span class="label prio{{trafficMessage.priority}}">1</span>
+                        <span class="label">{{location.reports_count}}</span>
 
                         <span class="cat-text">{{location.name}}</span>
                     </a>

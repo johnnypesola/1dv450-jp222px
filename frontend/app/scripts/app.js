@@ -29,6 +29,7 @@ climbingReportApp.constant('API_URL', 'http://192.168.1.12:3000/');
 climbingReportApp.constant('REST_PATH', 'api/v1/');
 climbingReportApp.constant('API_KEY', 'e22450efdfdf8c464ad31465931bf7b2dd1000d58f6e5afafa85044ecadbdabd');
 climbingReportApp.constant('AUTH_TOKEN_STR', 'X-auth-token');
+climbingReportApp.constant('GET_LOCATION_DISTANCE', 200);
 
 climbingReportApp.config(function ($routeProvider, $httpProvider) {
 

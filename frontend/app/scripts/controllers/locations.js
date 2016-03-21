@@ -50,6 +50,26 @@ angular.module('climbingReportApp')
       }
     };
 
+    var getLocationsNear = function(latitude, longitude){
+
+      $scope.locationsData = Location.near({
+        latitude: latitude,
+        longitude: longitude
+      });
+
+      $scope.locationsData.$promise
+
+        // If locations could not be fetched.
+        .catch(function(){
+
+          // Set Flash message
+          $rootScope.FlashMessage = {
+            type: 'danger',
+            message: 'Something strange happened. Could not get locations near (latitude = ' + latitude + ') (longitude = ' + longitude + ')'
+          };
+        });
+    };
+
     // Private methods END
 
     // Init code START
@@ -58,13 +78,10 @@ angular.module('climbingReportApp')
 
     if (navigator.geolocation) {
 
-      console.log('yep');
       navigator.geolocation.getCurrentPosition(
-        function(position){
+        function (position) {
 
-          console.log('position', position.coords.longitude, position.coords.latitude);
-
-          $scope.$apply(function(){
+          $scope.$apply(function () {
 
             $scope.mapValues.center = {
               longitude: position.coords.longitude,
@@ -72,14 +89,10 @@ angular.module('climbingReportApp')
             };
           });
         },
-        function(something){
-          console.log('error', something);
-        }
-        );
-    } else {
-      console.log('nope');
+        function () {
+          console.log('Could not get current geolocation from browser');
+        });
     }
-
     // Init code END
 
   });
