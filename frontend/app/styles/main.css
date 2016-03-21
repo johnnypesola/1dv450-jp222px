@@ -35,6 +35,73 @@
 
 /* ng-animate END */
 
+
+/* Map specific START */
+ng-map {
+    height: 300px !important;
+    display: block;
+}
+
+.map-marker-button {
+    position: relative;
+    cursor: pointer;
+    display: block;
+    background: #FFF;
+    border-radius: 3px;
+    font-size: 13px;
+
+    -webkit-box-shadow: 1px 1px 5px 0 rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 5px 0 rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 5px 0 rgba(50, 50, 50, 0.75);
+
+    padding: 1px 2px;
+}
+
+.map-marker-button:after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 45%;
+    border-width: 5px 5px 0;
+    border-style: solid;
+    border-color: #fff transparent;
+    display: block;
+    width: 0;
+}
+
+.map-marker-button span.label {
+    position: absolute;
+    top:3px;
+    left:2px;
+}
+
+.map-marker-button span.cat-text {
+    margin-left: 19px;
+    background: none !important;
+    display: block;
+    white-space: nowrap;
+}
+
+a.highlightedmarker {
+    background: #0b97c4;
+    color: #fff;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow:    none;
+    box-shadow:         none;
+}
+
+a.highlightedmarker:after {
+    border-color: #0b97c4 transparent;
+}
+
+a.highlightedmarker span.label {
+    background: #fff !important;
+    color: #0b97c4;
+}
+
+/* Map specific END */
+
 h1 {
     margin-top: 0 !important;
 }

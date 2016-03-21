@@ -1,1 +1,39 @@
-<p>This is the locations view.</p>
+<div class="well">
+    <strong>What are locations for?</strong><br>
+    Locations are the places where you do your climbing at.
+</div>
+
+<div class="row">
+
+    <h1 class="col-md-6">Locations</h1>
+
+    <div map-lazy-load="https://maps.google.com/maps/api/js">
+        <ng-map zoom="{{mapValues.zoom}}" center="[{{mapValues.center.latitude}}, {{mapValues.center.longitude}}]">
+
+            <custom-marker
+                position="[{{location.latitude}}, {{location.longitude}}]"
+                ng-repeat="location in locationsData.items"
+            >
+                <div class="cm">
+                    <!-- Runs angular function and also toggles bootstrap modal with "data-toggle" and "data-target" attributes -->
+                    <a class="map-marker-button"
+                       ng-click="setSpecificTrafficMsg(trafficMessage)"
+                       ng-mouseover="highlightTrafficMessage(trafficMessage)"
+                       ng-mouseleave="highlightTrafficMessage()"
+                       data-toggle="modal"
+                       data-target="#specificTrafficMessage"
+                       ng-class="{highlightedmarker: hightlightedTrafficMsg == trafficMessage}"
+                    >
+                        <span class="label prio{{trafficMessage.priority}}">1</span>
+
+                        <span class="cat-text">{{location.name}}</span>
+                    </a>
+                </div>
+            </custom-marker>
+
+        </ng-map>
+    </div>
+
+    <pre id="default-spacing">{{ locationsData | json }}</pre>
+
+</div>

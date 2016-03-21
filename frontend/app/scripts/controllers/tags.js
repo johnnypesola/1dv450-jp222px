@@ -18,6 +18,33 @@ angular.module('climbingReportApp')
 
     // Init vars END
 
+    // Private methods START
+
+    var getTags = function(){
+
+      if(isLoggedIn){
+
+        $scope.tagsData = Tag.query({
+          page_num: $scope.pageNum,
+          per_page: $scope.tagsPerPage
+        });
+
+        $scope.tagsData.$promise
+
+          // If tags could not be fetched.
+          .catch(function(){
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'danger',
+              message: 'Something strange happened. Could not get tags.'
+            };
+          });
+      }
+    };
+
+    // Private methods END
+
     // Public methods START
 
     $scope.saveTag = function(tag){
@@ -131,33 +158,6 @@ angular.module('climbingReportApp')
     };
 
     // Public methods END
-
-    // Private methods START
-
-    var getTags = function(){
-
-      if(isLoggedIn){
-
-        $scope.tagsData = Tag.query({
-          page_num: $scope.pageNum,
-          per_page: $scope.tagsPerPage
-        });
-
-        $scope.tagsData.$promise
-
-          // If tags could not be fetched.
-          .catch(function(){
-
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'danger',
-              message: 'Something strange happened. Could not get tags.'
-            };
-        });
-      }
-    };
-
-    // Private methods END
 
     // Init code START
 
