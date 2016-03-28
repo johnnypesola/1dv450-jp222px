@@ -7,12 +7,17 @@
 
     <h1 class="col-md-6">Locations</h1>
 
-    <div map-lazy-load="https://maps.google.com/maps/api/js">
+    <p class="text-right col-md-6">
+        <button class="btn btn-success" ng-click="setIsAddMode(true)" ng-disabled="isAddMode"><span class="glyphicon glyphicon-plus"></span> Add location</button>
+    </p>
+
+    <div class="ng-map-container" map-lazy-load="https://maps.google.com/maps/api/js">
         <ng-map zoom="{{mapValues.zoom}}" center="[{{mapValues.center.latitude}}, {{mapValues.center.longitude}}]">
 
             <custom-marker
+                ng-if="!addMode"
                 position="[{{location.latitude}}, {{location.longitude}}]"
-                ng-repeat="location in locationsData.items"
+                ng-repeat="location in visibleLocations"
             >
                 <div class="cm">
                     <!-- Runs angular function and also toggles bootstrap modal with "data-toggle" and "data-target" attributes -->
@@ -31,9 +36,35 @@
                 </div>
             </custom-marker>
 
+            <marker
+                ng-repeat="location in newLocation"
+                position="[{{mapValues.center.latitude}}, {{mapValues.center.longitude}}]"
+                draggable="true"
+                event-drag="newLocationDrag($event, $ngMap)"
+                event-dragstart="newLocationDragStart($event, $ngMap)"
+                event-dragend="newLocationDragEnd($event, $ngMap)"
+                icon="{
+                    url:'images/new_location_marker_icon.png',
+                    scaledSize:[50,58]
+                }"
+            >
+            </marker>
+
         </ng-map>
     </div>
 
-    <pre id="default-spacing">{{ locationsData | json }}</pre>
+    <div ng-show="isAddMode" class="repeat-animation">
+
+        <div class="input-group">
+            <input type="text" class="form-control" ng-model="newLocation[0].name">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="addLocation(newLocation[0])" ng-disabled="newTag.isBusy">Save</button>
+                <button type="button" class="btn btn-default" ng-click="setIsAddMode(false)" ng-disabled="newTag.isBusy">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+    <pre id="default-spacing">{{ visibleLocations | json }}</pre>
 
 </div>

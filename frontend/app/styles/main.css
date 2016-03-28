@@ -37,6 +37,11 @@
 
 
 /* Map specific START */
+
+.ng-map-container {
+    height: 350px;
+}
+
 ng-map {
     height: 300px !important;
     display: block;
