@@ -13,9 +13,10 @@ angular.module('climbingReportApp')
     // Init vars START
 
     var locationsData = {};
+    var editedLocationByReference;
     var isLoggedIn = AuthService.isLoggedIn();
     $scope.pageNum = 1;
-    $scope.locationsPerPage = 4;
+    $scope.locationsPerPage = 50;
 
     $scope.mapValues = {
       center: {},
@@ -79,9 +80,10 @@ angular.module('climbingReportApp')
 
     // Public methods START
 
-    $scope.setIsAddMode = function(isAddMode){
+    $scope.setAddMode = function(isAddMode){
 
       $scope.isAddMode = isAddMode;
+      $scope.isEditMode = false;
 
       if(isAddMode) {
 
@@ -101,6 +103,95 @@ angular.module('climbingReportApp')
       }
     };
 
+    $scope.editLocation = function(location){
+
+      // Store reference
+      editedLocationByReference = location;
+
+      // Clone object, break reference
+      var locationToEdit =  JSON.parse(JSON.stringify(location));
+
+      $scope.isAddMode = false;
+      $scope.isEditMode = true;
+      $scope.editedLocation = locationToEdit;
+    };
+
+    $scope.saveLocation = function(location){
+
+      location.isBusy = true;
+
+      var locationToSave = new Location(
+        {
+          id: location.id,
+          name: location.name,
+          latitude: location.latitude,
+          longitude: location.longitude
+        }
+      );
+
+      Location.update({ id: location.id }, locationToSave).$promise
+        .then(function(){
+
+          // Update location name on map
+          editedLocationByReference.name = location.name;
+
+          $scope.isEditMode = false;
+
+          location.isBusy = false;
+        })
+
+        // If location could not be saved.
+        .catch(function() {
+
+          // Set Flash message
+          $rootScope.FlashMessage = {
+            type: 'danger',
+            message: 'Something strange happened. Location could not be saved.'
+          };
+        });
+    };
+
+    $scope.deleteLocation = function(location){
+
+      location.isBusy = true;
+
+      var locationToDelete = new Location(
+        {
+          id: location.id,
+          name: location.name
+        }
+      );
+
+      locationToDelete.$delete()
+
+        .then(function(response){
+
+          var locationToRemoveIndex;
+
+          // Find index of location to remove
+          locationToRemoveIndex = locationsData.items.findIndex(function(otherLocation){
+            return location.id === otherLocation.id;
+          });
+
+          // Remove location from array.
+          locationsData.items.splice(locationToRemoveIndex, 1);
+
+          location.isBusy = false;
+          $scope.isEditMode = false;
+
+        })
+
+        // If location could not be deleted.
+        .catch(function() {
+
+          // Set Flash message
+          $rootScope.FlashMessage = {
+            type: 'danger',
+            message: 'Something strange happened. Location could not be deleted.'
+          };
+        });
+    };
+
     $scope.addLocation = function(location){
 
       location.isBusy = true;
@@ -115,16 +206,22 @@ angular.module('climbingReportApp')
 
       locationToAdd.$save()
 
-        .then(function(response){
+        .then(function(){
 
           $scope.isAddMode = false;
           location.isBusy = false;
+          location.reports_count = 0;
 
-          $scope.visibleLocations.push(response.items[0]);
+          locationsData.items.push(location);
+
+          $scope.visibleLocations = locationsData.items;
+          $scope.newLocation = [];
         })
 
         // If location could not be added.
         .catch(function() {
+
+          location.isBusy = false;
 
           // Set Flash message
           $rootScope.FlashMessage = {
@@ -132,6 +229,12 @@ angular.module('climbingReportApp')
             message: 'Something strange happened. Location could not be added.'
           };
         });
+    };
+
+    $scope.onDragUpdateLocationPosition = function(){
+
+      $scope.newLocation[0].latitude = this.getPosition().lat();
+      $scope.newLocation[0].longitude = this.getPosition().lng();
     };
 
     // Public methods END

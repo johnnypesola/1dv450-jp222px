@@ -63,6 +63,16 @@ angular.module('climbingReportApp')
         .then(function(){
           tag.isEditMode = false;
           tag.isSaving = false;
+        })
+
+        // If tag could not be saved.
+        .catch(function() {
+
+          // Set Flash message
+          $rootScope.FlashMessage = {
+            type: 'danger',
+            message: 'Something strange happened. Tag could not be saved.'
+          };
         });
     };
 
@@ -96,7 +106,7 @@ angular.module('climbingReportApp')
 
         })
 
-        // If tag could not be added.
+        // If tag could not be deleted.
         .catch(function() {
 
           // Set Flash message
