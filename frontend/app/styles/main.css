@@ -38,10 +38,6 @@
 
 /* Map specific START */
 
-.ng-map-container {
-    height: 350px;
-}
-
 ng-map {
     height: 300px !important;
     display: block;
@@ -74,7 +70,7 @@ ng-map {
     width: 0;
 }
 
-.map-marker-button span.label {
+.map-marker-button span.reports-count {
     position: absolute;
     top:3px;
     left:2px;
@@ -82,7 +78,7 @@ ng-map {
     background: #00A000 !important;
 }
 
-.map-marker-button span.cat-text {
+.map-marker-button span.location-name {
     margin-left: 19px;
     background: none !important;
     display: block;
@@ -102,7 +98,7 @@ a.highlightedmarker:after {
     border-color: #00A000 transparent;
 }
 
-a.highlightedmarker span.label {
+a.highlightedmarker span.reports-count {
     background: #fff !important;
     color: #00A000;
 }

@@ -44,13 +44,14 @@ angular.module('climbingReportApp')
             $scope.visibleLocations = response.items;
           })
 
-          // If locations could not be fetched.
-          .catch(function(){
+          // If location could not be fetched.
+          .catch(function(response) {
 
             // Set Flash message
             $rootScope.FlashMessage = {
               type: 'danger',
-              message: 'Something strange happened. Could not get locations.'
+              message: response.data.error,
+              reasons: response.data.reasons
             };
           });
       }
@@ -65,13 +66,14 @@ angular.module('climbingReportApp')
 
       $scope.locationsData.$promise
 
-        // If locations could not be fetched.
-        .catch(function(){
+        // If location could not be fetched.
+        .catch(function(response) {
 
           // Set Flash message
           $rootScope.FlashMessage = {
             type: 'danger',
-            message: 'Something strange happened. Could not get locations near (latitude = ' + latitude + ') (longitude = ' + longitude + ')'
+            message: response.data.error,
+            reasons: response.data.reasons
           };
         });
     };
@@ -134,20 +136,22 @@ angular.module('climbingReportApp')
 
           // Update location name on map
           editedLocationByReference.name = location.name;
-
-          $scope.isEditMode = false;
-
-          location.isBusy = false;
         })
 
         // If location could not be saved.
-        .catch(function() {
+        .catch(function(response) {
 
           // Set Flash message
           $rootScope.FlashMessage = {
             type: 'danger',
-            message: 'Something strange happened. Location could not be saved.'
+            message: response.data.error,
+            reasons: response.data.reasons
           };
+        })
+
+        .finally(function(){
+          location.isBusy = false;
+          $scope.isEditMode = false;
         });
     };
 
@@ -164,7 +168,7 @@ angular.module('climbingReportApp')
 
       locationToDelete.$delete()
 
-        .then(function(response){
+        .then(function(){
 
           var locationToRemoveIndex;
 
@@ -175,20 +179,24 @@ angular.module('climbingReportApp')
 
           // Remove location from array.
           locationsData.items.splice(locationToRemoveIndex, 1);
-
-          location.isBusy = false;
-          $scope.isEditMode = false;
-
         })
 
         // If location could not be deleted.
-        .catch(function() {
+        .catch(function(response) {
+
+          location.isBusy = false;
 
           // Set Flash message
           $rootScope.FlashMessage = {
             type: 'danger',
-            message: 'Something strange happened. Location could not be deleted.'
+            message: response.data.error,
+            reasons: response.data.reasons
           };
+        })
+
+        .finally(function(){
+          location.isBusy = false;
+          $scope.isEditMode = false;
         });
     };
 
@@ -219,14 +227,15 @@ angular.module('climbingReportApp')
         })
 
         // If location could not be added.
-        .catch(function() {
+        .catch(function(response) {
 
           location.isBusy = false;
 
           // Set Flash message
           $rootScope.FlashMessage = {
             type: 'danger',
-            message: 'Something strange happened. Location could not be added.'
+            message: response.data.error,
+            reasons: response.data.reasons
           };
         });
     };

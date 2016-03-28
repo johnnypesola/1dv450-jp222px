@@ -15,6 +15,7 @@ angular.module('climbingReportApp')
     var isLoggedIn = AuthService.isLoggedIn();
     $scope.pageNum = 1;
     $scope.tagsPerPage = 4;
+    $scope.newTag = {}
 
     // Init vars END
 
@@ -32,12 +33,13 @@ angular.module('climbingReportApp')
         $scope.tagsData.$promise
 
           // If tags could not be fetched.
-          .catch(function(){
+          .catch(function(response) {
 
             // Set Flash message
             $rootScope.FlashMessage = {
               type: 'danger',
-              message: 'Something strange happened. Could not get tags.'
+              message: response.data.error,
+              reasons: response.data.reasons
             };
           });
       }
@@ -66,13 +68,18 @@ angular.module('climbingReportApp')
         })
 
         // If tag could not be saved.
-        .catch(function() {
+        .catch(function(response) {
 
           // Set Flash message
           $rootScope.FlashMessage = {
             type: 'danger',
-            message: 'Something strange happened. Tag could not be saved.'
+            message: response.data.error,
+            reasons: response.data.reasons
           };
+        })
+
+        .finally(function() {
+          tag.isSaving = false;
         });
     };
 
@@ -101,19 +108,21 @@ angular.module('climbingReportApp')
 
           // Remove tag from array.
           $scope.tagsData.items.splice(tagToRemoveIndex, 1);
-
-          tag.isBusy = false;
-
         })
 
         // If tag could not be deleted.
-        .catch(function() {
+        .catch(function(response) {
 
           // Set Flash message
           $rootScope.FlashMessage = {
             type: 'danger',
-            message: 'Something strange happened. Tag could not be deleted.'
+            message: response.data.error,
+            reasons: response.data.reasons
           };
+        })
+
+        .finally(function(){
+          tag.isBusy = false;
         });
     };
 
@@ -133,19 +142,22 @@ angular.module('climbingReportApp')
         .then(function(response){
 
           $scope.isAddMode = false;
-          tag.isBusy = false;
-
           $scope.tagsData.items.push(response.items[0]);
         })
 
         // If tag could not be added.
-        .catch(function() {
+        .catch(function(response) {
 
           // Set Flash message
           $rootScope.FlashMessage = {
             type: 'danger',
-            message: 'Something strange happened. Tag could not be added.'
+            message: response.data.error,
+            reasons: response.data.reasons
           };
+        })
+
+        .finally(function(){
+          tag.isBusy = false;
         });
     };
 

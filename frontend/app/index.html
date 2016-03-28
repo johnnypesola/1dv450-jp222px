@@ -38,12 +38,17 @@
         </div>
 
         <!-- Flash message -->
-        <div class="flash-message-container text-center" role="alert" data-ng-controller="FlashMessageCtrl" data-ng-show="messageVisible">
+        <div class="flash-message-container" role="alert" data-ng-controller="FlashMessageCtrl" data-ng-show="messageVisible">
             <div class="alert alert-{{messageClass}}">
-                {{messageText}}
                 <button type="button" class="close" data-ng-click="hideMessage()">
                     <span aria-hidden="true">&times;</span>
                 </button>
+                <strong>{{messageText}}</strong>
+                <ul ng-show="messageReasons">
+                    <li ng-repeat="reason in messageReasons">
+                        {{reason}}
+                    </li>
+                </ul>
             </div>
         </div>
 

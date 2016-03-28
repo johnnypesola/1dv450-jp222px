@@ -76,10 +76,14 @@ angular.module('climbingReportApp')
       if ((typeof(newValue) !== 'undefined') && (newValue !== null) && (typeof newValue.type !== 'undefined')) {
 
         // Add class
-        $scope.messageClass = newValue.type;
+        $scope.messageClass = newValue.type || 'danger';
 
         // Add message
-        $scope.messageText = newValue.message;
+        $scope.messageText = newValue.message || 'Something strange happened';
+
+        // Add reasons, if there are any.
+        $scope.messageReasons = newValue.reasons;
+
         $scope.messageVisible = true;
       }
     });

@@ -24,8 +24,8 @@
                     <a class="map-marker-button"
                        ng-click="editLocation(location)"
                     >
-                        <span class="label">{{location.reports_count}}</span>
-                        <span class="cat-text">{{location.name}}</span>
+                        <span class="reports-count">{{location.reports_count}}</span>
+                        <span class="location-name">{{location.name}}</span>
                     </a>
                 </div>
             </custom-marker>
@@ -46,6 +46,7 @@
     </div>
 
     <div ng-show="isEditMode">
+        <h4>Edit location name</h4>
 
         <div class="input-group">
             <input type="text" class="form-control" ng-model="editedLocation.name">
@@ -58,6 +59,8 @@
     </div>
 
     <div ng-show="isAddMode">
+
+        <h4>New location name</h4>
 
         <div class="input-group">
             <input type="text" class="form-control" ng-model="newLocation[0].name">
