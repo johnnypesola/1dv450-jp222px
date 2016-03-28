@@ -23,6 +23,7 @@ class Api::V1::LocationsController < Api::ApiBaseController
 
       # Add HATEOAS href to objects
       locations.each do |location|
+        location.reports_count = location.report.count
         location.href = api_v1_location_url(location.id)
       end
 
@@ -30,8 +31,8 @@ class Api::V1::LocationsController < Api::ApiBaseController
       response.status = 200
       render :json => {
           :items => locations,
-          :pagination => generate_pagination_json(page_num, per_page, locations)
-      }, methods: [:href]
+          :pagination => generate_pagination_json(page_num, per_page, locations, api_v1_locations_url)
+      }, methods: [:href, :reports_count]
 
     end
 
@@ -276,7 +277,7 @@ class Api::V1::LocationsController < Api::ApiBaseController
         response.status = 200
         render :json => {
             :items => locations,
-            :pagination => generate_pagination_json(page_num, per_page, locations)
+            :pagination => generate_pagination_json(page_num, per_page, locations, api_v1_locations_url)
         }, methods: [:href]
 
       end

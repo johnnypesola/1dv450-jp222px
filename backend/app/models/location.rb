@@ -1,6 +1,6 @@
 class Location < ActiveRecord::Base
 
-  attr_accessor :href
+  attr_accessor :href, :reports_count
 
   reverse_geocoded_by :latitude, :longitude
 

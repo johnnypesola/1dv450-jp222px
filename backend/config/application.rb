@@ -27,5 +27,13 @@ module Backend
     # Use custom error pages
     config.exceptions_app = self.routes
 
+    # Rack Cors
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
+
   end
 end

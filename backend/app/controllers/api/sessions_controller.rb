@@ -1,4 +1,4 @@
-class Api::SessionsController < ApplicationController
+class Api::SessionsController < Api::ApiBaseController
 
   include RestAuthHelper
 
@@ -17,6 +17,7 @@ class Api::SessionsController < ApplicationController
     # Read back the client callback url from session
     url = session[:client_callback]
     session[:client_callback] = nil
+
     redirect_to  "#{url}?auth_token=#{clientuser.auth_token}&token_expires=#{Rack::Utils.escape(clientuser.token_expires.to_s)}"
   end
 
@@ -34,6 +35,20 @@ class Api::SessionsController < ApplicationController
       response.status = 200
       render :nothing => true
 
+    end
+
+  end
+
+  def is_logged_in
+
+    clientuser = Clientuser.try_get_logged_in_user(request.headers)
+
+    if clientuser.nil?
+      response.status = 401
+      render :nothing => true
+    else
+      response.status = 200
+      render :nothing => true
     end
 
   end
