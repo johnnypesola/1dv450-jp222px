@@ -10,7 +10,7 @@
 
 angular.module('climbingReportApp')
 
-  .service('AuthService', function ($q, $window, $http, $location, AppSettings, API_URL, APP_URL) {
+  .service('AuthService', function ($q, $window, $http, $location, $rootScope, AppSettings, API_URL, APP_URL) {
 
     // Init vars
     var that = this;
@@ -62,12 +62,18 @@ angular.module('climbingReportApp')
 
     // Public Methods START
 
-    that.isLoggedIn = function() {
+    that.isLoggedInCheck = function() {
 
       var tokenExists = AppSettings.getToken() !== null;
+      var isLoggedIn = tokenExists && !isTokenOld();
+
+      // Update rootscope variable if needed
+      if($rootScope.isLoggedIn !== isLoggedIn) {
+        $rootScope.isLoggedIn = isLoggedIn;
+      }
 
       // If auth token is valid
-      return tokenExists && !isTokenOld();
+      return isLoggedIn;
     };
 
     that.login = function () {
@@ -99,6 +105,7 @@ angular.module('climbingReportApp')
         // Remove token from local storage
         AppSettings.destroyToken();
 
+        $rootScope.isLoggedIn = false;
       });
 
       return deferred.promise;

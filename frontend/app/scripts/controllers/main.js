@@ -27,7 +27,7 @@ angular.module('climbingReportApp')
 
     // Init code START
 
-    $scope.isLoggedIn = AuthService.isLoggedIn();
+    $scope.isLoggedInCheck = AuthService.isLoggedInCheck();
 
     // Init code END
 

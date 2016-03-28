@@ -72,36 +72,38 @@ climbingReportApp.config(function ($routeProvider, $httpProvider) {
       });
 
     // Do stuff in every http request
-    $httpProvider.interceptors.push(function ($q, AppSettings, AUTH_TOKEN_STR) {
+    $httpProvider.interceptors.push(function ($q, $rootScope, AppSettings, AUTH_TOKEN_STR) {
       return {
         // Only use API Key and Auth if we are connecting to the REST API.
         request: function (config) {
 
-          var urlPartsArray, apiUrlPartsArray, apiCompareUrl, currentCompareUrl;
+          // If the base url of the request is the same as the API url
+          if ( AppSettings.apiUrlEqualsUrl(config.url) ) {
 
-          urlPartsArray = config.url.split('/');
+            // Use API key
+            config.url = config.url + AppSettings.getApiKeyUrl();
 
-          // If the url is a potential API url
-          if(urlPartsArray.length > 2) {
-
-            apiUrlPartsArray = config.url.split('/');
-
-            // Build base urls to compare
-            currentCompareUrl = urlPartsArray[0] + urlPartsArray[2];
-            apiCompareUrl = apiUrlPartsArray[0] + apiUrlPartsArray[2];
-
-            // If the base url of the request is the same as the API url
-            if ( currentCompareUrl === apiCompareUrl ) {
-
-              // Use API key
-              config.url = config.url + AppSettings.getApiKeyUrl();
-
-              // Use Authentication headers
-              config.headers[AUTH_TOKEN_STR] = AppSettings.getToken();
-            }
+            // Use Authentication headers
+            config.headers[AUTH_TOKEN_STR] = AppSettings.getToken();
           }
 
           return config;
+        },
+
+        // Check if we have been logged out from REST API for some reason.
+        responseError: function(rejection) {
+
+          if (
+            AppSettings.apiUrlEqualsUrl(rejection.config.url) &&
+            rejection.status === 401
+          ) {
+            // Remove token from local storage
+            AppSettings.destroyToken();
+
+            $rootScope.isLoggedIn = false;
+          }
+
+          return $q.reject(rejection);
         }
       };
     });

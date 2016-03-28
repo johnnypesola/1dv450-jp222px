@@ -12,7 +12,7 @@ angular.module('climbingReportApp')
 
     // Init vars START
 
-    var isLoggedIn = AuthService.isLoggedIn();
+    var isLoggedIn = AuthService.isLoggedInCheck();
     $scope.pageNum = 1;
     $scope.tagsPerPage = 4;
     $scope.newTag = {};

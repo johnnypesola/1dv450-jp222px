@@ -12,51 +12,58 @@ angular.module('climbingReportApp')
   // Header Controller
   .controller('HeaderCtrl', ['$scope', '$rootScope', '$location', 'AuthService', function($scope, $rootScope, $location, AuthService){
 
-    var isLoggedIn = AuthService.isLoggedIn();
+    var isLoggedIn = AuthService.isLoggedInCheck();
 
-    // Declare Menu
-    $scope.menus = [
-      {
-        title: "Home",
-        location: "#/",
-        isVisible: true
-      },
-      {
-        title: "Tags",
-        location: "#/tags",
-        isVisible: isLoggedIn
-      },
-      {
-        title: "Reports",
-        location: "#/reports",
-        isVisible: isLoggedIn
-      },
-      {
-        title: "Locations",
-        location: "#/locations",
-        isVisible: isLoggedIn
-      },
-      {
-        title: "Users",
-        location: "#/users",
-        isVisible: isLoggedIn
-      },
-      {
-        title: "About",
-        location: "#/about",
-        isVisible: isLoggedIn
-      }
-    ];
+    /* Private methods START */
 
-    /* Object methods START */
+    var generateMenu = function(){
 
-    /* Object methods END */
+      // Declare Menu
+      $scope.menus = [
+        {
+          title: "Home",
+          location: "#/",
+          isVisible: true
+        },
+        {
+          title: "Tags",
+          location: "#/tags",
+          isVisible: $rootScope.isLoggedIn
+        },
+        {
+          title: "Reports",
+          location: "#/reports",
+          isVisible: $rootScope.isLoggedIn
+        },
+        {
+          title: "Locations",
+          location: "#/locations",
+          isVisible: $rootScope.isLoggedIn
+        },
+        {
+          title: "Users",
+          location: "#/users",
+          isVisible: $rootScope.isLoggedIn
+        },
+        {
+          title: "About",
+          location: "#/about",
+          isVisible: $rootScope.isLoggedIn
+        }
+      ];
+    };
+
+    /* Private methods END */
 
     /* Public methods START */
 
     /* Public methods END */
 
     /* Initialization START */
+
+    $scope.$watch('isLoggedIn', function() {
+      generateMenu();
+    });
 
     /* Initialization END */
   }])

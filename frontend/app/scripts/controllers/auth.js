@@ -8,10 +8,12 @@
  * Controller of the climbingReportApp
  */
 angular.module('climbingReportApp')
-  .controller('AuthCtrl', function (authService, $location, $rootScope, appSettings) {
+  .controller('AuthCtrl', function (AuthService, $location, $rootScope, AppSettings) {
+
+    console.log('authService', AuthService);
 
     if($location.search().logout) {
-      authService.logout()
+      AuthService.logout()
 
         .then(function(){
 
@@ -41,15 +43,15 @@ angular.module('climbingReportApp')
     else {
 
       // Github has logged in user, extract token from get parameters
-      authService.getAndSaveTokenDataFromUrlParams();
+      AuthService.getAndSaveTokenDataFromUrlParams();
 
       // Set persistent Flash message
-      appSettings.setPersistentFlashMessage({
+      AppSettings.setPersistentFlashMessage({
         type: 'success',
         message: 'Successfully logged in!'
       });
 
       // Redirect to start page
-      window.location = appSettings.getAppRootUrl();
+      window.location = AppSettings.getAppRootUrl();
     }
   });

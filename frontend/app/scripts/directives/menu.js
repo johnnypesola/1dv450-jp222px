@@ -25,7 +25,7 @@ angular.module('climbingReportApp')
 
         /* Initialization START */
 
-        $scope.isLoggedIn = AuthService.isLoggedIn();
+        $scope.isLoggedInCheck = AuthService.isLoggedInCheck();
 
         // Detect when location / route / url is changed. For example when a <a> link is pressed.
         $rootScope.$on("$routeChangeStart", function () {

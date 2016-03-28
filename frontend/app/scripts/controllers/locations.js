@@ -17,7 +17,7 @@ angular.module('climbingReportApp')
 
     var locationsData = {};
     var editedLocationByReference;
-    var isLoggedIn = AuthService.isLoggedIn();
+    var isLoggedIn = AuthService.isLoggedInCheck();
     $scope.pageNum = 1;
     $scope.locationsPerPage = 50;
 

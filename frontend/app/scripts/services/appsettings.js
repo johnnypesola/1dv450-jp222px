@@ -24,11 +24,11 @@ angular.module('climbingReportApp')
     PERSISTENT_FLASH_MESSAGE,
     PERSISTENT_FLASH_TYPE,
     localStorageService,
-    $location
+    $location,
+    API_URL
   ) {
 
     // Define variable names
-
 
     // Token START
 
@@ -98,6 +98,26 @@ angular.module('climbingReportApp')
       }
       else {
         return false;
+      }
+    };
+
+    this.apiUrlEqualsUrl = function(configUrl){
+
+      var urlPartsArray, apiUrlPartsArray, apiCompareUrl, currentCompareUrl;
+
+      urlPartsArray = configUrl.split('/');
+
+      // If the url is a potential API url
+      if(urlPartsArray.length > 2) {
+
+        apiUrlPartsArray = API_URL.split('/');
+
+        // Build base urls to compare
+        currentCompareUrl = urlPartsArray[0] + urlPartsArray[2];
+        apiCompareUrl = apiUrlPartsArray[0] + apiUrlPartsArray[2];
+
+        // If the base url of the request is the same as the API url
+        return currentCompareUrl === apiCompareUrl;
       }
     };
   });
