@@ -67,6 +67,12 @@ angular.module('climbingReportApp')
           .then(function(){
             tag.isEditMode = false;
             tag.isSaving = false;
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'success',
+              message: 'Succesfully saved tag.'
+            };
           })
 
           // If tag could not be saved.
@@ -102,7 +108,7 @@ angular.module('climbingReportApp')
 
         tagToDelete.$delete()
 
-          .then(function(response){
+          .then(function(){
 
             var tagToRemoveIndex;
 
@@ -113,6 +119,12 @@ angular.module('climbingReportApp')
 
             // Remove tag from array.
             $scope.tagsData.items.splice(tagToRemoveIndex, 1);
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'success',
+              message: 'Succesfully removed tag.'
+            };
           })
 
           // If tag could not be deleted.
@@ -152,6 +164,12 @@ angular.module('climbingReportApp')
 
             $scope.isAddMode = false;
             $scope.tagsData.items.push(response.items[0]);
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'success',
+              message: 'Succesfully added tag.'
+            };
           })
 
           // If tag could not be added.

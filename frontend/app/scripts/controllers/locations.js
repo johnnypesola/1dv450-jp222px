@@ -30,7 +30,6 @@ angular.module('climbingReportApp')
 
     // Private methods START
 
-    /*
     var getLocations = function(){
 
       if(isLoggedIn){
@@ -60,7 +59,6 @@ angular.module('climbingReportApp')
           });
       }
     };
-    */
 
     var getLocationsNear = function(latitude, longitude){
 
@@ -152,6 +150,12 @@ angular.module('climbingReportApp')
 
             // Update location name on map
             editedLocationByReference.name = location.name;
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'success',
+              message: 'Succesfully saved location.'
+            };
           })
 
           // If location could not be saved.
@@ -199,6 +203,12 @@ angular.module('climbingReportApp')
 
             // Remove location from array.
             locationsData.items.splice(locationToRemoveIndex, 1);
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'success',
+              message: 'Succesfully removed location.'
+            };
           })
 
           // If location could not be deleted.
@@ -249,6 +259,12 @@ angular.module('climbingReportApp')
 
             $scope.visibleLocations = locationsData.items;
             $scope.newLocation = [];
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'success',
+              message: 'Succesfully added location.'
+            };
           })
 
           // If location could not be added.
@@ -299,7 +315,14 @@ angular.module('climbingReportApp')
           });
         },
         function () {
-          console.log('Could not get current geolocation from browser');
+
+          // Set Flash message
+          $rootScope.FlashMessage = {
+            type: 'warning',
+            message: 'Could not get current geolocation from browser.'
+          };
+
+          getLocations();
         });
     }
 
