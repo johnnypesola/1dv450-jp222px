@@ -1,6 +1,7 @@
 <div class="well">
     <strong>What are locations for?</strong><br>
     Locations are the places where you do your climbing at.
+    The number located beside the location in the map represents the number of reports associated with the location
 </div>
 
 <div class="row">
@@ -10,7 +11,8 @@
     <p class="text-right col-md-6">
         <button class="btn btn-success" ng-click="setAddMode(true)" ng-disabled="isAddMode || isEditMode"><span class="glyphicon glyphicon-plus"></span> Add location</button>
     </p>
-
+</div>
+<div class="row">
     <div class="ng-map-container" map-lazy-load="https://maps.google.com/maps/api/js">
         <ng-map zoom="{{mapValues.zoom}}" center="[{{mapValues.center.latitude}}, {{mapValues.center.longitude}}]">
 
@@ -41,10 +43,10 @@
                 }"
             >
             </marker>
-
         </ng-map>
     </div>
-
+</div>
+<div class="row">
     <div ng-show="isEditMode">
         <h4>Edit location name</h4>
 
@@ -59,7 +61,6 @@
     </div>
 
     <div ng-show="isAddMode">
-
         <h4>New location name</h4>
 
         <div class="input-group">
@@ -70,5 +71,4 @@
             </div>
         </div>
     </div>
-
 </div>

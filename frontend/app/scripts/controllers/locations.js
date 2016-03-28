@@ -7,8 +7,11 @@
  * # LocationsCtrl
  * Controller of the climbingReportApp
  */
+
+
+
 angular.module('climbingReportApp')
-  .controller('LocationsCtrl', function ($scope, $rootScope, Location, AuthService) {
+  .controller('LocationsCtrl', function ($scope, $rootScope, Location, AuthService, MAX_MAP_ZOOM, MIN_MAP_ZOOM) {
 
     // Init vars START
 
@@ -20,7 +23,7 @@ angular.module('climbingReportApp')
 
     $scope.mapValues = {
       center: {},
-      zoom: 5
+      zoom: MIN_MAP_ZOOM
     };
 
     // Init vars END
@@ -214,11 +217,13 @@ angular.module('climbingReportApp')
 
       locationToAdd.$save()
 
-        .then(function(){
+        .then(function(response){
+
+          var location = response.items[0];
+
+          location.reports_count = 0;
 
           $scope.isAddMode = false;
-          location.isBusy = false;
-          location.reports_count = 0;
 
           locationsData.items.push(location);
 
@@ -269,6 +274,11 @@ angular.module('climbingReportApp')
           console.log('Could not get current geolocation from browser');
         });
     }
-    // Init code END
+
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      var map = evtMap;
+      map.setOptions({maxZoom: MAX_MAP_ZOOM, minZoom: MIN_MAP_ZOOM});//set maxzoom and minzoom
+      // Init code END
+    });
 
   });
