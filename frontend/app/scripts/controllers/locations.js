@@ -30,6 +30,7 @@ angular.module('climbingReportApp')
 
     // Private methods START
 
+    /*
     var getLocations = function(){
 
       if(isLoggedIn){
@@ -59,26 +60,36 @@ angular.module('climbingReportApp')
           });
       }
     };
+    */
 
     var getLocationsNear = function(latitude, longitude){
 
-      $scope.locationsData = Location.near({
-        latitude: latitude,
-        longitude: longitude
-      });
+      if(isLoggedIn){
 
-      $scope.locationsData.$promise
-
-        // If location could not be fetched.
-        .catch(function(response) {
-
-          // Set Flash message
-          $rootScope.FlashMessage = {
-            type: 'danger',
-            message: response.data.error,
-            reasons: response.data.reasons
-          };
+        locationsData = Location.near({
+          latitude: latitude,
+          longitude: longitude,
+          page_num: $scope.pageNum,
+          per_page: $scope.locationsPerPage
         });
+
+        locationsData.$promise
+
+          .then(function(response){
+            $scope.visibleLocations = response.items;
+          })
+
+          // If location could not be fetched.
+          .catch(function(response) {
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'danger',
+              message: response.data.error,
+              reasons: response.data.reasons
+            };
+          });
+      }
     };
 
     // Private methods END
@@ -123,126 +134,137 @@ angular.module('climbingReportApp')
 
     $scope.saveLocation = function(location){
 
-      location.isBusy = true;
+      if(isLoggedIn){
 
-      var locationToSave = new Location(
-        {
-          id: location.id,
-          name: location.name,
-          latitude: location.latitude,
-          longitude: location.longitude
-        }
-      );
+        location.isBusy = true;
 
-      Location.update({ id: location.id }, locationToSave).$promise
-        .then(function(){
+        var locationToSave = new Location(
+          {
+            id: location.id,
+            name: location.name,
+            latitude: location.latitude,
+            longitude: location.longitude
+          }
+        );
 
-          // Update location name on map
-          editedLocationByReference.name = location.name;
-        })
+        Location.update({ id: location.id }, locationToSave).$promise
+          .then(function(){
 
-        // If location could not be saved.
-        .catch(function(response) {
+            // Update location name on map
+            editedLocationByReference.name = location.name;
+          })
 
-          // Set Flash message
-          $rootScope.FlashMessage = {
-            type: 'danger',
-            message: response.data.error,
-            reasons: response.data.reasons
-          };
-        })
+          // If location could not be saved.
+          .catch(function(response) {
 
-        .finally(function(){
-          location.isBusy = false;
-          $scope.isEditMode = false;
-        });
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'danger',
+              message: response.data.error,
+              reasons: response.data.reasons
+            };
+          })
+
+          .finally(function(){
+            location.isBusy = false;
+            $scope.isEditMode = false;
+          });
+
+      }
     };
 
     $scope.deleteLocation = function(location){
 
-      location.isBusy = true;
+      if(isLoggedIn){
 
-      var locationToDelete = new Location(
-        {
-          id: location.id,
-          name: location.name
-        }
-      );
+        location.isBusy = true;
 
-      locationToDelete.$delete()
+        var locationToDelete = new Location(
+          {
+            id: location.id,
+            name: location.name
+          }
+        );
 
-        .then(function(){
+        locationToDelete.$delete()
 
-          var locationToRemoveIndex;
+          .then(function(){
 
-          // Find index of location to remove
-          locationToRemoveIndex = locationsData.items.findIndex(function(otherLocation){
-            return location.id === otherLocation.id;
+            var locationToRemoveIndex;
+
+            // Find index of location to remove
+            locationToRemoveIndex = locationsData.items.findIndex(function(otherLocation){
+              return location.id === otherLocation.id;
+            });
+
+            // Remove location from array.
+            locationsData.items.splice(locationToRemoveIndex, 1);
+          })
+
+          // If location could not be deleted.
+          .catch(function(response) {
+
+            location.isBusy = false;
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'danger',
+              message: response.data.error,
+              reasons: response.data.reasons
+            };
+          })
+
+          .finally(function(){
+            location.isBusy = false;
+            $scope.isEditMode = false;
           });
-
-          // Remove location from array.
-          locationsData.items.splice(locationToRemoveIndex, 1);
-        })
-
-        // If location could not be deleted.
-        .catch(function(response) {
-
-          location.isBusy = false;
-
-          // Set Flash message
-          $rootScope.FlashMessage = {
-            type: 'danger',
-            message: response.data.error,
-            reasons: response.data.reasons
-          };
-        })
-
-        .finally(function(){
-          location.isBusy = false;
-          $scope.isEditMode = false;
-        });
+      }
     };
 
     $scope.addLocation = function(location){
 
-      location.isBusy = true;
+      if(isLoggedIn){
 
-      var locationToAdd = new Location(
-        {
-          name: location.name,
-          latitude: location.latitude,
-          longitude: location.longitude
-        }
-      );
+        location.isBusy = true;
 
-      locationToAdd.$save()
+        var locationToAdd = new Location(
+          {
+            name: location.name,
+            latitude: location.latitude,
+            longitude: location.longitude
+          }
+        );
 
-        .then(function(response){
+        locationToAdd.$save()
 
-          var location = response.items[0];
+          .then(function(response){
 
-          location.reports_count = 0;
+            var location = response.items[0];
 
-          $scope.isAddMode = false;
+            location.reports_count = 0;
 
-          locationsData.items.push(location);
+            $scope.isAddMode = false;
 
-          $scope.visibleLocations = locationsData.items;
-          $scope.newLocation = [];
-        })
+            locationsData.items.push(location);
 
-        // If location could not be added.
-        .catch(function(response) {
+            $scope.visibleLocations = locationsData.items;
+            $scope.newLocation = [];
+          })
 
-          location.isBusy = false;
+          // If location could not be added.
+          .catch(function(response) {
 
-          // Set Flash message
-          $rootScope.FlashMessage = {
-            type: 'danger',
-            message: response.data.error,
-            reasons: response.data.reasons
-          };
-        });
+            location.isBusy = false;
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'danger',
+              message: response.data.error,
+              reasons: response.data.reasons
+            };
+          });
+
+      }
     };
 
     $scope.onDragUpdateLocationPosition = function(){
@@ -255,19 +277,25 @@ angular.module('climbingReportApp')
 
     // Init code START
 
-    getLocations();
+    // getLocations();
 
     if (navigator.geolocation) {
 
       navigator.geolocation.getCurrentPosition(
         function (position) {
 
+          var latitude = position.coords.latitude,
+              longitude = position.coords.longitude;
+
           $scope.$apply(function () {
 
             $scope.mapValues.center = {
-              longitude: position.coords.longitude,
-              latitude: position.coords.latitude
+              longitude: longitude,
+              latitude: latitude
             };
+
+            getLocationsNear(latitude, longitude);
+
           });
         },
         function () {
@@ -277,7 +305,7 @@ angular.module('climbingReportApp')
 
     $scope.$on('mapInitialized', function(evt, evtMap) {
       var map = evtMap;
-      map.setOptions({maxZoom: MAX_MAP_ZOOM, minZoom: MIN_MAP_ZOOM});//set maxzoom and minzoom
+      map.setOptions({maxZoom: MAX_MAP_ZOOM, minZoom: MIN_MAP_ZOOM});
       // Init code END
     });
 

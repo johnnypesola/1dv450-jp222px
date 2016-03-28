@@ -15,7 +15,7 @@ angular.module('climbingReportApp')
     var isLoggedIn = AuthService.isLoggedIn();
     $scope.pageNum = 1;
     $scope.tagsPerPage = 4;
-    $scope.newTag = {}
+    $scope.newTag = {};
 
     // Init vars END
 
@@ -51,131 +51,149 @@ angular.module('climbingReportApp')
 
     $scope.saveTag = function(tag){
 
-      tag.isSaving = true;
+      if(isLoggedIn){
 
-      var tagToSave = new Tag(
-        {
-          id: tag.id,
-          name: tag.name,
-          color: tag.color
-        }
-      );
+        tag.isSaving = true;
 
-      Tag.update({ id: tag.id }, tagToSave).$promise
-        .then(function(){
-          tag.isEditMode = false;
-          tag.isSaving = false;
-        })
+        var tagToSave = new Tag(
+          {
+            id: tag.id,
+            name: tag.name,
+            color: tag.color
+          }
+        );
 
-        // If tag could not be saved.
-        .catch(function(response) {
+        Tag.update({ id: tag.id }, tagToSave).$promise
+          .then(function(){
+            tag.isEditMode = false;
+            tag.isSaving = false;
+          })
 
-          // Set Flash message
-          $rootScope.FlashMessage = {
-            type: 'danger',
-            message: response.data.error,
-            reasons: response.data.reasons
-          };
-        })
+          // If tag could not be saved.
+          .catch(function(response) {
 
-        .finally(function() {
-          tag.isSaving = false;
-        });
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'danger',
+              message: response.data.error,
+              reasons: response.data.reasons
+            };
+          })
+
+          .finally(function() {
+            tag.isSaving = false;
+          });
+      }
     };
 
     $scope.deleteTag = function(tag){
 
-      tag.isBusy = true;
+      if(isLoggedIn){
 
-      var tagToDelete = new Tag(
-        {
-          id: tag.id,
-          name: tag.name,
-          color: tag.color
-        }
-      );
+        tag.isBusy = true;
 
-      tagToDelete.$delete()
+        var tagToDelete = new Tag(
+          {
+            id: tag.id,
+            name: tag.name,
+            color: tag.color
+          }
+        );
 
-        .then(function(response){
+        tagToDelete.$delete()
 
-          var tagToRemoveIndex;
+          .then(function(response){
 
-          // Find index of tag to remove
-          tagToRemoveIndex = $scope.tagsData.items.findIndex(function(otherTag){
-            return tag.id === otherTag.id;
+            var tagToRemoveIndex;
+
+            // Find index of tag to remove
+            tagToRemoveIndex = $scope.tagsData.items.findIndex(function(otherTag){
+              return tag.id === otherTag.id;
+            });
+
+            // Remove tag from array.
+            $scope.tagsData.items.splice(tagToRemoveIndex, 1);
+          })
+
+          // If tag could not be deleted.
+          .catch(function(response) {
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'danger',
+              message: response.data.error,
+              reasons: response.data.reasons
+            };
+          })
+
+          .finally(function(){
+            tag.isBusy = false;
           });
 
-          // Remove tag from array.
-          $scope.tagsData.items.splice(tagToRemoveIndex, 1);
-        })
-
-        // If tag could not be deleted.
-        .catch(function(response) {
-
-          // Set Flash message
-          $rootScope.FlashMessage = {
-            type: 'danger',
-            message: response.data.error,
-            reasons: response.data.reasons
-          };
-        })
-
-        .finally(function(){
-          tag.isBusy = false;
-        });
+      }
     };
 
     $scope.addTag = function(tag){
 
-      tag.isBusy = true;
+      if(isLoggedIn){
 
-      var tagToAdd = new Tag(
-        {
-          name: tag.name,
-          color: tag.color
-        }
-      );
+        tag.isBusy = true;
 
-      tagToAdd.$save()
+        var tagToAdd = new Tag(
+          {
+            name: tag.name,
+            color: tag.color
+          }
+        );
 
-        .then(function(response){
+        tagToAdd.$save()
 
-          $scope.isAddMode = false;
-          $scope.tagsData.items.push(response.items[0]);
-        })
+          .then(function(response){
 
-        // If tag could not be added.
-        .catch(function(response) {
+            $scope.isAddMode = false;
+            $scope.tagsData.items.push(response.items[0]);
+          })
 
-          // Set Flash message
-          $rootScope.FlashMessage = {
-            type: 'danger',
-            message: response.data.error,
-            reasons: response.data.reasons
-          };
-        })
+          // If tag could not be added.
+          .catch(function(response) {
 
-        .finally(function(){
-          tag.isBusy = false;
-        });
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'danger',
+              message: response.data.error,
+              reasons: response.data.reasons
+            };
+          })
+
+          .finally(function(){
+            tag.isBusy = false;
+          });
+
+      }
     };
 
     $scope.nextPage = function(){
 
-      if($scope.pageNum !== $scope.tagsData.pagination.total_pages) {
-        $scope.pageNum += 1;
+      if(isLoggedIn){
 
-        getTags();
+        if($scope.pageNum !== $scope.tagsData.pagination.total_pages) {
+          $scope.pageNum += 1;
+
+          getTags();
+        }
       }
     };
 
     $scope.previousPage = function(){
 
-      if($scope.pageNum !== 1) {
-        $scope.pageNum -= 1;
+      if(isLoggedIn){
 
-        getTags();
+        if($scope.pageNum !== 1) {
+          $scope.pageNum -= 1;
+
+          getTags();
+        }
+
       }
     };
 
