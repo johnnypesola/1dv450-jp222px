@@ -1,10 +1,10 @@
 module PaginationHelper
 
-  def generate_pagination_json(page_num, per_page, resource)
+  def generate_pagination_json(page_num, per_page, resource, base_url)
 
     # Show href if there are more previous pages
     if page_num > 1
-      prev_page_href = api_v1_reports_url + '?per_page=' + per_page.to_s + '&page_num=' + (page_num - 1).to_s
+      prev_page_href = base_url + '?per_page=' + per_page.to_s + '&page_num=' + (page_num - 1).to_s
     else
       prev_page_href = ''
     end
@@ -13,7 +13,7 @@ module PaginationHelper
     if resource.total_pages == page_num || resource.total_pages == 0
       next_page_href = ''
     else
-      next_page_href = api_v1_reports_url + '?per_page=' + per_page.to_s + '&page_num=' + (page_num + 1).to_s
+      next_page_href = base_url + '?per_page=' + per_page.to_s + '&page_num=' + (page_num + 1).to_s
     end
 
     return {

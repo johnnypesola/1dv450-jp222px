@@ -35,6 +35,9 @@ gem 'omniauth-github'
 # Geocoder (Measurements for latitude and longitude + more)
 gem 'geocoder'
 
+#Cors
+gem 'rack-cors', :require => 'rack/cors'
+
 # Pagination
 #gem 'will_paginate'
 gem 'kaminari'

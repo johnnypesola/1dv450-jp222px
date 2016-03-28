@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback" => "api/sessions#create"
   get "/signout" => "api/sessions#destroy", :as => :signout
   get "/authenticate" => "api/sessions#authenticate"
+  get "/is_logged_in" => "api/sessions#is_logged_in"
   get "/unauthorized" => "api/sessions#unauthorized", :as => :unauthorized
   get "/unauthorized_key" => "api/sessions#unauthorized_key", :as => :unauthorized_key
 

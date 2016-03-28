@@ -454,7 +454,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
         response.status = 200
         render :json => {
             :items => reports,
-            :pagination => generate_pagination_json(page_num, per_page, reports)
+            :pagination => generate_pagination_json(page_num, per_page, reports, api_v1_reports_url)
         }, methods: [:href]
 
       end

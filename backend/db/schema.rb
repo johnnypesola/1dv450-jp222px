@@ -76,8 +76,9 @@ ActiveRecord::Schema.define(version: 20160223230242) do
 
   create_table "tags", force: :cascade do |t|
     t.string   "name",       limit: 50
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.string   "color",      limit: 7,  default: "#888888"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   create_table "users", force: :cascade do |t|

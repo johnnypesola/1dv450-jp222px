@@ -4,6 +4,8 @@ class CreateTags < ActiveRecord::Migration
 
       t.string "name", :limit => 50
 
+      t.string "color", :limit => 7, :default => '#ffffff'
+
       t.timestamps null: false
     end
   end

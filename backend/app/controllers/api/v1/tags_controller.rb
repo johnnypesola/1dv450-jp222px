@@ -31,7 +31,7 @@ class Api::V1::TagsController < Api::ApiBaseController
       response.status = 200
       render :json => {
           :items => tags,
-          :pagination => generate_pagination_json(page_num, per_page, tags)
+          :pagination => generate_pagination_json(page_num, per_page, tags, api_v1_tags_url)
       }, methods: [:href, :reports_href]
 
     end
@@ -228,7 +228,7 @@ class Api::V1::TagsController < Api::ApiBaseController
       render :json => {
           :items => reports,
           :tag => tag,
-          :pagination => generate_pagination_json(page_num, per_page, reports)
+          :pagination => generate_pagination_json(page_num, per_page, reports, api_v1_reports_url)
       }, methods: [:href]
 
     end
@@ -255,7 +255,7 @@ class Api::V1::TagsController < Api::ApiBaseController
   private
 
   def tag_params
-    params.permit(:name, :id)
+    params.permit(:name, :id, :color)
   end
 
   def destroy_params

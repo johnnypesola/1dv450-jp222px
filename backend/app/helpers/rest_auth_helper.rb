@@ -8,7 +8,12 @@ module RestAuthHelper
 
     if clientuser.nil?
 
-      redirect_to unauthorized_path
+      response.status = 401
+      render :json => {
+          error: 'Unauthorized.',
+          reasons: [ 'Please login and try again.' ]
+
+      }
 
       return false
 
