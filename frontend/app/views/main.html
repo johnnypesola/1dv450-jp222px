@@ -1,0 +1,32 @@
+<div>
+
+  <div class="jumbotron climbing-report-ornament">
+
+    <div ng-switch on="isLoggedIn">
+      <div ng-switch-when="true">
+        <p class="lead">
+          <strong>"I'll be back"</strong> you said, and here you are!<br>
+          You are a man of true words.
+        </p>
+        <p><button class="btn btn-lg btn-success"><span class="glyphicon glyphicon-edit"></span> Add report</button></p>
+      </div>
+      <div ng-switch-when="false">
+        <h1>Welcome to the Climbing report system</h1>
+        <p class="lead">
+          Keep track of your climbing progress
+        </p>
+        <p><button class="btn btn-lg btn-success" ng-click="doLogIn()"><span class="glyphicon glyphicon-lock"></span> Authenticate with Github</button></p>
+      </div>
+    </div>
+  </div>
+
+  <div ng-switch on="isLoggedIn">
+    <div class="row marketing" ng-switch-when="false">
+      <h4>Authenticate with Github</h4>
+      <p>
+        This app uses Github for authentication. Don't have an account? <a href="http://www.github.com" target="_blank">Then check it out!</a>
+      </p>
+    </div>
+  </div>
+
+</div>

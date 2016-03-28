@@ -1,0 +1,273 @@
+/* ng-animate START */
+
+.repeat-animation {
+    box-sizing:border-box;
+    line-height:20px;
+}
+
+.repeat-animation.ng-enter-stagger,
+.repeat-animation.ng-move-stagger {
+    /* 200ms will be applied between each sucessive enter operation */
+    -webkit-transition-delay:0.1s;
+    transition-delay:0.1s;
+}
+
+.repeat-animation.ng-enter,
+.repeat-animation.ng-move {
+    -webkit-transition:0.1s linear all;
+    transition:0.1s linear all;
+}
+
+.repeat-animation.ng-enter,
+.repeat-animation.ng-move {
+    -webkit-transition:0.1s linear all;
+    transition:0.1s linear all;
+
+    opacity:0;
+    height:0;
+}
+
+.repeat-animation.ng-move.ng-move-active,
+.repeat-animation.ng-enter.ng-enter-active {
+    opacity:1;
+    height:20px;
+}
+
+/* ng-animate END */
+
+
+/* Map specific START */
+
+ng-map {
+    height: 300px !important;
+    display: block;
+}
+
+.map-marker-button {
+    position: relative;
+    cursor: pointer;
+    display: block;
+    background: #fff;
+    border-radius: 3px;
+    font-size: 13px;
+
+    -webkit-box-shadow: 1px 1px 5px 0 rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 5px 0 rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 5px 0 rgba(50, 50, 50, 0.75);
+
+    padding: 1px 2px;
+}
+
+.map-marker-button:after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 45%;
+    border-width: 5px 5px 0;
+    border-style: solid;
+    border-color: #fff transparent;
+    display: block;
+    width: 0;
+}
+
+.map-marker-button span.reports-count {
+    position: absolute;
+    top:3px;
+    left:2px;
+    color: #fff;
+    background: #00A000 !important;
+}
+
+.map-marker-button span.location-name {
+    margin-left: 19px;
+    background: none !important;
+    display: block;
+    white-space: nowrap;
+}
+
+a.highlightedmarker {
+    background: #00A000;
+    color: #fff;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow:    none;
+    box-shadow:         none;
+}
+
+a.highlightedmarker:after {
+    border-color: #00A000 transparent;
+}
+
+a.highlightedmarker span.reports-count {
+    background: #fff !important;
+    color: #00A000;
+}
+
+/* Map specific END */
+
+h1 {
+    margin-top: 0 !important;
+}
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body {
+  padding: 0;
+}
+
+.climbing-report-logo {
+    height: 50px;
+    border-right: 1px solid #ccc;
+}
+
+.climbing-report-ornament {
+    background-image: url(../images/climbing_report_ornament.svg);
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+.color-picker-container {
+    position: relative;
+    top: -12px;
+    left: -3px;
+}
+
+.colorbox {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border: 1px solid #ccc;
+    border-radius: 11px;
+}
+
+.logout {
+    margin: 14px !important;
+}
+
+.pagination {
+    margin: 0 !important;
+}
+
+.custom-button {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e1e1e1+51,f6f6f6+100 */
+    background: #ffffff; /* Old browsers */
+    margin-left: 5px;
+}
+
+.navbar-default {
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f6f6f6+0,e1e1e1+49 */
+    background: #f6f6f6; /* Old browsers */
+    background: -moz-linear-gradient(top,  #f6f6f6 85%, #e9e9e9 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #f6f6f6 85%,#e9e9e9 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #f6f6f6 85%,#e9e9e9 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', endColorstr='#e9e9e9',GradientType=0 ); /* IE6-9 */
+
+    border-bottom: none
+}
+
+.navbar-default .navbar-toggle {
+    border-color: #ccc;
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e1e1e1+51,f6f6f6+100 */
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #e1e1e1 51%, #f6f6f6 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#e1e1e1 51%,#f6f6f6 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #ffffff 0%,#e1e1e1 51%,#f6f6f6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+
+}
+
+.navbar-nav > li > a {
+    border-left:  1px solid #eee;
+    border-right: 1px solid #ccc;
+}
+
+.navbar-default .navbar-nav > .active > a {
+    color: #00A000 !important;
+    border-left:  1px solid #fff;
+    border-right: 1px solid #ccc;
+    background: #fff !important;
+}
+
+    /* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  margin-bottom: 20px;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+
+/* Custom page footer */
+.footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+  padding: 20px 0 10px 0;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
