@@ -19,8 +19,12 @@ class Api::V1::ReportsController < Api::ApiBaseController
       # Sort order
       sort_order = params[:sort_order] == 'asc' ? 'ASC' : 'DESC'
 
+      # Get user
+      user = get_logged_in_user
+
       # Get reports
-      reports = Report.page(page_num).per(per_page).order(sort_by + ' ' + sort_order).includes(:tags)
+      reports = user.report.page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
+
 
       # Add HATEOAS href to objects
       reports.each do |report|
@@ -33,7 +37,15 @@ class Api::V1::ReportsController < Api::ApiBaseController
       render :json => {
         :items => reports,
         :pagination => generate_pagination_json(page_num, per_page, reports, api_v1_reports_url)
-      }, methods: [:href, :href_location, :tags]
+      }, methods: [:href, :href_location, :tags, :location],
+          :include => {
+              :tags => {
+                  :except => [:name, :created_at, :updated_at]
+              },
+              :location => {
+                  :except => [:latitude, :longitude, :created_at, :updated_at]
+              }
+          }
 
     end
 
@@ -51,7 +63,10 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
     if check_rest_login && check_api_key(params[:key])
 
-      report = Report.find(params[:id])
+      # Get user
+      user = get_logged_in_user
+
+      report = Report.where(id: params[:id], clientuser_id: user.id).first
 
       # Add HATEOAS href to object
       report.href = api_v1_report_url(report.id)
@@ -60,7 +75,15 @@ class Api::V1::ReportsController < Api::ApiBaseController
       response.status = 200
       render :json => {
           :items => [report],
-      }, methods: [:href, :href_location]
+      }, methods: [:href, :href_location],
+           :include => {
+               :tags => {
+                   :except => [:name, :created_at, :updated_at]
+               },
+               :location => {
+                   :except => [:created_at, :updated_at]
+               }
+           }
 
     end
 
@@ -298,6 +321,20 @@ class Api::V1::ReportsController < Api::ApiBaseController
     if check_rest_login && check_api_key(params[:key])
 
       report = Report.find(params[:report_id])
+
+      # Check if are not allowed to modify this report
+      if report.clientuser_id != get_logged_in_user.id
+
+        response.status = 403
+        render :json => {
+            error: 'Could not add tag to report report.',
+            reasons: [ 'you are not the owner of that report' ]
+        }
+
+        return
+
+      end
+
       tag = Tag.find(params[:tag_id])
 
       tags_before = report.tags.length
@@ -315,7 +352,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
         response.status = 500
 
         render :json => {
-            error: 'Could add tag to report.',
+            error: 'Could remove tag from report.',
             reasons: [ 'Unknown error occured' ]
         }
 
@@ -348,6 +385,20 @@ class Api::V1::ReportsController < Api::ApiBaseController
     if check_rest_login && check_api_key(params[:key])
 
       report = Report.find(params[:report_id])
+
+      # Check if are not allowed to modify this report
+      if report.clientuser_id != get_logged_in_user.id
+
+        response.status = 403
+        render :json => {
+            error: 'Could not add tag to report report.',
+            reasons: [ 'you are not the owner of that report' ]
+        }
+
+        return
+
+      end
+
       tag = Tag.find(params[:tag_id])
 
       tags_before = report.tags.length
@@ -356,10 +407,6 @@ class Api::V1::ReportsController < Api::ApiBaseController
       report.tags << tag
 
       if report.tags.length == tags_before + 1
-
-
-
-
 
         # Add HATEOAS href to objects
         report.href = api_v1_report_url(report.id)
@@ -391,7 +438,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
       response.status = 404
 
       render :json => {
-          error: 'Could add tag to report.',
+          error: 'Could not add tag to report.',
           reasons: [ 'Report or tag not found' ]
       }
 
@@ -400,7 +447,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
       response.status = 400
 
       render :json => {
-          error: 'Could add tag to report.',
+          error: 'Could not add tag to report.',
           reasons: [ 'Tag already present on report' ]
       }
 
@@ -416,6 +463,9 @@ class Api::V1::ReportsController < Api::ApiBaseController
       # Pagination params
       page_num = Integer(params[:page_num]) || 1
       per_page = Integer(params[:per_page]) || 10
+
+      # Get user
+      user = get_logged_in_user
 
       # Sort by
       case params[:sort_by]
@@ -442,7 +492,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
       else
 
         # Search after value and apply pagination and order
-        reports = Report.where("route_name LIKE ?", "%#{search_string}%"
+        reports = Report.where("route_name LIKE ? AND clientuser_id = ?", "%#{search_string}%", user.id
         ).page(page_num).per(per_page).order(sort_by + ' ' + sort_order).includes(:tags)
 
         # Add HATEOAS href to objects

@@ -201,8 +201,11 @@ class Api::V1::TagsController < Api::ApiBaseController
       # Get tag
       tag = Tag.find(params[:id])
 
+      # Get user
+      user = get_logged_in_user
+
       # Get reports
-      reports = tag.reports.page(page_num).per(per_page).order(sort_by + ' ' + sort_order).includes(:tags)
+      reports = tag.reports.page(page_num).per(per_page).order(sort_by + ' ' + sort_order).includes(:tags).where(clientuser_id: user.id)
 
       if reports.length == 0
 
