@@ -1,7 +1,91 @@
-<p>This is the reports view.</p>
+<div class="well">
+    <strong>What are reports?</strong><br>
+    Reports of your climbing helps you keep track of your climbing progress.
+</div>
+
+<div class="row">
+
+    <h1 class="col-md-6">Reports</h1>
+
+    <div class="input-group col-md-6">
+        <input type="text" class="form-control" ng-model="searchForRoute.name" placeholder="Search for climbing route">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="searchReports(searchForRoute)" ng-disabled="searchForRoute.isBusy"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <h4 class="col-md-1">Tags</h4>
+
+    <p class="col-md-11">
+        <button
+            class="btn btn-default btn-xs climbing-tag"
+            ng-click="selectTag()"
+        >
+            All
+        </button>
+
+        <button
+            class="btn btn-default btn-xs climbing-tag"
+            ng-class="{'climbing-tag-selected': tag.selected}"
+            type="button"
+            ng-repeat="tag in tagsData.items"
+            style="background-color: {{tag.color}}"
+            ng-click="selectTag(tag)"
+        >
+            {{tag.name}}
+        </button>
+    </p>
+</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th width="46"></th>
+        <th>Tags</th>
+        <th>Route name</th>
+        <th>Grade</th>
+        <th>Created time</th>
+        <th>Location</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="report in reportData.items" class="repeat-animation">
+        <td>
+            <button
+                    class="custom-button btn btn-default btn-xs glyphicon glyphicon-zoom-in"
+                    ng-click="showReport(report)"
+            />
+        </td>
+        <td>
+            <div class="colorbox"
+                 ng-repeat="tag in report.tags"
+                 style="background: {{tag.color}}"
+            >{{tag.name | limitTo : 1}}</div>
+        </td>
+        <td>
+            {{report.route_name}}
+        </td>
+        <td>
+            {{report.route_grade}}
+        </td>
+        <td>
+            {{report.created_at | date:"yyyy-MM-dd 'at' HH:mm"}}
+        </td>
+        <td>
+            {{report.location.name}}
+        </td>
+    </tr>
+</table>
+
+<pre>
+    {{ reportData | json }}
+</pre>
 
 
 <p>Show reports with tags</p>
 <p>Lists with tags</p>
 
-<p>Search for report or search for location? Cant remember</p>
+<p>Search for report with specific route name</p>

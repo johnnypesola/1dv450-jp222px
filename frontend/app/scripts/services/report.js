@@ -15,7 +15,11 @@ angular.module('climbingReportApp')
       { id: '@id' },
       {
         query: { method: 'GET' },
-        update: { method:'PUT' }
+        update: { method:'PUT' },
+        search: {
+          url: API_URL + REST_PATH + 'reports/search',
+          method: 'GET'
+        }
       }
     );
   });

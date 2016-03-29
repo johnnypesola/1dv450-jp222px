@@ -67,6 +67,11 @@ climbingReportApp.config(function ($routeProvider, $httpProvider) {
         controller: 'ReportsCtrl',
         controllerAs: 'reports'
       })
+      .when('/report/:id', {
+        templateUrl: 'views/report.html',
+        controller: 'ReportCtrl',
+        controllerAs: 'report'
+      })
       .otherwise({
         redirectTo: '/'
       });

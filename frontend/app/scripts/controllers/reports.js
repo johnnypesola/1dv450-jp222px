@@ -8,28 +8,51 @@
  * Controller of the climbingReportApp
  */
 angular.module('climbingReportApp')
-  .controller('ReportsCtrl', function ($scope, $rootScope, AuthService, Report) {
+  .controller('ReportsCtrl', function ($scope, $rootScope, $location, AuthService, Report, Tag) {
     // Init vars START
 
     var isLoggedIn = AuthService.isLoggedInCheck();
     $scope.pageNum = 1;
     $scope.reportsPerPage = 4;
-    $scope.newReport = {};
 
     // Init vars END
 
     // Private methods START
 
+    var getTags = function(){
+
+      if(isLoggedIn){
+
+        $scope.tagsData = Tag.query({
+          page_num: 1,
+          per_page: 1000
+        });
+
+        $scope.tagsData.$promise
+
+          // If tags could not be fetched.
+          .catch(function(response) {
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'danger',
+              message: response.data.error,
+              reasons: response.data.reasons
+            };
+          });
+      }
+    };
+
     var getReports = function(){
 
       if(isLoggedIn){
 
-        $scope.reportsData = Report.query({
+        $scope.reportData = Report.query({
           page_num: $scope.pageNum,
           per_page: $scope.reportsPerPage
         });
 
-        $scope.reportsData.$promise
+        $scope.reportData.$promise
 
           // If reports could not be fetched.
           .catch(function(response) {
@@ -44,148 +67,62 @@ angular.module('climbingReportApp')
       }
     };
 
+    var deselectTags = function(){
+
+      $scope.tagsData.items.forEach(function(tag){
+        tag.selected = false;
+      });
+    };
+
     // Private methods END
 
     // Public methods START
 
-    $scope.saveReport = function(report){
+    $scope.showReport = function(report) {
 
-      if(isLoggedIn){
-
-        report.isSaving = true;
-
-        var reportToSave = new Report(
-          {
-            id: report.id,
-            name: report.name,
-            color: report.color
-          }
-        );
-
-        Report.update({ id: report.id }, reportToSave).$promise
-          .then(function(){
-            report.isEditMode = false;
-            report.isSaving = false;
-
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'success',
-              message: 'Succesfully saved report.'
-            };
-          })
-
-          // If report could not be saved.
-          .catch(function(response) {
-
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'danger',
-              message: response.data.error,
-              reasons: response.data.reasons
-            };
-          })
-
-          .finally(function() {
-            report.isSaving = false;
-          });
-      }
+      $location.path('report/' + report.id);
     };
 
-    $scope.deleteReport = function(report){
+    $scope.searchReports = function(report) {
 
-      if(isLoggedIn){
+      report.isBusy = true;
 
-        report.isBusy = true;
+      $scope.reportData = Report.search({
+        page_num: $scope.pageNum,
+        per_page: $scope.reportsPerPage,
+        search_string: report.name
+      });
 
-        var reportToDelete = new Report(
-          {
-            id: report.id,
-            name: report.name,
-            color: report.color
-          }
-        );
+      $scope.reportData.$promise
 
-        reportToDelete.$delete()
+        .finally(function(){
+          report.isBusy = false;
 
-          .then(function(){
-
-            var reportToRemoveIndex;
-
-            // Find index of report to remove
-            reportToRemoveIndex = $scope.reportsData.items.findIndex(function(otherReport){
-              return report.id === otherReport.id;
-            });
-
-            // Remove report from array.
-            $scope.reportsData.items.splice(reportToRemoveIndex, 1);
-
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'success',
-              message: 'Succesfully removed report.'
-            };
-          })
-
-          // If report could not be deleted.
-          .catch(function(response) {
-
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'danger',
-              message: response.data.error,
-              reasons: response.data.reasons
-            };
-          })
-
-          .finally(function(){
-            report.isBusy = false;
-          });
-
-      }
+          deselectTags();
+        });
     };
 
-    $scope.addReport = function(report){
+    $scope.selectTag = function(selectedTag) {
 
-      if(isLoggedIn){
+      // Check that tag is not already selected
+      if(selectedTag !== undefined && !selectedTag.selected) {
 
-        report.isBusy = true;
+        deselectTags();
 
-        var reportToAdd = new Report(
-          {
-            name: report.name,
-            color: report.color
-          }
-        );
+        // Select tag
+        selectedTag.selected = true;
 
-        reportToAdd.$save()
+        $scope.reportData = Tag.reports({
+          page_num: $scope.pageNum,
+          per_page: $scope.reportsPerPage,
+          id: selectedTag.id
+        });
 
-          .then(function(response){
+      } else {
 
-            $scope.isAddMode = false;
-            $scope.reportsData.items.push(response.items[0]);
+        deselectTags();
 
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'success',
-              message: 'Succesfully added report.'
-            };
-          })
-
-          // If report could not be added.
-          .catch(function(response) {
-
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'danger',
-              message: response.data.error,
-              reasons: response.data.reasons
-            };
-          })
-
-          .finally(function(){
-            report.isBusy = false;
-          });
-
+        getReports();
       }
     };
 
@@ -193,7 +130,7 @@ angular.module('climbingReportApp')
 
       if(isLoggedIn){
 
-        if($scope.pageNum !== $scope.reportsData.pagination.total_pages) {
+        if($scope.pageNum !== $scope.reportData.pagination.total_pages) {
           $scope.pageNum += 1;
 
           getReports();
@@ -219,6 +156,8 @@ angular.module('climbingReportApp')
     // Init code START
 
     getReports();
+
+    getTags();
 
     // Init code END
   });
