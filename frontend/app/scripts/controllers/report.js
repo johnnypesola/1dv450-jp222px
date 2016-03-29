@@ -95,6 +95,24 @@ angular.module('climbingReportApp')
       }
     };
 
+    var removeTagFromReport = function(tag){
+
+      Report.removeTag({
+        id: $scope.reportData.id,
+        tagId: tag.id
+      });
+    };
+
+    var addTagToReport = function(tag){
+
+      console.log($scope.reportData.id);
+
+      Report.addTag({
+        id: $scope.reportData.id,
+        tagId: tag.id
+      });
+    };
+
     // Private methods END
 
     // Public methods START
@@ -103,6 +121,15 @@ angular.module('climbingReportApp')
 
       selectedTag.selected = !selectedTag.selected;
 
+      if(selectedTag.selected) {
+
+        addTagToReport(selectedTag);
+
+      } else {
+
+        removeTagFromReport(selectedTag);
+
+      }
     };
 
     $scope.saveReport = function(report){
