@@ -1,23 +1,23 @@
 'use strict';
 
-describe('Controller: ReportCtrl', function () {
+describe('Controller: AddReportCtrl', function () {
 
   // load the controller's module
   beforeEach(module('climbingReportApp'));
 
-  var ReportCtrl,
+  var AddreportCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    ReportCtrl = $controller('ReportCtrl', {
+    AddreportCtrl = $controller('AddReportCtrl', {
       $scope: scope
       // place here mocked dependencies
     });
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
-    expect(ReportCtrl.awesomeThings.length).toBe(3);
+    expect(AddReportCtrl.awesomeThings.length).toBe(3);
   });
 });
