@@ -20,7 +20,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
       sort_order = params[:sort_order] == 'asc' ? 'ASC' : 'DESC'
 
       # Get reports
-      reports = Report.page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
+      reports = Report.page(page_num).per(per_page).order(sort_by + ' ' + sort_order).includes(:tags)
 
       # Add HATEOAS href to objects
       reports.each do |report|
@@ -32,8 +32,8 @@ class Api::V1::ReportsController < Api::ApiBaseController
       response.status = 200
       render :json => {
         :items => reports,
-        :pagination => generate_pagination_json(page_num, per_page, reports)
-      }, methods: [:href, :href_location]
+        :pagination => generate_pagination_json(page_num, per_page, reports, api_v1_reports_url)
+      }, methods: [:href, :href_location, :tags]
 
     end
 
@@ -443,7 +443,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
 
         # Search after value and apply pagination and order
         reports = Report.where("route_name LIKE ?", "%#{search_string}%"
-        ).page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
+        ).page(page_num).per(per_page).order(sort_by + ' ' + sort_order).includes(:tags)
 
         # Add HATEOAS href to objects
         reports.each do |report|
@@ -455,7 +455,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
         render :json => {
             :items => reports,
             :pagination => generate_pagination_json(page_num, per_page, reports, api_v1_reports_url)
-        }, methods: [:href]
+        }, methods: [:href, :tags]
 
       end
 

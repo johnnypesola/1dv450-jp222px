@@ -202,7 +202,7 @@ class Api::V1::TagsController < Api::ApiBaseController
       tag = Tag.find(params[:id])
 
       # Get reports
-      reports = tag.reports.page(page_num).per(per_page).order(sort_by + ' ' + sort_order)
+      reports = tag.reports.page(page_num).per(per_page).order(sort_by + ' ' + sort_order).includes(:tags)
 
       if reports.length == 0
 
@@ -229,7 +229,7 @@ class Api::V1::TagsController < Api::ApiBaseController
           :items => reports,
           :tag => tag,
           :pagination => generate_pagination_json(page_num, per_page, reports, api_v1_reports_url)
-      }, methods: [:href]
+      }, methods: [:href, :tags]
 
     end
 
