@@ -206,7 +206,7 @@ body {
 /* Custom labels */
 .climbing-tag {
     background: #eee;
-    border: 3px solid #fff;
+    border: 3px solid rgba(255,255,255,0);
     color: #fff !important;
     text-shadow: 0 0 2px rgba(0, 0, 0, 1);
     font-weight: bold;

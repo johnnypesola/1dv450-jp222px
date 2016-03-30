@@ -2,20 +2,21 @@
 
 /**
  * @ngdoc function
- * @name climbingReportApp.controller:ReportsCtrl
+ * @name climbingReportApp.controller:AddreportCtrl
  * @description
- * # ReportsCtrl
+ * # AddreportCtrl
  * Controller of the climbingReportApp
  */
 angular.module('climbingReportApp')
-  .controller('ReportCtrl', function ($scope, $rootScope, $routeParams, $location, $q, AuthService, Report, Tag, MIN_MAP_ZOOM) {
+  .controller('AddReportCtrl', function ($scope, $rootScope, $routeParams, $location, $q, AuthService, Report, Location, Tag, MIN_MAP_ZOOM) {
     // Init vars START
 
     var isLoggedIn = AuthService.isLoggedInCheck();
-    var reportData;
+    var locationsData;
 
+    $scope.pageNum = 1;
+    $scope.locationsPerPage = 50;
     $scope.newReport = {};
-
     $scope.mapValues = {
       center: {},
       zoom: MIN_MAP_ZOOM
@@ -25,21 +26,34 @@ angular.module('climbingReportApp')
 
     // Private methods START
 
-    var markSelectedTags = function(){
+    var getLocationsNear = function(latitude, longitude){
 
-      var allTags = $scope.tagsData.items;
-      var reportTags = reportData.items[0].tags;
+      if(isLoggedIn){
 
-      allTags.forEach(function(tag){
-
-        reportTags.forEach(function(tagInReport){
-
-          if(tag.id === tagInReport.id){
-
-            tag.selected = true;
-          }
+        locationsData = Location.near({
+          latitude: latitude,
+          longitude: longitude,
+          page_num: $scope.pageNum,
+          per_page: $scope.locationsPerPage
         });
-      });
+
+        locationsData.$promise
+
+          .then(function(response){
+            $scope.visibleLocations = response.items;
+          })
+
+          // If location could not be fetched.
+          .catch(function(response) {
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'danger',
+              message: response.data.error,
+              reasons: response.data.reasons
+            };
+          });
+      }
     };
 
     var getTags = function(){
@@ -66,33 +80,14 @@ angular.module('climbingReportApp')
       }
     };
 
-    var getReport = function(){
+    var removeTagFromReport = function(tag){
 
-      if(isLoggedIn){
 
-        var reportId = $routeParams.id;
+    };
 
-        reportData = Report.get({id: reportId});
+    var addTagToReport = function(tag){
 
-        reportData.$promise
 
-          .then(function(response){
-
-            $scope.reportData = response.items[0];
-
-          })
-
-          // If reports could not be fetched.
-          .catch(function(response) {
-
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'danger',
-              message: response.data.error,
-              reasons: response.data.reasons
-            };
-          });
-      }
     };
 
     // Private methods END
@@ -103,6 +98,11 @@ angular.module('climbingReportApp')
 
       selectedTag.selected = !selectedTag.selected;
 
+      if(selectedTag.selected) {
+
+      } else {
+
+      }
     };
 
     $scope.saveReport = function(report){
@@ -114,8 +114,8 @@ angular.module('climbingReportApp')
         var reportToSave = new Report(
           {
             id: report.id,
-            name: report.name,
-            color: report.color
+            route_name: report.route_name,
+            route_grade: report.route_grade
           }
         );
 
@@ -247,8 +247,6 @@ angular.module('climbingReportApp')
 
     // Init code START
 
-    getReport();
-
     getTags();
 
     if (navigator.geolocation) {
@@ -266,7 +264,7 @@ angular.module('climbingReportApp')
               latitude: latitude
             };
 
-            // getLocationsNear(latitude, longitude);
+            getLocationsNear(latitude, longitude);
 
           });
         },
@@ -280,15 +278,6 @@ angular.module('climbingReportApp')
         });
     }
 
-    // When all promises have resolved, (all data is fetched)
-    $q.all([
-        reportData.$promise,
-        $scope.tagsData.$promise
-      ])
-      .then(function() {
-        markSelectedTags();
-      });
-
-
     // Init code END
   });
+

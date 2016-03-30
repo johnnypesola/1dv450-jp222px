@@ -2,7 +2,7 @@
 
     <div class="row">
 
-        <h1 class="col-md-12">Report</h1>
+        <h1 class="col-md-12">Add Report</h1>
 
     </div>
 
@@ -11,28 +11,28 @@
         <p class="input-group col-md-12">
             <span class="input-group-addon">Route name</span>
             <input
-                type="text"
-                class="form-control"
-                ng-model="reportData.route_name"
-                placeholder="Enter the name of the route"
-                ng-minlength="2"
-                ng-maxlength="50"
-                minlength="2"
-                maxlength="50"
+                    type="text"
+                    class="form-control"
+                    ng-model="reportData.route_name"
+                    placeholder="Enter the name of the route"
+                    ng-minlength="2"
+                    ng-maxlength="50"
+                    minlength="2"
+                    maxlength="50"
             >
         </p>
 
         <p class="input-group col-md-12">
             <span class="input-group-addon">Route grade</span>
             <input
-                type="text"
-                class="form-control"
-                ng-model="reportData.route_grade"
-                placeholder="5+, 7a, 5.10 or something else"
-                ng-minlength="1"
-                ng-maxlength="5"
-                minlength="1"
-                maxlength="5"
+                    type="text"
+                    class="form-control"
+                    ng-model="reportData.route_grade"
+                    placeholder="5+, 7a, 5.10 or something else"
+                    ng-minlength="1"
+                    ng-maxlength="5"
+                    minlength="1"
+                    maxlength="5"
             >
         </p>
 
@@ -44,24 +44,30 @@
 
         <p class="col-md-11">
             <button
-                    class="btn btn-default btn-xs climbing-tag"
+                    class="btn btn-default btn-xs climbing-tag repeat-animation ng-scope"
                     ng-class="{'climbing-tag-selected': tag.selected}"
                     type="button"
                     ng-repeat="tag in tagsData.items"
                     style="background-color: {{tag.color}}"
                     ng-click="selectTag(tag)"
+                    ng-disabled="isSavingTag"
             >
                 {{tag.name}}
             </button>
         </p>
     </div>
 
+    <div class="row">
+        <h4 class="col-md-1">Location</h4>
+    </div>
+
     <div class="ng-map-container" map-lazy-load="https://maps.google.com/maps/api/js">
+
         <ng-map zoom="{{mapValues.zoom}}" center="[{{reportData.location.latitude}}, {{reportData.location.longitude}}]">
 
             <custom-marker
-                ng-if="!addMode"
-                position="[{{reportData.location.latitude}}, {{reportData.location.longitude}}]"
+                    ng-if="!addMode"
+                    position="[{{reportData.location.latitude}}, {{reportData.location.longitude}}]"
             >
                 <div class="cm">
                     <!-- Runs angular function and also toggles bootstrap modal with "data-toggle" and "data-target" attributes -->
@@ -75,11 +81,11 @@
             </custom-marker>
 
             <marker
-                ng-if="addMode"
-                position="[{{mapValues.center.latitude}}, {{mapValues.center.longitude}}]"
-                draggable="{{!location.isBusy}}"
-                on-drag="onDragUpdateLocationPosition()"
-                icon="{
+                    ng-if="addMode"
+                    position="[{{mapValues.center.latitude}}, {{mapValues.center.longitude}}]"
+                    draggable="{{!location.isBusy}}"
+                    on-drag="onDragUpdateLocationPosition()"
+                    icon="{
                     url:'images/position_marker_icon.png',
                     scaledSize:[50,58]
                 }"
@@ -91,26 +97,23 @@
     <div class="row text-center">
         <p class="col-md-12">
             <button
-                class="btn btn-success"
-                type="button"
-                ng-click="saveReport(reportData)"
-                ng-disabled="reportData.isSaving"
+                    class="btn btn-success"
+                    type="button"
+                    ng-click="saveReport(reportData)"
+                    ng-disabled="reportData.isSaving"
             >
                 Save report
             </button>
+
+            <a href="#/reports"
+               class="btn btn-default"
+               type="button"
+               ng-click=""
+               ng-disabled="reportData.isSaving"
+            >
+                Back
+            </a>
         </p>
     </div>
 
 </div>
-
-
-
-<pre>
-    {{ reportData | json }}
-</pre>
-
-
-<p>Show reports with tags</p>
-<p>Lists with tags</p>
-
-<p>Search for report with specific route name</p>
