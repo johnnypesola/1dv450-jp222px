@@ -159,23 +159,57 @@ class Api::V1::ReportsController < Api::ApiBaseController
     if check_rest_login && check_api_key(params[:key])
 
       # Tag specific
+      tags = Array.new
+      new_tags = Array.new
 
-      tag = nil
+      if !report_params[:tags].nil?
 
-      if !report_params[:tag_name].nil?
 
-        tag = Tag.new(name: report_params[:tag_name])
+        # Try to find duplicate tags names is given data
+        if report_params[:tags].uniq.length != report_params[:tags].length
 
-        if tag.save
+          response.status = 400
+          render :json => {
+              error: 'Could not save tag.',
+              reasons: [ 'tag names must be unique.' ]
+          }
+        end
+
+        # Try to find tag names in database
+        tags_in_db = Tag.where(name: report_params[:tags])
+        if tags_in_db.length > 0
+          tags.push(*tags_in_db)
+        end
+
+        #tags = Tag.where(name: report_params[:tags])
+
+        report_params[:tags].each do |name|
+
+          unless tags.any? {|tag| tag.name == name}
+
+            new_tags.append(Tag.new(name: name))
+          end
+
+        end
+
+        Tag.transaction do
+          new_tags.each(&:save!)
+        end
+
+        tags.push(*new_tags)
+
+        tags.each do |tag|
 
           # Add HATEOAS href to object
           tag.href = api_v1_tag_url(tag.id)
+        end
 
+=begin
         else
           # Save was unsuccessful, probably due to missing values
           errors = Array.new
 
-          tag.errors.full_messages.each do |msg|
+          tags.errors.full_messages.each do |msg|
             errors.append(msg)
           end
 
@@ -188,6 +222,8 @@ class Api::V1::ReportsController < Api::ApiBaseController
           return
 
         end
+=end
+
 
       end
 
@@ -200,9 +236,9 @@ class Api::V1::ReportsController < Api::ApiBaseController
           location_id: report_params[:location_id]
       )
 
-      # Add tag to report
-      unless tag.nil?
-        report.tags << tag
+      # Add tags to report
+      unless tags.nil?
+        report.tags << tags
       end
 
 
@@ -230,7 +266,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
           response.status = 201
           render :json => {
               :items => [report],
-              :tag => tag,
+              :tags => report_params[:tags],
           }, methods: [:href]
 
           return
@@ -255,6 +291,14 @@ class Api::V1::ReportsController < Api::ApiBaseController
       end
 
     end
+
+    rescue ActiveRecord::RecordInvalid => exception
+
+      response.status = 400
+      render :json => {
+          error: 'Could not save tag.',
+          reasons: exception.message
+      }
 
   end
 
@@ -524,7 +568,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
   private
 
   def report_params
-    params.permit(:route_name, :route_grade, :location_id, :id, :tag_name)
+    params.permit(:route_name, :route_grade, :location_id, :id, :tag_name, tags: [])
   end
 
   def destroy_params
