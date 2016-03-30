@@ -40,6 +40,24 @@
     </p>
 </div>
 
+<div class="text-right col-md-12">
+    <ul class="pagination">
+        <li ng-class="{ disabled: reportData.pagination.prev_page_href == ''}">
+            <a href ng-click="previousPage()">
+                <span>&laquo;</span>
+            </a>
+        </li>
+        <li class="active">
+            <span>Page <strong>{{reportData.pagination.page_num}}</strong> of {{reportData.pagination.total_pages}}</span>
+        </li>
+        <li ng-class="{ disabled: reportData.pagination.next_page_href == ''}">
+            <a href ng-click="nextPage()">
+                <span>&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
 <table class="table table-striped">
     <thead>
     <tr>

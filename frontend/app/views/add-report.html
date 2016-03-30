@@ -25,72 +25,69 @@
         <p class="input-group col-md-12">
             <span class="input-group-addon">Route grade</span>
             <input
-                    type="text"
-                    class="form-control"
-                    ng-model="reportData.route_grade"
-                    placeholder="5+, 7a, 5.10 or something else"
-                    ng-minlength="1"
-                    ng-maxlength="5"
-                    minlength="1"
-                    maxlength="5"
+                type="text"
+                class="form-control"
+                ng-model="reportData.route_grade"
+                placeholder="5+, 7a, 5.10 or something else"
+                ng-minlength="1"
+                ng-maxlength="5"
+                minlength="1"
+                maxlength="5"
             >
         </p>
 
     </div>
 
     <div class="row">
+        <h4 class="col-md-12">Tags</h4>
+    </div>
+    <div class="row">
 
-        <h4 class="col-md-1">Tags</h4>
 
-        <p class="col-md-11">
+        <p class="col-md-9">
             <button
-                    class="btn btn-default btn-xs climbing-tag repeat-animation ng-scope"
-                    ng-class="{'climbing-tag-selected': tag.selected}"
-                    type="button"
-                    ng-repeat="tag in tagsData.items"
-                    style="background-color: {{tag.color}}"
-                    ng-click="selectTag(tag)"
-                    ng-disabled="isSavingTag"
+                class="btn btn-default btn-xs climbing-tag repeat-animation ng-scope"
+                ng-class="{'climbing-tag-selected': tag.selected}"
+                type="button"
+                ng-repeat="tag in tagsData.items"
+                style="background-color: {{tag.color}}"
+                ng-click="selectTag(tag)"
+                ng-disabled="reportData.isBusy"
             >
                 {{tag.name}}
             </button>
         </p>
+        <div class="input-group col-md-3">
+            <input type="text" class="form-control" ng-model="newTag.name" placeholder="New tag name">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="addTag(newTag)" ng-disabled="reportData.isBusy">Add</button>
+            </div>
+        </div>
     </div>
 
     <div class="row">
-        <h4 class="col-md-1">Location</h4>
+        <h4 class="col-md-12">Location</h4>
     </div>
 
     <div class="ng-map-container" map-lazy-load="https://maps.google.com/maps/api/js">
 
-        <ng-map zoom="{{mapValues.zoom}}" center="[{{reportData.location.latitude}}, {{reportData.location.longitude}}]">
+        <ng-map zoom="{{mapValues.zoom}}" center="[{{mapValues.center.latitude}}, {{mapValues.center.longitude}}]">
 
             <custom-marker
-                    ng-if="!addMode"
-                    position="[{{reportData.location.latitude}}, {{reportData.location.longitude}}]"
+                position="[{{location.latitude}}, {{location.longitude}}]"
+                ng-repeat="location in visibleLocations"
             >
                 <div class="cm">
                     <!-- Runs angular function and also toggles bootstrap modal with "data-toggle" and "data-target" attributes -->
                     <a class="map-marker-button"
-                       ng-click="editLocation(location)"
+                       ng-click="selectLocation(location)"
+                       ng-class="{highlightedmarker: reportData.location_id == location.id}"
                     >
-                        <span class="reports-count">{{reportData.location.reports_count}}</span>
-                        <span class="location-name">{{reportData.location.name}}</span>
+                        <span class="location-name">{{location.name}}</span>
+                        <span class="reports-count">{{location.reports_count}}</span>
                     </a>
                 </div>
             </custom-marker>
-
-            <marker
-                    ng-if="addMode"
-                    position="[{{mapValues.center.latitude}}, {{mapValues.center.longitude}}]"
-                    draggable="{{!location.isBusy}}"
-                    on-drag="onDragUpdateLocationPosition()"
-                    icon="{
-                    url:'images/position_marker_icon.png',
-                    scaledSize:[50,58]
-                }"
-            >
-            </marker>
         </ng-map>
     </div>
 
@@ -115,5 +112,9 @@
             </a>
         </p>
     </div>
+
+    <pre>
+        {{ reportData | json }}
+    </pre>
 
 </div>

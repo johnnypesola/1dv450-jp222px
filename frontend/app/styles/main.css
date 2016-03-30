@@ -71,19 +71,18 @@ ng-map {
 }
 
 .map-marker-button span.reports-count {
-    position: absolute;
-    top:3px;
-    left:2px;
+
     color: #fff;
     background: #00A000 !important;
 }
 
 .map-marker-button span.location-name {
-    margin-left: 19px;
     background: none !important;
-    display: block;
+
     white-space: nowrap;
 }
+
+
 
 a.highlightedmarker {
     background: #00A000;
