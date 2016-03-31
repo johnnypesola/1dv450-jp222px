@@ -41,11 +41,6 @@ angular.module('climbingReportApp')
           isVisible: $rootScope.isLoggedIn
         },
         {
-          title: "Users",
-          location: "#/users",
-          isVisible: $rootScope.isLoggedIn
-        },
-        {
           title: "About",
           location: "#/about",
           isVisible: $rootScope.isLoggedIn
@@ -69,15 +64,16 @@ angular.module('climbingReportApp')
   }])
 
   // Flash Message Controller
-  .controller('FlashMessageCtrl', ["$rootScope", "$scope", "AppSettings", function($rootScope, $scope, AppSettings){
+  .controller('FlashMessageCtrl', ["$rootScope", "$scope", "AppSettings", "$timeout", function($rootScope, $scope, AppSettings, $timeout){
 
     var messageObj;
 
-    $scope.hideMessage = function(){
-      $scope.messageVisible = false;
-    };
-
     $rootScope.$watch('FlashMessage', function(newValue, oldValue) {
+
+      $scope.hideMessage = function(){
+        $scope.messageVisible = false;
+        $scope.messageAnimation = false;
+      };
 
       // Check that the value contains data
       if ((typeof(newValue) !== 'undefined') && (newValue !== null) && (typeof newValue.type !== 'undefined')) {
@@ -92,6 +88,17 @@ angular.module('climbingReportApp')
         $scope.messageReasons = newValue.reasons;
 
         $scope.messageVisible = true;
+        $scope.messageAnimation = false;
+
+        // Start animation after 50 ms
+        $timeout(function(){
+          $scope.messageAnimation = true;
+        }, 500);
+
+        // Start animation after 50 ms
+        $timeout(function(){
+          $scope.messageVisible = false;
+        }, 5000);
       }
     });
 

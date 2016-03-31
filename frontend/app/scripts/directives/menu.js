@@ -24,6 +24,7 @@ angular.module('climbingReportApp')
           menu;
 
         /* Initialization START */
+        $scope.isLoggedIn = $rootScope.isLoggedIn;
 
         $scope.isLoggedInCheck = AuthService.isLoggedInCheck();
 
@@ -99,6 +100,14 @@ angular.module('climbingReportApp')
         /* Initialization START */
 
         that.selectCurrentLocationMenus();
+
+        $rootScope.$watch('isLoading', function(isLoading) {
+          $scope.isLoading = isLoading;
+        });
+
+        $rootScope.$watch('isLoggedIn', function(isLoggedIn) {
+          $scope.isLoggedIn = isLoggedIn;
+        });
 
         /* Initialization END */
       }]

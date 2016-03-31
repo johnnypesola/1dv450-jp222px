@@ -8,7 +8,7 @@
  * Controller of the climbingReportApp
  */
 angular.module('climbingReportApp')
-  .controller('EditReportCtrl', function ($scope, $rootScope, $routeParams, $location, $q, AuthService, Report, Tag, MIN_MAP_ZOOM) {
+  .controller('EditReportCtrl', function ($scope, $rootScope, $routeParams, $location, $q, AuthService, Report, Tag, MIN_MAP_ZOOM, MAX_MAP_ZOOM, DEFAULT_MAP_ZOOM) {
     // Init vars START
 
     var isLoggedIn = AuthService.isLoggedInCheck();
@@ -18,7 +18,7 @@ angular.module('climbingReportApp')
 
     $scope.mapValues = {
       center: {},
-      zoom: MIN_MAP_ZOOM
+      zoom: DEFAULT_MAP_ZOOM
     };
 
     // Init vars END
@@ -202,6 +202,8 @@ angular.module('climbingReportApp')
 
           .finally(function() {
             report.isSaving = false;
+
+            $location.path('reports');
           });
       }
     };
@@ -222,16 +224,6 @@ angular.module('climbingReportApp')
 
           .then(function(){
 
-            var reportToRemoveIndex;
-
-            // Find index of report to remove
-            reportToRemoveIndex = $scope.reportData.items.findIndex(function(otherReport){
-              return report.id === otherReport.id;
-            });
-
-            // Remove report from array.
-            $scope.reportData.items.splice(reportToRemoveIndex, 1);
-
             // Set Flash message
             $rootScope.FlashMessage = {
               type: 'success',
@@ -251,7 +243,8 @@ angular.module('climbingReportApp')
           })
 
           .finally(function(){
-            report.isBusy = false;
+
+            $location.path('reports');
           });
       }
     };
@@ -278,9 +271,6 @@ angular.module('climbingReportApp')
               longitude: longitude,
               latitude: latitude
             };
-
-            // getLocationsNear(latitude, longitude);
-
           });
         },
         function () {
@@ -302,6 +292,11 @@ angular.module('climbingReportApp')
         markSelectedTags();
       });
 
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      var map = evtMap;
+      map.setOptions({maxZoom: MAX_MAP_ZOOM, minZoom: MIN_MAP_ZOOM});
+
+    });
 
     // Init code END
   });

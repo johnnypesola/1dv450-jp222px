@@ -8,7 +8,7 @@
  * Controller of the climbingReportApp
  */
 angular.module('climbingReportApp')
-  .controller('AddReportCtrl', function ($scope, $rootScope, $routeParams, $location, $q, AuthService, Report, Location, Tag, MIN_MAP_ZOOM) {
+  .controller('AddReportCtrl', function ($scope, $rootScope, $routeParams, $location, $q, AuthService, Report, Location, Tag, MIN_MAP_ZOOM, MAX_MAP_ZOOM, DEFAULT_MAP_ZOOM) {
     // Init vars START
 
     var isLoggedIn = AuthService.isLoggedInCheck();
@@ -16,10 +16,12 @@ angular.module('climbingReportApp')
 
     $scope.pageNum = 1;
     $scope.locationsPerPage = 50;
-    $scope.newReport = {};
+    $scope.reportData = {
+      tags: []
+    };
     $scope.mapValues = {
       center: {},
-      zoom: MIN_MAP_ZOOM
+      zoom: DEFAULT_MAP_ZOOM
     };
 
     // Init vars END
@@ -82,17 +84,32 @@ angular.module('climbingReportApp')
 
     var removeTagFromReport = function(tag){
 
+      var index = $scope.reportData.tags.indexOf(tag.name);
 
+      if (index > -1) {
+        $scope.reportData.tags.splice(index, 1);
+      }
     };
 
     var addTagToReport = function(tag){
 
-
+      $scope.reportData.tags.push(tag.name);
     };
 
     // Private methods END
 
     // Public methods START
+
+    $scope.isAbleToSave = function() {
+
+      return (
+        $scope.reportData.route_name !== undefined &&
+        $scope.reportData.route_grade !== undefined &&
+        $scope.reportData.route_grade !== undefined &&
+        $scope.reportData.tags !== undefined &&
+        $scope.reportData.location_id !== undefined
+      );
+    };
 
     $scope.selectTag = function(selectedTag) {
 
@@ -100,7 +117,11 @@ angular.module('climbingReportApp')
 
       if(selectedTag.selected) {
 
+        addTagToReport(selectedTag);
+
       } else {
+
+        removeTagFromReport(selectedTag);
 
       }
     };
@@ -115,14 +136,22 @@ angular.module('climbingReportApp')
           {
             id: report.id,
             route_name: report.route_name,
-            route_grade: report.route_grade
+            route_grade: report.route_grade,
+            location_id: report.location_id,
+            tags: report.tags
           }
         );
 
-        Report.update({ id: report.id }, reportToSave).$promise
+        reportToSave.$save()
+
           .then(function(){
             report.isEditMode = false;
             report.isSaving = false;
+
+            // Reset report data
+            $scope.reportData = {
+              tags: []
+            };
 
             // Set Flash message
             $rootScope.FlashMessage = {
@@ -148,99 +177,31 @@ angular.module('climbingReportApp')
       }
     };
 
-    $scope.deleteReport = function(report){
+    $scope.selectLocation = function(location){
 
-      if(isLoggedIn){
+      $scope.reportData.location_id = location.id;
 
-        report.isBusy = true;
-
-        var reportToDelete = new Report(
-          {
-            id: report.id
-          }
-        );
-
-        reportToDelete.$delete()
-
-          .then(function(){
-
-            var reportToRemoveIndex;
-
-            // Find index of report to remove
-            reportToRemoveIndex = $scope.reportData.items.findIndex(function(otherReport){
-              return report.id === otherReport.id;
-            });
-
-            // Remove report from array.
-            $scope.reportData.items.splice(reportToRemoveIndex, 1);
-
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'success',
-              message: 'Succesfully removed report.'
-            };
-          })
-
-          // If report could not be deleted.
-          .catch(function(response) {
-
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'danger',
-              message: response.data.error,
-              reasons: response.data.reasons
-            };
-          })
-
-          .finally(function(){
-            report.isBusy = false;
-          });
-      }
     };
 
-    $scope.addReport = function(report){
+    $scope.addTag = function(tag){
 
-      if(isLoggedIn){
-
-        report.isBusy = true;
-
-        var reportToAdd = new Report(
-          {
-            name: report.name,
-            color: report.color
-          }
-        );
-
-        reportToAdd.$save()
-
-          .then(function(response){
-
-            $scope.isAddMode = false;
-            $scope.reportData.items.push(response.items[0]);
-
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'success',
-              message: 'Succesfully added report.'
-            };
-          })
-
-          // If report could not be added.
-          .catch(function(response) {
-
-            // Set Flash message
-            $rootScope.FlashMessage = {
-              type: 'danger',
-              message: response.data.error,
-              reasons: response.data.reasons
-            };
-          })
-
-          .finally(function(){
-            report.isBusy = false;
-          });
-
+      if(!tag) {
+        return;
       }
+
+      // Clone object, break reference
+      var newTag = JSON.parse(JSON.stringify(tag));
+
+      var tagExists = $scope.tagsData.items.find(function(oldTag){
+        return oldTag.name.toLowerCase() === tag.name.toLowerCase()
+      });
+
+      if (tagExists === undefined) {
+        $scope.tagsData.items.push(newTag);
+      }
+
+      // Reset tag input
+      $scope.newTag.name = '';
     };
 
     // Public methods END
@@ -277,6 +238,11 @@ angular.module('climbingReportApp')
           };
         });
     }
+
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      var map = evtMap;
+      map.setOptions({maxZoom: MAX_MAP_ZOOM, minZoom: MIN_MAP_ZOOM});
+    });
 
     // Init code END
   });

@@ -1,3 +1,35 @@
+/* Custom animations START */
+
+.flash-message-animation {
+    opacity: 0;
+    -webkit-animation-timing-function: ease-in;
+    -webkit-animation-duration: 5000ms;
+    -webkit-animation-name: fadeout;
+    -moz-animation-timing-function: ease-in;
+    -moz-animation-duration: 5000ms;
+    -moz-animation-name: fadeout;
+    animation-timing-function: ease-in;
+    animation-duration: 5000ms;
+    animation-name: fadeout;
+}
+@-webkit-keyframes fadeout {
+    0% { opacity: 1; }
+    66% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-moz-keyframes fadeout {
+    0% { opacity: 1; }
+    66% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@keyframes fadeout {
+    0% { opacity: 1; }
+    66% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Custom animations END */
+
 /* ng-animate START */
 
 .repeat-animation {
@@ -35,6 +67,16 @@
 
 /* ng-animate END */
 
+.flash-message-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+}
+
+.loader-image {
+    float: right;
+}
 
 /* Map specific START */
 
@@ -71,19 +113,18 @@ ng-map {
 }
 
 .map-marker-button span.reports-count {
-    position: absolute;
-    top:3px;
-    left:2px;
+
     color: #fff;
     background: #00A000 !important;
 }
 
 .map-marker-button span.location-name {
-    margin-left: 19px;
     background: none !important;
-    display: block;
+
     white-space: nowrap;
 }
+
+
 
 a.highlightedmarker {
     background: #00A000;
@@ -206,7 +247,7 @@ body {
 /* Custom labels */
 .climbing-tag {
     background: #eee;
-    border: 3px solid rgba(255,255,255,0);
+    border: 5px solid rgba(255,255,255,0);
     color: #fff !important;
     text-shadow: 0 0 2px rgba(0, 0, 0, 1);
     font-weight: bold;
@@ -222,7 +263,7 @@ body {
 }
 
 .climbing-tag-selected, .climbing-tag-selected:hover {
-    border: 3px solid #444;
+    border: 5px solid #444;
     -webkit-box-shadow: inset 1px 1px 2px 0 rgba(0,0,0,0.5);
     -moz-box-shadow: inset 1px 1px 2px 0 rgba(0,0,0,0.5);
     box-shadow: inset 1px 1px 2px 0 rgba(0,0,0,0.5);

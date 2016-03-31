@@ -33,16 +33,23 @@
             <div class="main-menu">
                 <main-menu
                     menu-items="menus"
-                ></main-menu>
+                >
+                </main-menu>
             </div>
         </div>
 
         <!-- Flash message -->
-        <div class="flash-message-container" role="alert" data-ng-controller="FlashMessageCtrl" data-ng-show="messageVisible">
+        <div
+            ng-cloak
+            class="flash-message-container"
+            role="alert"
+            ng-controller="FlashMessageCtrl"
+            ng-show="messageVisible"
+            ng-class="{'flash-message-animation': messageAnimation}"
+            ng-click="hideMessage()"
+        >
             <div class="alert alert-{{messageClass}}">
-                <button type="button" class="close" data-ng-click="hideMessage()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <span class="glyphicon glyphicon-info-sign"></span>
                 <strong>{{messageText}}</strong>
                 <ul ng-show="messageReasons">
                     <li ng-repeat="reason in messageReasons">
@@ -55,9 +62,10 @@
     </header>
 
 
-    <div class="container">
-    <div ng-view=""></div>
-    </div>
+    <div class="container" ng-cloak>
+
+        <div ng-view=""></div>
+        </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>

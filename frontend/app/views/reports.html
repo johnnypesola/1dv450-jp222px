@@ -1,6 +1,6 @@
 <div class="well">
     <strong>What are reports?</strong><br>
-    Reports of your climbing helps you keep track of your climbing progress.
+    Reports of your climbing, helps you keep track of your climbing progress.
 </div>
 
 <div class="row">
@@ -38,6 +38,24 @@
             {{tag.name}}
         </button>
     </p>
+</div>
+
+<div class="text-right col-md-12">
+    <ul class="pagination">
+        <li ng-class="{ disabled: reportData.pagination.prev_page_href == ''}">
+            <a href ng-click="previousPage()">
+                <span>&laquo;</span>
+            </a>
+        </li>
+        <li class="active">
+            <span>Page <strong>{{reportData.pagination.page_num}}</strong> of {{reportData.pagination.total_pages}}</span>
+        </li>
+        <li ng-class="{ disabled: reportData.pagination.next_page_href == ''}">
+            <a href ng-click="nextPage()">
+                <span>&raquo;</span>
+            </a>
+        </li>
+    </ul>
 </div>
 
 <table class="table table-striped">
@@ -79,13 +97,3 @@
         </td>
     </tr>
 </table>
-
-<pre>
-    {{ reportData | json }}
-</pre>
-
-
-<p>Show reports with tags</p>
-<p>Lists with tags</p>
-
-<p>Search for report with specific route name</p>
