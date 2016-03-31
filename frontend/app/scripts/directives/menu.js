@@ -7,15 +7,13 @@
  * # menu
  */
 angular.module('climbingReportApp')
-  .directive('mainMenu', ["$route", "$routeParams", "$location", "$rootScope", "AuthService", function($route, $routeParams, $location, $rootScope, AuthService) {
+  .directive('mainMenu', function($route, $routeParams, $location, $rootScope, AuthService) {
     return {
       restrict: 'E',
       replace: true,
       templateUrl: 'views/directives/menu.html',
-      scope: {
-        menuItems: '=menuItems'
-      },
-      controller: ["$scope", function($scope) {
+
+      controller: function($scope) {
 
         var that = this,
           currentLocation,
@@ -49,10 +47,13 @@ angular.module('climbingReportApp')
         that.selectCurrentLocationMenus = function(){
 
           // Check if we are on the index page
-          if($location.path().length === 1) {
+          if($location.path === undefined || $location.path().length === 1) {
 
             // Activate first menu
-            that.disableAllButOne($scope.menuItems, 'isMenuActive', $scope.menuItems[0]);
+            if($rootScope.menus !== undefined) {
+
+              that.disableAllButOne($rootScope.menus, 'isMenuActive', $rootScope.menus[0]);
+            }
           }
 
           // We aren't on the index page.
@@ -61,10 +62,10 @@ angular.module('climbingReportApp')
             currentLocation = $location.path().split('/')[1];
 
             // Loop through main menu items
-            for(i = 0; i < $scope.menuItems.length; i+=1) {
+            for(i = 0; i < $rootScope.menus.length; i+=1) {
 
               // Get main menu
-              menu = $scope.menuItems[i];
+              menu = $rootScope.menus[i];
 
               // Get location url string from menu
               menuLocation = menu.location.split('/')[1];
@@ -73,7 +74,7 @@ angular.module('climbingReportApp')
               if(menuLocation === currentLocation){
 
                 // Activate selected menu, deactivate the other siblings.
-                that.disableAllButOne($scope.menuItems, 'isMenuActive', menu);
+                that.disableAllButOne($rootScope.menus, 'isMenuActive', menu);
 
                 // Avoid unnecessary iterations
                 break;
@@ -91,7 +92,7 @@ angular.module('climbingReportApp')
           $scope.selectedMainMenu = menu;
 
           // Toggle active main menu. (which is shown)
-          that.disableAllButOne($scope.menuItems, 'isMenuActive', $scope.selectedMainMenu);
+          that.disableAllButOne($rootScope.menus, 'isMenuActive', $scope.selectedMainMenu);
 
         };
 
@@ -109,7 +110,11 @@ angular.module('climbingReportApp')
           $scope.isLoggedIn = isLoggedIn;
         });
 
+        $rootScope.$watch('menus', function(menus) {
+          $scope.menus = menus;
+        });
+
         /* Initialization END */
-      }]
+      }
     };
-  }]);
+  });

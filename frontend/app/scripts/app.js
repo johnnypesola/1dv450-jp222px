@@ -24,8 +24,8 @@ climbingReportApp = angular
     'ngMap'
   ]);
 
-climbingReportApp.constant('APP_URL', 'http://localhost:9000/');
-climbingReportApp.constant('API_URL', 'http://192.168.1.12:3000/');
+climbingReportApp.constant('APP_URL', 'http://www.pesola.se/webbprogrammerare/1dv450/'); // 'http://localhost:9000/'
+climbingReportApp.constant('API_URL', 'http://www.pesola.se:3000/'); // 'http://192.168.1.12:3000/'
 climbingReportApp.constant('REST_PATH', 'api/v1/');
 climbingReportApp.constant('API_KEY', 'e22450efdfdf8c464ad31465931bf7b2dd1000d58f6e5afafa85044ecadbdabd');
 climbingReportApp.constant('AUTH_TOKEN_STR', 'X-auth-token');

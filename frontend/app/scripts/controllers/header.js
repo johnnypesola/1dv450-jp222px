@@ -10,16 +10,14 @@
 angular.module('climbingReportApp')
 
   // Header Controller
-  .controller('HeaderCtrl', ['$scope', '$rootScope', '$location', 'AuthService', function($scope, $rootScope, $location, AuthService){
-
-    var isLoggedIn = AuthService.isLoggedInCheck();
+  .controller('HeaderCtrl', function($scope, $rootScope){
 
     /* Private methods START */
 
     var generateMenu = function(){
 
       // Declare Menu
-      $scope.menus = [
+      $rootScope.menus = [
         {
           title: "Home",
           location: "#/",
@@ -56,19 +54,24 @@ angular.module('climbingReportApp')
 
     /* Initialization START */
 
+    generateMenu();
+
     $scope.$watch('isLoggedIn', function() {
       generateMenu();
     });
 
     /* Initialization END */
-  }])
+  })
+
+  .constant('FLASH_ANIMATION_START_TIME', 50)
+  .constant('FLASH_ANIMATION_END_TIME', 5000)
 
   // Flash Message Controller
-  .controller('FlashMessageCtrl', ["$rootScope", "$scope", "AppSettings", "$timeout", function($rootScope, $scope, AppSettings, $timeout){
+  .controller('FlashMessageCtrl', function($rootScope, $scope, AppSettings, $timeout, FLASH_ANIMATION_END_TIME, FLASH_ANIMATION_START_TIME){
 
     var messageObj;
 
-    $rootScope.$watch('FlashMessage', function(newValue, oldValue) {
+    $rootScope.$watch('FlashMessage', function(newValue) {
 
       $scope.hideMessage = function(){
         $scope.messageVisible = false;
@@ -90,15 +93,15 @@ angular.module('climbingReportApp')
         $scope.messageVisible = true;
         $scope.messageAnimation = false;
 
-        // Start animation after 50 ms
+        // Start animation after some time
         $timeout(function(){
           $scope.messageAnimation = true;
-        }, 500);
+        }, FLASH_ANIMATION_START_TIME);
 
-        // Start animation after 50 ms
+        // Hide message after some time
         $timeout(function(){
           $scope.messageVisible = false;
-        }, 5000);
+        }, FLASH_ANIMATION_END_TIME);
       }
     });
 
@@ -116,6 +119,6 @@ angular.module('climbingReportApp')
     }
 
     /* Initialization END */
-  }]);
+  });
 
 

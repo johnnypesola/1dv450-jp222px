@@ -16,7 +16,7 @@
 
             <ul class="nav navbar-nav">
                 <li ng-show="menu.isVisible"
-                    ng-repeat="menu in menuItems"
+                    ng-repeat="menu in menus"
                     ng-class="{active: menu.isMenuActive}"
                 >
                     <a ng-href="{{menu.location}}" ng-click="selectMainMenu(menu)">{{menu.title}}</a>

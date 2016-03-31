@@ -8,7 +8,7 @@
  * Controller of the climbingReportApp
  */
 angular.module('climbingReportApp')
-  .controller('AuthCtrl', function (AuthService, $location, $rootScope, AppSettings) {
+  .controller('AuthCtrl', function (AuthService, $location, $rootScope, AppSettings, APP_URL) {
 
     console.log('authService', AuthService);
 
@@ -52,6 +52,6 @@ angular.module('climbingReportApp')
       });
 
       // Redirect to start page
-      window.location = AppSettings.getAppRootUrl();
+      window.location = APP_URL;
     }
   });

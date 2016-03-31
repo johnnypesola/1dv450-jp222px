@@ -193,7 +193,7 @@ angular.module('climbingReportApp')
       var newTag = JSON.parse(JSON.stringify(tag));
 
       var tagExists = $scope.tagsData.items.find(function(oldTag){
-        return oldTag.name.toLowerCase() === tag.name.toLowerCase()
+        return oldTag.name.toLowerCase() === tag.name.toLowerCase();
       });
 
       if (tagExists === undefined) {
