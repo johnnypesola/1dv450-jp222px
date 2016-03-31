@@ -13,7 +13,7 @@ angular.module('climbingReportApp')
 
     var isLoggedIn = AuthService.isLoggedInCheck();
     $scope.pageNum = 1;
-    $scope.reportsPerPage = 4;
+    $scope.reportsPerPage = 8;
 
     // Init vars END
 

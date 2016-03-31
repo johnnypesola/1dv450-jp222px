@@ -11,7 +11,7 @@
 
 
 angular.module('climbingReportApp')
-  .controller('LocationsCtrl', function ($scope, $rootScope, Location, AuthService, MAX_MAP_ZOOM, MIN_MAP_ZOOM) {
+  .controller('LocationsCtrl', function ($scope, $rootScope, Location, AuthService, MAX_MAP_ZOOM, DEFAULT_MAP_ZOOM, MIN_MAP_ZOOM) {
 
     // Init vars START
 
@@ -23,7 +23,7 @@ angular.module('climbingReportApp')
 
     $scope.mapValues = {
       center: {},
-      zoom: MIN_MAP_ZOOM
+      zoom: DEFAULT_MAP_ZOOM
     };
 
     // Init vars END
@@ -329,7 +329,8 @@ angular.module('climbingReportApp')
     $scope.$on('mapInitialized', function(evt, evtMap) {
       var map = evtMap;
       map.setOptions({maxZoom: MAX_MAP_ZOOM, minZoom: MIN_MAP_ZOOM});
-      // Init code END
+
     });
 
+    // Init code END
   });

@@ -94,27 +94,22 @@
     <div class="row text-center">
         <p class="col-md-12">
             <button
-                    class="btn btn-success"
-                    type="button"
-                    ng-click="saveReport(reportData)"
-                    ng-disabled="reportData.isSaving"
+                class="btn btn-success"
+                type="button"
+                ng-click="saveReport(reportData)"
+                ng-disabled="reportData.isSaving || !isAbleToSave()"
             >
                 Save report
             </button>
 
-            <a href="#/reports"
-               class="btn btn-default"
-               type="button"
-               ng-click=""
-               ng-disabled="reportData.isSaving"
+            <button
+                onclick="history.back()"
+                class="btn btn-default"
+                type="button"
+                ng-disabled="reportData.isSaving"
             >
                 Back
-            </a>
+            </button>
         </p>
     </div>
-
-    <pre>
-        {{ reportData | json }}
-    </pre>
-
 </div>

@@ -8,7 +8,7 @@
  * Controller of the climbingReportApp
  */
 angular.module('climbingReportApp')
-  .controller('AddReportCtrl', function ($scope, $rootScope, $routeParams, $location, $q, AuthService, Report, Location, Tag, MIN_MAP_ZOOM) {
+  .controller('AddReportCtrl', function ($scope, $rootScope, $routeParams, $location, $q, AuthService, Report, Location, Tag, MIN_MAP_ZOOM, MAX_MAP_ZOOM, DEFAULT_MAP_ZOOM) {
     // Init vars START
 
     var isLoggedIn = AuthService.isLoggedInCheck();
@@ -21,7 +21,7 @@ angular.module('climbingReportApp')
     };
     $scope.mapValues = {
       center: {},
-      zoom: MIN_MAP_ZOOM
+      zoom: DEFAULT_MAP_ZOOM
     };
 
     // Init vars END
@@ -100,6 +100,17 @@ angular.module('climbingReportApp')
 
     // Public methods START
 
+    $scope.isAbleToSave = function() {
+
+      return (
+        $scope.reportData.route_name !== undefined &&
+        $scope.reportData.route_grade !== undefined &&
+        $scope.reportData.route_grade !== undefined &&
+        $scope.reportData.tags !== undefined &&
+        $scope.reportData.location_id !== undefined
+      );
+    };
+
     $scope.selectTag = function(selectedTag) {
 
       selectedTag.selected = !selectedTag.selected;
@@ -136,6 +147,11 @@ angular.module('climbingReportApp')
           .then(function(){
             report.isEditMode = false;
             report.isSaving = false;
+
+            // Reset report data
+            $scope.reportData = {
+              tags: []
+            };
 
             // Set Flash message
             $rootScope.FlashMessage = {
@@ -222,6 +238,11 @@ angular.module('climbingReportApp')
           };
         });
     }
+
+    $scope.$on('mapInitialized', function(evt, evtMap) {
+      var map = evtMap;
+      map.setOptions({maxZoom: MAX_MAP_ZOOM, minZoom: MIN_MAP_ZOOM});
+    });
 
     // Init code END
   });

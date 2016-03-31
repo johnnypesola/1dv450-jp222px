@@ -31,7 +31,8 @@ climbingReportApp.constant('API_KEY', 'e22450efdfdf8c464ad31465931bf7b2dd1000d58
 climbingReportApp.constant('AUTH_TOKEN_STR', 'X-auth-token');
 climbingReportApp.constant('GET_LOCATION_DISTANCE', 200);
 climbingReportApp.constant('MAX_MAP_ZOOM', 18);
-climbingReportApp.constant('MIN_MAP_ZOOM', 5);
+climbingReportApp.constant('DEFAULT_MAP_ZOOM', 5);
+climbingReportApp.constant('MIN_MAP_ZOOM', 3);
 
 climbingReportApp.config(function ($routeProvider, $httpProvider) {
 
@@ -87,6 +88,8 @@ climbingReportApp.config(function ($routeProvider, $httpProvider) {
         // Only use API Key and Auth if we are connecting to the REST API.
         request: function (config) {
 
+          $rootScope.isLoading = true;
+
           // If the base url of the request is the same as the API url
           if ( AppSettings.apiUrlEqualsUrl(config.url) ) {
 
@@ -100,8 +103,24 @@ climbingReportApp.config(function ($routeProvider, $httpProvider) {
           return config;
         },
 
+        requestError: function(response) {
+
+          $rootScope.isLoading = false;
+
+          return response;
+        },
+
+        response: function(response) {
+
+          $rootScope.isLoading = false;
+
+          return response;
+        },
+
         // Check if we have been logged out from REST API for some reason.
         responseError: function(rejection) {
+
+          $rootScope.isLoading = false;
 
           if (
             AppSettings.apiUrlEqualsUrl(rejection.config.url) &&
