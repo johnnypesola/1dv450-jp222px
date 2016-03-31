@@ -1,16 +1,16 @@
 ## Frontend
 
+### Instruktioner för att testa Frontenden
+
+För att testa rest API:et så måste du ha ett konto på github. Efter det så kan du använda det kontot för att logga in frontenden.
+Frontenden hittas här: http://www.pesola.se/webbprogrammerare/1dv450/
+
 ### Förändringar gjorda på REST-API:et i samband med frontend utvecklingen
 När jag byggde frontend så fick jag lägga till bättre CORS support, den tidigare som fanns var inte tillräckligt bra. Jag lade även till ett "färg" attribut på tag objektet, för att i frontenden kunna knyta en färg till en tagg.
 
 När man arbetar med rapporter så lade jag till en auth check så att man inte kan hämta andra användares rapporter. När man hämtar ut rapporter inkluderas nu även taggar som den rapporten är associerad med.
 
 Gjorde även så att man kan posta en array med taggar till API:et istället för enbart en tagg när man skapar en ny rapport.
-
-### Instruktioner för att testa Frontenden
-
-För att testa rest API:et så måste du ha ett konto på github. Efter det så kan du använda det kontot för att logga in frontenden.
-Frontenden hittas här: http://www.pesola.se/webbprogrammerare/1dv450/
 
 ## Backend (REST API)
 
