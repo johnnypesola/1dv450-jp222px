@@ -32,6 +32,8 @@ climbingReportApp.constant('AUTH_TOKEN_STR', 'X-auth-token');
 climbingReportApp.constant('GET_LOCATION_DISTANCE', 200);
 climbingReportApp.constant('MAX_MAP_ZOOM', 18);
 climbingReportApp.constant('DEFAULT_MAP_ZOOM', 5);
+climbingReportApp.constant('DEFAULT_LATITUDE', 59.2792);
+climbingReportApp.constant('DEFAULT_LONGITUDE', 15.2361);
 climbingReportApp.constant('MIN_MAP_ZOOM', 3);
 
 climbingReportApp.config(function ($routeProvider, $httpProvider) {

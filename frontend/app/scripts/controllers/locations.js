@@ -11,10 +11,11 @@
 
 
 angular.module('climbingReportApp')
-  .controller('LocationsCtrl', function ($scope, $rootScope, Location, AuthService, MAX_MAP_ZOOM, DEFAULT_MAP_ZOOM, MIN_MAP_ZOOM) {
+  .controller('LocationsCtrl', function ($scope, $rootScope, Location, AuthService, MAX_MAP_ZOOM, DEFAULT_MAP_ZOOM, MIN_MAP_ZOOM, DEFAULT_LATITUDE, DEFAULT_LONGITUDE ) {
 
     // Init vars START
 
+    var map;
     var locationsData = {};
     var editedLocationByReference;
     var isLoggedIn = AuthService.isLoggedInCheck();
@@ -22,7 +23,10 @@ angular.module('climbingReportApp')
     $scope.locationsPerPage = 50;
 
     $scope.mapValues = {
-      center: {},
+      center: {
+        latitude: DEFAULT_LATITUDE,
+        longitude: DEFAULT_LONGITUDE
+      },
       zoom: DEFAULT_MAP_ZOOM
     };
 
@@ -96,6 +100,10 @@ angular.module('climbingReportApp')
 
     $scope.setAddMode = function(isAddMode){
 
+      var latLng = map.getCenter();
+
+      console.log(latLng.lat(), latLng.lng());
+
       $scope.isAddMode = isAddMode;
       $scope.isEditMode = false;
 
@@ -105,8 +113,8 @@ angular.module('climbingReportApp')
         $scope.newLocation = [
           {
             name: '',
-            latitude: $scope.mapValues.center.latitude,
-            longitude: $scope.mapValues.center.longitude
+            latitude: latLng.lat(),
+            longitude: latLng.lng()
           }
         ];
 
@@ -293,8 +301,6 @@ angular.module('climbingReportApp')
 
     // Init code START
 
-    // getLocations();
-
     if (navigator.geolocation) {
 
       navigator.geolocation.getCurrentPosition(
@@ -327,9 +333,8 @@ angular.module('climbingReportApp')
     }
 
     $scope.$on('mapInitialized', function(evt, evtMap) {
-      var map = evtMap;
+      map = evtMap;
       map.setOptions({maxZoom: MAX_MAP_ZOOM, minZoom: MIN_MAP_ZOOM});
-
     });
 
     // Init code END

@@ -34,8 +34,8 @@
 
             <marker
                 ng-repeat="location in newLocation"
-                position="[{{mapValues.center.latitude}}, {{mapValues.center.longitude}}]"
-                draggable="{{!location.isBusy}}"
+                position="[{{location.latitude}}, {{location.longitude}}]"
+                draggable="true"
                 on-drag="onDragUpdateLocationPosition()"
                 icon="{
                     url:'images/new_location_marker_icon.png',

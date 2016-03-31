@@ -8,7 +8,7 @@
  * Controller of the climbingReportApp
  */
 angular.module('climbingReportApp')
-  .controller('AddReportCtrl', function ($scope, $rootScope, $routeParams, $location, $q, AuthService, Report, Location, Tag, MIN_MAP_ZOOM, MAX_MAP_ZOOM, DEFAULT_MAP_ZOOM) {
+  .controller('AddReportCtrl', function ($scope, $rootScope, $routeParams, $location, $q, AuthService, Report, Location, Tag, MIN_MAP_ZOOM, MAX_MAP_ZOOM, DEFAULT_MAP_ZOOM, DEFAULT_LATITUDE, DEFAULT_LONGITUDE) {
     // Init vars START
 
     var isLoggedIn = AuthService.isLoggedInCheck();
@@ -20,13 +20,46 @@ angular.module('climbingReportApp')
       tags: []
     };
     $scope.mapValues = {
-      center: {},
+      center: {
+        latitude: DEFAULT_LATITUDE,
+        longitude: DEFAULT_LONGITUDE
+      },
       zoom: DEFAULT_MAP_ZOOM
     };
 
     // Init vars END
 
     // Private methods START
+
+    var getLocations = function(){
+
+      if(isLoggedIn){
+
+        locationsData = Location.query({
+          page_num: $scope.pageNum,
+          per_page: $scope.locationsPerPage,
+          sort_by: 'created_at',
+          sort_order: 'asc'
+        });
+
+        locationsData.$promise
+
+          .then(function(response){
+            $scope.visibleLocations = response.items;
+          })
+
+          // If location could not be fetched.
+          .catch(function(response) {
+
+            // Set Flash message
+            $rootScope.FlashMessage = {
+              type: 'danger',
+              message: response.data.error,
+              reasons: response.data.reasons
+            };
+          });
+      }
+    };
 
     var getLocationsNear = function(latitude, longitude){
 
@@ -236,6 +269,8 @@ angular.module('climbingReportApp')
             type: 'warning',
             message: 'Could not get current geolocation from browser.'
           };
+
+          getLocations();
         });
     }
 
