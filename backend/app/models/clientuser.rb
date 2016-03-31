@@ -31,7 +31,7 @@ class Clientuser < ActiveRecord::Base
   end
 
   def expand_login_time
-    self.token_expires = Time.now + 2.weeks
+    self.token_expires = Time.now + 1.day
     self.save
   end
 

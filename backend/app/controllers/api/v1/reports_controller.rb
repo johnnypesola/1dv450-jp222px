@@ -40,7 +40,7 @@ class Api::V1::ReportsController < Api::ApiBaseController
       }, methods: [:href, :href_location, :tags, :location],
           :include => {
               :tags => {
-                  :except => [:name, :created_at, :updated_at]
+                  :except => [:created_at, :updated_at]
               },
               :location => {
                   :except => [:latitude, :longitude, :created_at, :updated_at]
@@ -203,27 +203,6 @@ class Api::V1::ReportsController < Api::ApiBaseController
           # Add HATEOAS href to object
           tag.href = api_v1_tag_url(tag.id)
         end
-
-=begin
-        else
-          # Save was unsuccessful, probably due to missing values
-          errors = Array.new
-
-          tags.errors.full_messages.each do |msg|
-            errors.append(msg)
-          end
-
-          response.status = 400
-          render :json => {
-              error: 'Could not save tag.',
-              reasons: errors
-          }
-
-          return
-
-        end
-=end
-
 
       end
 
