@@ -202,6 +202,8 @@ angular.module('climbingReportApp')
 
           .finally(function() {
             report.isSaving = false;
+
+            $location.path('reports');
           });
       }
     };
@@ -222,16 +224,6 @@ angular.module('climbingReportApp')
 
           .then(function(){
 
-            var reportToRemoveIndex;
-
-            // Find index of report to remove
-            reportToRemoveIndex = $scope.reportData.items.findIndex(function(otherReport){
-              return report.id === otherReport.id;
-            });
-
-            // Remove report from array.
-            $scope.reportData.items.splice(reportToRemoveIndex, 1);
-
             // Set Flash message
             $rootScope.FlashMessage = {
               type: 'success',
@@ -251,7 +243,8 @@ angular.module('climbingReportApp')
           })
 
           .finally(function(){
-            report.isBusy = false;
+
+            $location.path('reports');
           });
       }
     };
@@ -278,9 +271,6 @@ angular.module('climbingReportApp')
               longitude: longitude,
               latitude: latitude
             };
-
-            // getLocationsNear(latitude, longitude);
-
           });
         },
         function () {

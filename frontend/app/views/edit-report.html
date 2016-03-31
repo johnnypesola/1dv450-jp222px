@@ -105,6 +105,15 @@
                 Save report
             </button>
 
+            <button
+                class="btn btn-danger"
+                type="button"
+                ng-click="deleteReport(reportData)"
+                ng-disabled="reportData.isSaving"
+            >
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
+
             <a href="#/reports"
                 class="btn btn-default"
                 type="button"
