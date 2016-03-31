@@ -23,7 +23,7 @@ Den förinställa token som finns inställt i postman-konfigurationen har för s
 
 Jag rekommenderar att REST-API:ts OAuth del (Session controllern) testas i slutskedet, eftersom man då slipper skriva in det nya genererade tokenet i Postmans alla anrop, vilket sparar en del tid.
 
-[Här finns en enkel klient](http://www.pesola.se/temp/1dv450-client/) för att testa OAuth funktionaliteten (lånad ifrån John Häggerud). Den autentiserar emot Github för att sedan generera ett nytt token som sedan skickas med i varje API anrop.
+[Här finns en enkel klient](http://www.pesola.se/webbprogrammerare/1dv450/test-client/) för att testa OAuth funktionaliteten (lånad ifrån John Häggerud). Den autentiserar emot Github för att sedan generera ett nytt token som sedan skickas med i varje API anrop.
 
 
 ## Backend (API nycklar)
