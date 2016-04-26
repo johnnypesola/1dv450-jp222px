@@ -61,6 +61,15 @@ angular.module('climbingReportApp')
       }
     };
 
+    var increaseLocationCount = function(locationId) {
+
+      $scope.visibleLocations.forEach(function(location){
+        if(location.id === locationId) {
+          location.reports_count += 1;
+        }
+      });
+    };
+
     var getLocationsNear = function(latitude, longitude){
 
       if(isLoggedIn){
@@ -178,6 +187,7 @@ angular.module('climbingReportApp')
         reportToSave.$save()
 
           .then(function(){
+
             report.isEditMode = false;
             report.isSaving = false;
 
@@ -191,6 +201,9 @@ angular.module('climbingReportApp')
               type: 'success',
               message: 'Succesfully saved report.'
             };
+
+            // Increase count on map
+            increaseLocationCount(report.location_id);
           })
 
           // If report could not be saved.

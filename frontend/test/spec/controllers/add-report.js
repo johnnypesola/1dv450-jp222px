@@ -5,13 +5,13 @@ describe('Controller: AddReportCtrl', function () {
   // load the controller's module
   beforeEach(module('climbingReportApp'));
 
-  var AddreportCtrl,
+  var AddReportCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    AddreportCtrl = $controller('AddReportCtrl', {
+    AddReportCtrl = $controller('AddReportCtrl', {
       $scope: scope
       // place here mocked dependencies
     });
