@@ -140,29 +140,42 @@ class Api::V1::TagsController < Api::ApiBaseController
 
       tag = Tag.find(destroy_params[:id])
 
-      # Try to delete tag
-      if tag.destroy
+      # There can be no reports that has this location
+      if tag.reports.count != 0
 
-        response.status = 200
-
+        response.status = 406
         render :json => {
-            :items => [tag]
+            error: 'Could not delete tag.',
+            reasons: [ "The tag has #{tag.reports.count} reports associated with it" ]
         }
 
       else
 
-        errors = Array.new
+        # Try to delete tag
+        if tag.destroy
 
-        tag.errors.full_messages.each do |msg|
-          errors.append(msg)
+          response.status = 200
+
+          render :json => {
+              :items => [tag]
+          }
+
+        else
+
+          errors = Array.new
+
+          tag.errors.full_messages.each do |msg|
+            errors.append(msg)
+          end
+
+          response.status = 400
+
+          render :json => {
+              error: 'Could not delete tag.',
+              reasons: errors
+          }
+
         end
-
-        response.status = 400
-
-        render :json => {
-            error: 'Could not delete tag.',
-            reasons: errors
-        }
 
       end
 
