@@ -190,29 +190,42 @@ class Api::V1::LocationsController < Api::ApiBaseController
 
       location = Location.find(destroy_params[:id])
 
-      # Try to delete location
-      if location.destroy
+      # There can be no reports that has this location
+      if location.report.count != 0
 
-        response.status = 200
-
+        response.status = 406
         render :json => {
-            :items => [location]
+            error: 'Could not delete location.',
+            reasons: [ "The location has #{location.report.count} reports associated with it" ]
         }
 
       else
 
-        errors = Array.new
+        # Try to delete location
+        if location.destroy
 
-        location.errors.full_messages.each do |msg|
-          errors.append(msg)
+          response.status = 200
+
+          render :json => {
+              :items => [location]
+          }
+
+        else
+
+          errors = Array.new
+
+          location.errors.full_messages.each do |msg|
+            errors.append(msg)
+          end
+
+          response.status = 400
+
+          render :json => {
+              error: 'Could not delete location.',
+              reasons: errors
+          }
+
         end
-
-        response.status = 400
-
-        render :json => {
-            error: 'Could not delete location.',
-            reasons: errors
-        }
 
       end
 
